@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "video-project-state-v1",
+  "project": "__PROJECT_NAME__",
+  "projectPath": "__PROJECT_PATH__",
+  "createdAt": "__CREATED_AT__",
+  "updatedAt": "__CREATED_AT__",
+  "currentStage": "Topic",
+  "stageStatus": "topic_ready",
+  "nextAction": "Fill the account, writing style, and knowledge source files; confirm evidence before Script TTS.",
+  "latestRender": {
+    "path": null,
+    "sha256": null
+  },
+  "qa": {
+    "automated": "not_run",
+    "automatedReport": null,
+    "humanStatus": "not_run",
+    "humanVisualReview": null
+  },
+  "blockers": [],
+  "published": null,
+  "source": "minimal-video-project-template"
+}

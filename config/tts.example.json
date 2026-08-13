@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "mode": "existing-audio",
+  "referenceAudio": {
+    "path": "",
+    "sha256": ""
+  },
+  "indexTts": {
+    "repo": "",
+    "python": "",
+    "cacheRoot": ""
+  },
+  "ffprobePath": ""
+}

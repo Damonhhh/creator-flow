@@ -1,0 +1,21 @@
+{
+  "source_policy": {
+    "selected_fallback_min_items": 10,
+    "tracking_params": [
+      "utm_",
+      "fbclid",
+      "gclid",
+      "ref",
+      "ref_src"
+    ],
+    "tier_domains": {
+      "official": ["openai.com", "anthropic.com", "ai.google", "github.blog"],
+      "research": ["arxiv.org", "openreview.net"],
+      "developer_community": ["github.com", "huggingface.co"],
+      "credible_media": ["reuters.com", "apnews.com"],
+      "social_signal": ["x.com", "linkedin.com"],
+      "aggregator": []
+    },
+    "official_social_sources": []
+  }
+}

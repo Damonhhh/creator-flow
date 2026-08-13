@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "renderer": {
+    "engine": "hyperframes",
+    "command": ""
+  },
+  "paths": {
+    "videos": "videos",
+    "output": "videos/00-final-output"
+  },
+  "quality": {
+    "requireHumanVisualReview": true,
+    "requireRenderSha256Binding": true
+  }
+}

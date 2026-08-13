@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "videoGeneration": {
+    "grok": {
+      "enabled": false,
+      "apiBase": "",
+      "apiKeyEnvironmentVariable": "GROK_VIDEO_API_KEY"
+    },
+    "minimax": {
+      "enabled": false,
+      "apiBase": "",
+      "apiKeyEnvironmentVariable": "MINIMAX_API_KEY"
+    }
+  }
+}

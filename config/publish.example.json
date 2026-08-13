@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "outputRoot": "videos/00-final-output",
+  "collection": "",
+  "platforms": [],
+  "publishCopyPass": {
+    "recordPattern": "publish-copy-pass-v*.md",
+    "requiredMarkers": [
+      "status: PASS",
+      "method:"
+    ]
+  }
+}

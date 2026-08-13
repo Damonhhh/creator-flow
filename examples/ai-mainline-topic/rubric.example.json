@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "name": "Portable AI mainline topic rubric",
+  "minimumEvidenceItems": 1,
+  "scoreRange": {
+    "minimum": 1,
+    "maximum": 5
+  },
+  "dimensions": [
+    {
+      "field": "freshness",
+      "label": "Freshness",
+      "weight": 30,
+      "direction": "higher"
+    },
+    {
+      "field": "audienceFit",
+      "label": "Audience fit",
+      "weight": 50,
+      "direction": "higher"
+    },
+    {
+      "field": "productionCost",
+      "label": "Production cost",
+      "weight": 20,
+      "direction": "lower"
+    }
+  ]
+}

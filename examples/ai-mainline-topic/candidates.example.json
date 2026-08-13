@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "candidates": [
+    {
+      "title": "AI meeting notes with a human acceptance gate",
+      "source": "Fixed product-workflow fixture",
+      "evidence": [
+        "A transcript can be checked against the source recording.",
+        "The acceptance gate gives viewers a concrete workflow to copy."
+      ],
+      "freshness": 4,
+      "audienceFit": 5,
+      "productionCost": 2
+    },
+    {
+      "title": "New model benchmark roundup",
+      "source": "Fixed benchmark fixture",
+      "evidence": [
+        "The example assumes a published benchmark table is available."
+      ],
+      "freshness": 5,
+      "audienceFit": 3,
+      "productionCost": 4
+    },
+    {
+      "title": "Build a local AI avatar studio",
+      "source": "Fixed creator-tool fixture",
+      "evidence": [
+        "The workflow can be demonstrated with local tools and sample media."
+      ],
+      "freshness": 3,
+      "audienceFit": 3,
+      "productionCost": 5
+    },
+    {
+      "title": "Prompt tips without a concrete task",
+      "source": "Fixed prompt-list fixture",
+      "evidence": [
+        "A short list of generic prompt patterns is available."
+      ],
+      "freshness": 2,
+      "audienceFit": 2,
+      "productionCost": 2
+    },
+    {
+      "title": "Enterprise agent governance update",
+      "source": "Fixed policy fixture",
+      "evidence": [
+        "The example assumes a dated governance memo is available."
+      ],
+      "freshness": 4,
+      "audienceFit": 2,
+      "productionCost": 5
+    }
+  ]
+}
