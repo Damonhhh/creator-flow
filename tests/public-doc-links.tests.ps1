@@ -105,7 +105,7 @@ foreach ($needle in @(
   )) {
   Assert-True ($readmeText.Contains($needle)) "README quick start is missing: $needle"
 }
-Assert-True ($readmeText.Contains('one-click fully automated account machine')) 'README must reject the one-click automation claim'
+Assert-True (-not $readmeText.Contains('one-click fully automated account machine')) 'README must not make the one-click automation claim'
 Assert-True ($readmeText.Contains('-AcceptDownload')) 'README must explain consent-gated renderer setup'
 
 $dependencyText = Get-PublicDocumentText -Destination 'docs/dependency-matrix.md'

@@ -1,13 +1,13 @@
 ---
 name: zimeiti-video-workflow
-description: Use for zimeiti video production stage routing, HyperFrames assembly, external editing-tool choice, QA, and wrap-up.
+description: Use as CreatorFlow's core skill for video production stage routing, HyperFrames assembly, external editing-tool choice, QA, and wrap-up.
 ---
 
-# Zimeiti Video Workflow
+# CreatorFlow Video Workflow
 
 ## Purpose
 
-This is the project-level router for video work in this repository. Use it whenever the task involves topic planning, scripting, TTS/subtitles, materials, assembly, QA, publishing packages, wrap-up, or choosing between HyperFrames and another compatible renderer.
+This is CreatorFlow's project-level router. Use it whenever the task involves topic planning, scripting, TTS/subtitles, materials, assembly, QA, publishing packages, wrap-up, or choosing between HyperFrames and another compatible renderer.
 
 This skill decides the production stage and the smallest reference slice needed for that stage. `references\pipeline.md` is the execution map.
 

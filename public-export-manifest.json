@@ -1,17 +1,17 @@
 {
     "schemaVersion":  1,
-    "repository":  "zimeiti-video-workflow",
+    "repository":  "creator-flow",
     "license":  "MIT",
     "files":  [
                   {
                       "source":  "open-source/README.md",
                       "destination":  "README.md",
-                      "sha256":  "c00372bfdfa8dbbccd1304877165bb8cfa302ac0dec177d521c4909d17b45e59"
+                      "sha256":  "e6f9fd3d9d8460faf27fb1a002ed189a3d45f6231acefe39f98188e8bed6a7c5"
                   },
                   {
                       "source":  "open-source/LICENSE",
                       "destination":  "LICENSE",
-                      "sha256":  "bef16772d777f927778cb753b774ae33e8f0de968b863f6495afb06d9fdccc22"
+                      "sha256":  "8c476110f57c447e8851fef9faaf85fb1af8da7b7596172c062dcb9603d61fc0"
                   },
                   {
                       "source":  "open-source/.gitignore",
@@ -166,7 +166,7 @@
                   {
                       "source":  "scripts/export-public-workflow.ps1",
                       "destination":  "scripts/export-public-workflow.ps1",
-                      "sha256":  "8e269722888094de9c23f3a17871272a6aa59175bab804e66f8821096fbed732"
+                      "sha256":  "c08cf0c20e18abc8a211165bba4aeaaf9a715a3a5d5b85635bcbcea5cb3d3fe0"
                   },
                   {
                       "source":  "scripts/lib/resolve-zimeiti-config.ps1",
@@ -291,7 +291,7 @@
                   {
                       "source":  "scripts/test-public-release.ps1",
                       "destination":  "scripts/test-public-release.ps1",
-                      "sha256":  "eacd018f011af2bf71eee08b8b7c8fadb7fda73cf3540947c8b8ea3cd1948303"
+                      "sha256":  "03cd2311c8cc623ab72919e7fec4522bda624eafb6296a247f29a3e0eb1f3e86"
                   },
                   {
                       "source":  "scripts/update-video-project-state.ps1",
@@ -331,12 +331,12 @@
                   {
                       "source":  "tests/public-export-manifest.tests.ps1",
                       "destination":  "tests/public-export-manifest.tests.ps1",
-                      "sha256":  "1972c6039c0c8b49a36a82d9db261cbfc23c69afb48dfae902321b09a3d570da"
+                      "sha256":  "60c52f032e57c7ac1ce9d60820b2d31fa48fc4958faeb981bbe8da4c973531ef"
                   },
                   {
                       "source":  "tests/public-export.tests.ps1",
                       "destination":  "tests/public-export.tests.ps1",
-                      "sha256":  "4b7fd65cab44775e136107d15ec3e1dc59b93f8a421a1eacbd693ecee5b583b2"
+                      "sha256":  "f7d557b5e080ddc4211038c9f0c5f1c74e675386372005e57af722f0c89b1f61"
                   },
                   {
                       "source":  "tests/workflow-config.tests.ps1",
@@ -391,7 +391,7 @@
                   {
                       "source":  "tests/public-doc-links.tests.ps1",
                       "destination":  "tests/public-doc-links.tests.ps1",
-                      "sha256":  "96e292b89fab5c79f4f0e8fead15e11e3a72002004ec547a6d0a2bbbf45368b1"
+                      "sha256":  "9f1692d6fc061d11b369cf5d672fb8fab01e76fb74be15363f555682c7848976"
                   },
                   {
                       "source":  "tests/video-workflow-contract.tests.ps1",
@@ -421,12 +421,12 @@
                   {
                       "source":  "tests/public-release.tests.ps1",
                       "destination":  "tests/public-release.tests.ps1",
-                      "sha256":  "b39854e7f01ccbdba32f31f81f87b3fd95e565bf28b98e00bcfd824e3449356c"
+                      "sha256":  "8dc673e1d091dd207df0bba1f03faff4959168338e9c2a862478235ff89465ed"
                   },
                   {
                       "source":  ".agents/skills/zimeiti-video-workflow/SKILL.md",
                       "destination":  ".agents/skills/zimeiti-video-workflow/SKILL.md",
-                      "sha256":  "9fdb66784191654b4f4b26d3e44c441bab1983b9b0ff42d5819c74488675bddb"
+                      "sha256":  "8ef6920a33ce8e8def3461eec902e4b8aae6f9785528142b5468a1f1fb6c1511"
                   },
                   {
                       "source":  ".agents/skills/zimeiti-video-workflow/references/pipeline.md",

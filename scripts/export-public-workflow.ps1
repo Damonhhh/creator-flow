@@ -1,6 +1,6 @@
 param(
   [string]$ManifestPath = (Join-Path (Join-Path $PSScriptRoot "..") "public-export-manifest.json"),
-  [string]$Destination = (Join-Path (Split-Path (Join-Path $PSScriptRoot "..") -Parent) "zimeiti-video-workflow"),
+  [string]$Destination = (Join-Path (Split-Path (Join-Path $PSScriptRoot "..") -Parent) "creator-flow"),
   [switch]$Force,
   [switch]$ScanOnly
 )
@@ -53,7 +53,7 @@ function Read-PublicExportManifest {
   }
   $manifest = Get-Content -LiteralPath $PathValue -Raw -Encoding UTF8 | ConvertFrom-Json
   if ($manifest.schemaVersion -ne 1) { throw "Unsupported public export schemaVersion: $($manifest.schemaVersion)" }
-  if ($manifest.repository -ne "zimeiti-video-workflow") { throw "Unexpected public repository name" }
+  if ($manifest.repository -ne "creator-flow") { throw "Unexpected public repository name" }
   if ($manifest.license -ne "MIT") { throw "Unexpected public license" }
   if (@($manifest.files).Count -eq 0) { throw "Public export manifest has no files" }
   return $manifest

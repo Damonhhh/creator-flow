@@ -33,7 +33,7 @@ try {
   $licenseHash = (Get-FileHash -LiteralPath (Join-Path $testRoot 'LICENSE') -Algorithm SHA256).Hash.ToLowerInvariant()
   $manifest = [ordered]@{
     schemaVersion = 1
-    repository = 'zimeiti-video-workflow'
+    repository = 'creator-flow'
     license = 'MIT'
     files = @(
       [ordered]@{ source = 'open-source/README.md'; destination = 'README.md'; sha256 = $readmeHash },

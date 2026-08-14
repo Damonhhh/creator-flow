@@ -35,7 +35,7 @@ function Read-PublicReleaseManifest {
     throw "Missing public-export-manifest.json: $path"
   }
   $manifest = Get-Content -LiteralPath $path -Raw -Encoding UTF8 | ConvertFrom-Json
-  if ($manifest.schemaVersion -ne 1 -or $manifest.repository -ne 'zimeiti-video-workflow' -or $manifest.license -ne 'MIT') {
+  if ($manifest.schemaVersion -ne 1 -or $manifest.repository -ne 'creator-flow' -or $manifest.license -ne 'MIT') {
     throw 'Unexpected public release manifest identity'
   }
   if (@($manifest.files).Count -eq 0) { throw 'Public release manifest has no files' }

@@ -13,7 +13,7 @@ Assert-True (Test-Path -LiteralPath $manifestPath) "Missing public-export-manife
 $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
 
 Assert-True ($manifest.schemaVersion -eq 1) "Expected schemaVersion 1"
-Assert-True ($manifest.repository -eq "zimeiti-video-workflow") "Expected repository name zimeiti-video-workflow"
+Assert-True ($manifest.repository -eq "creator-flow") "Expected repository name creator-flow"
 Assert-True ($manifest.license -eq "MIT") "Expected MIT license"
 Assert-True (@($manifest.files).Count -ge 4) "Expected at least four manifest files"
 

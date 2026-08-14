@@ -1,10 +1,10 @@
-# zimeiti-video-workflow
+# CreatorFlow
 
-这是一套从真实生产项目中抽出的自媒体视频链路：
+CreatorFlow 是一套从真实生产项目中抽出的自媒体视频工作流。它把一条内容从选题送到成片和发布包：
 
 `选题 → 评分 → 脚本 → 素材 → visual plan → 组装 → 渲染 → QA → 发布包 → 收尾`
 
-仓库交付的是链路，不是一台 **one-click fully automated account machine**。它不会替你决定账号定位，也不附带某个人的声音、判断、写作习惯或知识库。你需要补入自己的三个长期输入，系统才会逐渐成为你的工作流。
+仓库交付的是可执行的链路，不能把它当成一键接管账号的自动机器。它不会替你决定账号定位，也不附带某个人的声音、判断、写作习惯或知识库。你需要补入自己的账号定位、写作风格和知识来源，它才会逐渐变成你的工作流。
 
 V1 面向 Windows。Core 使用 PowerShell、Python、FFmpeg 和 ffprobe；HyperFrames、IndexTTS2、ASR、视频生成适配器与上传工具按需启用。
 
@@ -13,8 +13,8 @@ V1 面向 Windows。Core 使用 PowerShell、Python、FFmpeg 和 ffprobe；Hyper
 ### 1. 克隆并进入仓库
 
 ```powershell
-git clone https://github.com/<your-account>/zimeiti-video-workflow.git
-cd .\zimeiti-video-workflow
+git clone https://github.com/Damonhhh/creator-flow.git
+cd .\creator-flow
 ```
 
 如果远程仓库尚未创建，可直接在本地仓库根目录执行后续命令。

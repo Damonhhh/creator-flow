@@ -25,7 +25,7 @@ function New-Fixture {
   Write-Utf8 -Path (Join-Path $root "open-source\.gitignore") -Content "config/*.local.json`n"
   $manifest = [ordered]@{
     schemaVersion = 1
-    repository = "zimeiti-video-workflow"
+    repository = "creator-flow"
     license = "MIT"
     files = @(
       [ordered]@{ source = "open-source/README.md"; destination = "README.md" },
