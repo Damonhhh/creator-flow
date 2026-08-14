@@ -88,6 +88,29 @@ Assert-True ($qaText -match 'SHA256') 'QA stage must bind review to render SHA25
 
 $readmeText = Get-PublicDocumentText -Destination 'README.md'
 foreach ($needle in @(
+    'CreatorFlow',
+    'Codex',
+    'topic-ranking.json',
+    'project-state.json',
+    'publish\',
+    'examples/ai-mainline-topic/README.md',
+    'examples/minimal-video-project/README.md',
+    'account-profile.md',
+    'writing-style.md',
+    'knowledge-sources.md',
+    'Script TTS',
+    'Publish Wrap Up',
+    'human-visual-review',
+    'human-visual-review-vNN.md',
+    'docs/installation.md'
+  )) {
+  Assert-True ($readmeText.Contains($needle)) "README product entry is missing: $needle"
+}
+Assert-True (-not $readmeText.Contains('one-click fully automated account machine')) 'README must not make the one-click automation claim'
+Assert-True ($readmeText.Contains('-AcceptDownload')) 'README must explain consent-gated renderer setup'
+
+$installationText = Get-PublicDocumentText -Destination 'docs/installation.md'
+foreach ($needle in @(
     'test-workflow-capabilities.ps1',
     'workflow.local.json',
     'tts.local.json',
@@ -95,18 +118,18 @@ foreach ($needle in @(
     'publish.local.json',
     'new-video-project.ps1',
     'initialize-video-renderer.ps1',
+    'run-video-draft-qa.ps1',
+    'invoke-video-wrap-up.ps1',
     'account-profile.md',
     'writing-style.md',
     'knowledge-sources.md',
     'Script TTS',
     'Publish Wrap Up',
     'human-visual-review',
-    'invoke-video-wrap-up.ps1'
+    '-AcceptDownload'
   )) {
-  Assert-True ($readmeText.Contains($needle)) "README quick start is missing: $needle"
+  Assert-True ($installationText.Contains($needle)) "Installation guide is missing: $needle"
 }
-Assert-True (-not $readmeText.Contains('one-click fully automated account machine')) 'README must not make the one-click automation claim'
-Assert-True ($readmeText.Contains('-AcceptDownload')) 'README must explain consent-gated renderer setup'
 
 $dependencyText = Get-PublicDocumentText -Destination 'docs/dependency-matrix.md'
 foreach ($dependency in @('PowerShell', 'Python', 'FFmpeg', 'ffprobe', 'Node.js', 'npm', 'HyperFrames', 'IndexTTS2', 'ASR', 'Grok', 'MiniMax', 'Uploader')) {

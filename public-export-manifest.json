@@ -6,7 +6,7 @@
                   {
                       "source":  "open-source/README.md",
                       "destination":  "README.md",
-                      "sha256":  "e6f9fd3d9d8460faf27fb1a002ed189a3d45f6231acefe39f98188e8bed6a7c5"
+                      "sha256":  "217e0633efba1dfbbeb74f2fcbeb1def0b7345df28180868f40eb3b80bb13e32"
                   },
                   {
                       "source":  "open-source/LICENSE",
@@ -26,7 +26,7 @@
                   {
                       "source":  "open-source/docs/installation.md",
                       "destination":  "docs/installation.md",
-                      "sha256":  "b529dd3f7838f719a9557cc839095b51867d39a8f4461c701adb5e66dcee8081"
+                      "sha256":  "ee4dfb2fa00517b8d72da2a579b2e25d2ea8804652997414926682e1b064aa7e"
                   },
                   {
                       "source":  "open-source/docs/dependency-matrix.md",
@@ -391,7 +391,7 @@
                   {
                       "source":  "tests/public-doc-links.tests.ps1",
                       "destination":  "tests/public-doc-links.tests.ps1",
-                      "sha256":  "9f1692d6fc061d11b369cf5d672fb8fab01e76fb74be15363f555682c7848976"
+                      "sha256":  "c4807d4621d579e48b6c97afabfadc6c22cb1c012a6afb6f92f73acd75067872"
                   },
                   {
                       "source":  "tests/video-workflow-contract.tests.ps1",
