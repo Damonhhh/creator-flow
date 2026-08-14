@@ -42,6 +42,41 @@ function Read-PublicReleaseManifest {
   return $manifest
 }
 
+function Get-PublicCanonicalSha256 {
+  param(
+    [Parameter(Mandatory = $true)][string]$PathValue,
+    [ValidateSet('LF', 'CRLF')][string]$TextLineEnding = 'LF'
+  )
+  $textExtensions = @('', '.md', '.txt', '.json', '.jsonl', '.ps1', '.psm1', '.py', '.mjs', '.js', '.ts', '.tsx', '.css', '.html', '.yml', '.yaml', '.toml', '.gitignore')
+  $extension = [IO.Path]::GetExtension($PathValue).ToLowerInvariant()
+  $isText = $textExtensions -contains $extension -or (Split-Path -Leaf $PathValue) -eq '.gitignore'
+  if (-not $isText) {
+    return (Get-FileHash -LiteralPath $PathValue -Algorithm SHA256).Hash.ToLowerInvariant()
+  }
+
+  $inputBytes = [IO.File]::ReadAllBytes($PathValue)
+  $normalized = New-Object IO.MemoryStream
+  try {
+    for ($index = 0; $index -lt $inputBytes.Length; $index++) {
+      $byte = $inputBytes[$index]
+      if ($byte -eq 13 -and $index + 1 -lt $inputBytes.Length -and $inputBytes[$index + 1] -eq 10) {
+        if ($TextLineEnding -eq 'CRLF') { $normalized.WriteByte(13) }
+        $normalized.WriteByte(10)
+        $index++
+        continue
+      }
+      if ($byte -eq 10 -and $TextLineEnding -eq 'CRLF') { $normalized.WriteByte(13) }
+      $normalized.WriteByte($byte)
+    }
+    $sha = [Security.Cryptography.SHA256]::Create()
+    try {
+      return ([BitConverter]::ToString($sha.ComputeHash($normalized.ToArray()))).Replace('-', '').ToLowerInvariant()
+    }
+    finally { $sha.Dispose() }
+  }
+  finally { $normalized.Dispose() }
+}
+
 function Test-PublicManifestIntegrity {
   param(
     [Parameter(Mandatory = $true)][string]$PackageRoot,
@@ -68,8 +103,13 @@ function Test-PublicManifestIntegrity {
     if ($null -eq $hashProperty -or [string]$hashProperty.Value -notmatch '^[a-fA-F0-9]{64}$') {
       throw "Missing or invalid SHA256 for manifest file: $relative"
     }
-    $actual = (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant()
-    if ($actual -ne ([string]$hashProperty.Value).ToLowerInvariant()) {
+    $expected = ([string]$hashProperty.Value).ToLowerInvariant()
+    $actualHashes = @(
+      (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant(),
+      (Get-PublicCanonicalSha256 -PathValue $path -TextLineEnding LF),
+      (Get-PublicCanonicalSha256 -PathValue $path -TextLineEnding CRLF)
+    ) | Select-Object -Unique
+    if ($actualHashes -notcontains $expected) {
       throw "SHA256 mismatch for manifest file: $relative"
     }
     $checked++
@@ -119,6 +159,7 @@ function Test-PublicRequiredLayout {
     'scripts/test-video-orientation-decision.ps1', 'scripts/test-narration-pacing.ps1',
     'scripts/test-public-release.ps1',
     'tests/video-renderer-initializer.tests.ps1',
+    'tests/agent-platform-support.tests.ps1',
     'tests/public-network-boundary.tests.ps1',
     'tests/public-release.tests.ps1'
   )
@@ -218,6 +259,7 @@ function Invoke-PublicReleaseAudit {
     'tests/video-wrap-up-portability.tests.ps1',
     'tests/workflow-capabilities.tests.ps1',
     'tests/video-renderer-initializer.tests.ps1',
+    'tests/agent-platform-support.tests.ps1',
     'tests/public-doc-links.tests.ps1',
     'tests/public-network-boundary.tests.ps1',
     'tests/video-workflow-contract.tests.ps1',

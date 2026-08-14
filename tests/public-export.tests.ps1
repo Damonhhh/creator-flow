@@ -56,7 +56,7 @@ try {
   Assert-True (Test-Path -LiteralPath $exporterPath) "Missing scripts/export-public-workflow.ps1"
   New-Item -ItemType Directory -Force -Path $testRoot | Out-Null
 
-  $happyRoot = New-Fixture -Name "happy"
+  $happyRoot = New-Fixture -Name "happy" -Readme "# Fixture`r`n"
   $happyDestination = Join-Path $testRoot "happy-destination"
   $happyResult = Invoke-ExporterProcess -Arguments @(
     "-ManifestPath", (Join-Path $happyRoot "public-export-manifest.json"),
@@ -67,7 +67,12 @@ try {
   Assert-True (-not (Test-Path -LiteralPath (Join-Path $happyDestination "open-source"))) "Source wrapper directory leaked into destination"
   $publishedManifest = Get-Content -LiteralPath (Join-Path $happyDestination "public-export-manifest.json") -Raw -Encoding UTF8 | ConvertFrom-Json
   $publishedReadme = @($publishedManifest.files | Where-Object { $_.destination -eq 'README.md' })[0]
-  Assert-True ($publishedReadme.sha256 -eq (Get-FileHash -LiteralPath (Join-Path $happyDestination "README.md") -Algorithm SHA256).Hash.ToLowerInvariant()) "Exported manifest did not record the README SHA256"
+  $sha = [Security.Cryptography.SHA256]::Create()
+  try {
+    $expectedReadmeHash = ([BitConverter]::ToString($sha.ComputeHash([Text.UTF8Encoding]::new($false).GetBytes("# Fixture`n")))).Replace('-', '').ToLowerInvariant()
+  }
+  finally { $sha.Dispose() }
+  Assert-True ($publishedReadme.sha256 -eq $expectedReadmeHash) "Exported manifest did not record the canonical README SHA256"
   $publishedManifestEntry = @($publishedManifest.files | Where-Object { $_.destination -eq 'public-export-manifest.json' })[0]
   Assert-True ($null -eq $publishedManifestEntry.PSObject.Properties['sha256']) "The manifest must not contain a self-referential SHA256"
 
