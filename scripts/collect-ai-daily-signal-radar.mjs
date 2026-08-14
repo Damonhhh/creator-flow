@@ -178,8 +178,22 @@ function countBy(items, field) {
   }, {});
 }
 
-async function fetchAihot({ since, take, mode }) {
-  const url = new URL('https://aihot.virxact.com/api/public/items');
+function resolveHttpsEndpoint(value, name, usage) {
+  if (!value) return '';
+  let url;
+  try {
+    url = new URL(value);
+  } catch {
+    throw new Error(`${name} must be a valid absolute URL. ${usage}`);
+  }
+  if (url.protocol !== 'https:') {
+    throw new Error(`${name} must use HTTPS. ${usage}`);
+  }
+  return url.toString();
+}
+
+async function fetchAihot({ endpoint, since, take, mode }) {
+  const url = new URL(endpoint);
   url.searchParams.set('mode', mode);
   url.searchParams.set('since', since);
   url.searchParams.set('take', String(Math.min(Math.max(take, 20), 100)));
@@ -225,19 +239,31 @@ const fallbackMin = Number(args['selected-fallback-min-items'] ?? policy.selecte
 const liveCollection = args['live-collection'] === true || args['live-collection'] === 'true';
 
 try {
+  const needsLiveAihot = liveCollection && !args['aihot-input'];
+  const aihotEndpoint = needsLiveAihot
+    ? resolveHttpsEndpoint(
+        args['aihot-endpoint'] || process.env.AIHOT_PUBLIC_ENDPOINT || '',
+        'AI Hot endpoint',
+        'Provide --aihot-endpoint or AIHOT_PUBLIC_ENDPOINT before enabling live collection.',
+      )
+    : '';
+  if (needsLiveAihot && !aihotEndpoint) {
+    throw new Error('AI Hot live collection requires --aihot-endpoint or AIHOT_PUBLIC_ENDPOINT. Confirm the endpoint and network access before retrying.');
+  }
+
   let selectedPayload;
   let allPayload = { items: [] };
   if (args['aihot-input']) {
     selectedPayload = readJson(path.resolve(args['aihot-input']));
   } else if (liveCollection) {
-    selectedPayload = await fetchAihot({ since, take: maxItems, mode: 'selected' });
+    selectedPayload = await fetchAihot({ endpoint: aihotEndpoint, since, take: maxItems, mode: 'selected' });
   } else {
     selectedPayload = { items: [] };
   }
 
   const selectedItems = Array.isArray(selectedPayload.items) ? selectedPayload.items : [];
   if (liveCollection && !args['aihot-input'] && selectedItems.length < Math.min(fallbackMin, maxItems)) {
-    allPayload = await fetchAihot({ since, take: 100, mode: 'all' });
+    allPayload = await fetchAihot({ endpoint: aihotEndpoint, since, take: 100, mode: 'all' });
   }
   const fallbackItems = Array.isArray(allPayload.items) ? allPayload.items : [];
   const trendRadar = readTrendRadar(args['trendradar-input']);
@@ -259,7 +285,7 @@ try {
     rules_path: rulesPath,
     sources: {
       aihot: {
-        endpoint: 'https://aihot.virxact.com/api/public/items',
+        endpoint_configured: Boolean(aihotEndpoint),
         live_collection: liveCollection,
         mode: 'selected',
         selected_count: selectedItems.length,

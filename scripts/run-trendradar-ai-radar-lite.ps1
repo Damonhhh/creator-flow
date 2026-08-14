@@ -1,6 +1,7 @@
 param(
   [string]$ConfigDir = "",
   [string]$OutputRoot = "",
+  [string]$NewsNowApiBase = "",
   [switch]$LiveCollection,
   [int]$MaxItemsPerSource = 30,
   [int]$RssMaxAgeHours = 72
@@ -247,12 +248,16 @@ function Fetch-HotlistItems {
   param(
     [object[]]$Sources,
     [object[]]$KeywordGroups,
-    [int]$MaxItemsPerSource
+    [int]$MaxItemsPerSource,
+    [string]$ApiBase
   )
 
   $items = New-Object System.Collections.Generic.List[object]
   foreach ($source in $Sources) {
-    $apiUrl = "https://newsnow.busiyi.world/api/s?id=$($source.id)&latest"
+    $trimmedBase = $ApiBase.TrimEnd([char[]]'?&')
+    $separator = if ($trimmedBase.Contains('?')) { '&' } else { '?' }
+    $sourceId = [Uri]::EscapeDataString([string]$source.id)
+    $apiUrl = "{0}{1}id={2}&latest" -f $trimmedBase, $separator, $sourceId
     try {
       $responseText = $null
       for ($attempt = 1; $attempt -le 3; $attempt++) {
@@ -401,14 +406,29 @@ function Normalize-TitleKey {
 
 $configPath = Join-Path $ConfigDir "config.yaml"
 if (-not (Test-Path -LiteralPath $configPath)) {
-  throw "Config file not found: $configPath"
+  throw "TrendRadar lite config.yaml was not found: $configPath. Create the file from your own source list, then pass its directory with -ConfigDir. No dependency or configuration is downloaded automatically."
 }
 
-New-Item -ItemType Directory -Force -Path $OutputRoot | Out-Null
 $config = Read-TrendRadarLiteConfig -Path $configPath
 $keywordGroups = New-KeywordGroups
 
-$hotlistItems = Fetch-HotlistItems -Sources $config.sources -KeywordGroups $keywordGroups -MaxItemsPerSource $MaxItemsPerSource
+if (@($config.sources).Count -gt 0) {
+  if ([string]::IsNullOrWhiteSpace($NewsNowApiBase)) {
+    $NewsNowApiBase = [Environment]::GetEnvironmentVariable('NEWSNOW_API_BASE')
+  }
+  if ([string]::IsNullOrWhiteSpace($NewsNowApiBase)) {
+    throw "TrendRadar platform collection requires -NewsNowApiBase or NEWSNOW_API_BASE. Confirm the provider and network access before retrying. RSS-only configurations do not require this setting."
+  }
+
+  $parsedNewsNowUri = $null
+  if (-not [Uri]::TryCreate($NewsNowApiBase, [UriKind]::Absolute, [ref]$parsedNewsNowUri) -or $parsedNewsNowUri.Scheme -ne 'https') {
+    throw "NewsNow API base must be an absolute HTTPS URL. Set it with -NewsNowApiBase or NEWSNOW_API_BASE."
+  }
+  $NewsNowApiBase = $parsedNewsNowUri.AbsoluteUri
+}
+
+New-Item -ItemType Directory -Force -Path $OutputRoot | Out-Null
+$hotlistItems = Fetch-HotlistItems -Sources $config.sources -KeywordGroups $keywordGroups -MaxItemsPerSource $MaxItemsPerSource -ApiBase $NewsNowApiBase
 $rssItems = Fetch-RssItems -Feeds $config.feeds -KeywordGroups $keywordGroups -MaxItemsPerSource $MaxItemsPerSource -MaxAgeHours $RssMaxAgeHours
 
 $allFetchedItems = @()
