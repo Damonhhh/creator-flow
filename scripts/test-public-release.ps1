@@ -119,6 +119,7 @@ function Test-PublicRequiredLayout {
     'scripts/test-video-orientation-decision.ps1', 'scripts/test-narration-pacing.ps1',
     'scripts/test-public-release.ps1',
     'tests/video-renderer-initializer.tests.ps1',
+    'tests/public-network-boundary.tests.ps1',
     'tests/public-release.tests.ps1'
   )
   $missing = @($required | Where-Object { -not (Test-Path -LiteralPath (Resolve-PublicPackagePath -Root $PackageRoot -RelativePath $_) -PathType Leaf) })
@@ -218,6 +219,7 @@ function Invoke-PublicReleaseAudit {
     'tests/workflow-capabilities.tests.ps1',
     'tests/video-renderer-initializer.tests.ps1',
     'tests/public-doc-links.tests.ps1',
+    'tests/public-network-boundary.tests.ps1',
     'tests/video-workflow-contract.tests.ps1',
     'tests/video-project-state.tests.ps1',
     'tests/video-visual-task-coverage.tests.ps1',

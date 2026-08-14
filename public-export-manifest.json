@@ -6,7 +6,7 @@
                   {
                       "source":  "open-source/README.md",
                       "destination":  "README.md",
-                      "sha256":  "217e0633efba1dfbbeb74f2fcbeb1def0b7345df28180868f40eb3b80bb13e32"
+                      "sha256":  "eb93bc7e55f7818e53abe0d83d4a0302ac984155ca499ec296b46469b187dbbb"
                   },
                   {
                       "source":  "open-source/LICENSE",
@@ -26,12 +26,12 @@
                   {
                       "source":  "open-source/docs/installation.md",
                       "destination":  "docs/installation.md",
-                      "sha256":  "ee4dfb2fa00517b8d72da2a579b2e25d2ea8804652997414926682e1b064aa7e"
+                      "sha256":  "ea447231bf7f1828a90fc7d909832d62020cd7919518525fd00b046dd7f85d27"
                   },
                   {
                       "source":  "open-source/docs/dependency-matrix.md",
                       "destination":  "docs/dependency-matrix.md",
-                      "sha256":  "b0ab6346d567506f72c22f3ed404ad6f6eb218f96a9cff74b2f668b3c36b43b8"
+                      "sha256":  "4ab79d32b456f7f8175f8ee5265c17c3c45c4f77dd739443662e30975996cb20"
                   },
                   {
                       "source":  "open-source/docs/project-contract.md",
@@ -46,7 +46,7 @@
                   {
                       "source":  "open-source/docs/privacy-boundary.md",
                       "destination":  "docs/privacy-boundary.md",
-                      "sha256":  "6096f32e51c99c33bc83dd269d54497f0bffe5a5c4f0580f70a9c78500a3af05"
+                      "sha256":  "03c1137105e6b34ae264f2ae108581f4cee416cf4c62ce2a01c6342bfce6838c"
                   },
                   {
                       "source":  "open-source/docs/troubleshooting.md",
@@ -211,7 +211,7 @@
                   {
                       "source":  "scripts/run-ai-daily-briefing-chain.ps1",
                       "destination":  "scripts/run-ai-daily-briefing-chain.ps1",
-                      "sha256":  "50b25cc6d19e07e795d821589b506fb755ba52a97e1041c3a833bb62e2a0289b"
+                      "sha256":  "7d0072dc708ef67c3358fe9d14db1fc90cb9777f59a83a3525ee8a4bbc430f1c"
                   },
                   {
                       "source":  "scripts/new-ai-daily-briefing.ps1",
@@ -231,22 +231,17 @@
                   {
                       "source":  "scripts/collect-ai-daily-signal-radar.mjs",
                       "destination":  "scripts/collect-ai-daily-signal-radar.mjs",
-                      "sha256":  "9734acf8b853162ab8947115fd1d83f92e4cbe24b0091feb140fa40c28e8d123"
-                  },
-                  {
-                      "source":  "scripts/invoke-ai-daily-live-push.ps1",
-                      "destination":  "scripts/invoke-ai-daily-live-push.ps1",
-                      "sha256":  "97009a91580c58dbce5e7b99361875c26f3ca9857b82240d6fd7ddead3b6429c"
+                      "sha256":  "deb2fb02efc0c55e963d4794d0a6271818ebc3760e8b947519e62a68c7b8ef6e"
                   },
                   {
                       "source":  "scripts/run-trendradar-ai-radar.ps1",
                       "destination":  "scripts/run-trendradar-ai-radar.ps1",
-                      "sha256":  "b24491ca95b382b713aff3b9502e3e8b0b7fe3f36642383f8abc883ad192fab8"
+                      "sha256":  "85b41c6a7b528b7e2f5868183a419b46bd57456c830f8484af57f38bc76b206d"
                   },
                   {
                       "source":  "scripts/run-trendradar-ai-radar-lite.ps1",
                       "destination":  "scripts/run-trendradar-ai-radar-lite.ps1",
-                      "sha256":  "9510c24f51198aac095d272847bb1bd09835de4487860002b069daf384c09cb8"
+                      "sha256":  "ea8661dd39c34a23c68d1ccaf5c65594af455b2b743880fe0b52f82bbc15a355"
                   },
                   {
                       "source":  "scripts/run-indextts2-batch.py",
@@ -291,7 +286,7 @@
                   {
                       "source":  "scripts/test-public-release.ps1",
                       "destination":  "scripts/test-public-release.ps1",
-                      "sha256":  "03cd2311c8cc623ab72919e7fec4522bda624eafb6296a247f29a3e0eb1f3e86"
+                      "sha256":  "8b22d142b77eb983a41eec435aba23ec985159d073e234b54f4ecae7a844bad3"
                   },
                   {
                       "source":  "scripts/update-video-project-state.ps1",
@@ -392,6 +387,11 @@
                       "source":  "tests/public-doc-links.tests.ps1",
                       "destination":  "tests/public-doc-links.tests.ps1",
                       "sha256":  "c4807d4621d579e48b6c97afabfadc6c22cb1c012a6afb6f92f73acd75067872"
+                  },
+                  {
+                      "source":  "tests/public-network-boundary.tests.ps1",
+                      "destination":  "tests/public-network-boundary.tests.ps1",
+                      "sha256":  "089c9bf943552fcf96da37720e5a48109def5bcb58d230446e92856cbe22c4bb"
                   },
                   {
                       "source":  "tests/video-workflow-contract.tests.ps1",

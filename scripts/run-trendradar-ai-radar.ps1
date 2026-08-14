@@ -2,6 +2,7 @@ param(
   [string]$TrendRadarRoot = "",
   [string]$ConfigDir = "",
   [string]$OutputRoot = "",
+  [string]$NewsNowApiBase = "",
   [switch]$DoctorOnly,
   [switch]$FullTrendRadar,
   [switch]$LiveCollection
@@ -20,7 +21,7 @@ if ([string]::IsNullOrWhiteSpace($OutputRoot)) {
 
 if (-not $FullTrendRadar -and -not $DoctorOnly) {
   $liteScript = Join-Path $PSScriptRoot "run-trendradar-ai-radar-lite.ps1"
-  & $liteScript -ConfigDir $ConfigDir -OutputRoot $OutputRoot -LiveCollection:$LiveCollection
+  & $liteScript -ConfigDir $ConfigDir -OutputRoot $OutputRoot -NewsNowApiBase $NewsNowApiBase -LiveCollection:$LiveCollection
   return
 }
 

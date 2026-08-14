@@ -4,17 +4,15 @@ param(
   [string]$KnowledgeRoot = "",
   [string]$OutputRoot = "",
   [string]$JsonPath = "",
-  [string]$LiveFeedPath = "",
-  [string]$LiveScorePath = "",
-  [string]$LiveEndpoint = "",
   [string]$SignalRadarOutputRoot = "",
   [string]$SignalRadarAIHotInputPath = "",
+  [string]$SignalRadarAIHotEndpoint = "",
+  [string]$TrendRadarConfigDir = "",
+  [string]$TrendRadarNewsNowApiBase = "",
   [switch]$OverwriteExisting,
   [switch]$RadarOnly,
   [switch]$SkipTrendRadarSideRadar,
   [switch]$SkipSignalRadar,
-  [switch]$SkipLivePush,
-  [switch]$LiveDryRun,
   [switch]$LiveCollection
 )
 
@@ -148,6 +146,8 @@ function Assert-RequiredSections {
 function Invoke-TrendRadarSideRadar {
   param(
     [string]$Date,
+    [string]$ConfigDir,
+    [string]$NewsNowApiBase,
     [bool]$LiveCollection
   )
 
@@ -165,7 +165,14 @@ function Invoke-TrendRadarSideRadar {
   }
 
   try {
-    $radarResult = & $radarScript -LiveCollection:$LiveCollection
+    $radarArguments = @('-LiveCollection')
+    if (-not [string]::IsNullOrWhiteSpace($ConfigDir)) {
+      $radarArguments += @('-ConfigDir', $ConfigDir)
+    }
+    if (-not [string]::IsNullOrWhiteSpace($NewsNowApiBase)) {
+      $radarArguments += @('-NewsNowApiBase', $NewsNowApiBase)
+    }
+    $radarResult = & $radarScript @radarArguments
     $last = @($radarResult | Where-Object { $_ -is [pscustomobject] -or $_.PSObject.Properties["success"] } | Select-Object -Last 1)
 
     if (-not $last) {
@@ -208,6 +215,7 @@ function Invoke-DailySignalRadar {
     [string]$TrendRadarPath,
     [string]$OutputRoot,
     [string]$AIHotInputPath,
+    [string]$AIHotEndpoint,
     [bool]$LiveCollection
   )
 
@@ -233,6 +241,9 @@ function Invoke-DailySignalRadar {
     }
     if (-not [string]::IsNullOrWhiteSpace($AIHotInputPath)) {
       $arguments += @("--aihot-input", $AIHotInputPath, "--selected-fallback-min-items", "0")
+    }
+    if (-not [string]::IsNullOrWhiteSpace($AIHotEndpoint)) {
+      $arguments += @("--aihot-endpoint", $AIHotEndpoint)
     }
     if ($LiveCollection) {
       $arguments += "--live-collection"
@@ -271,24 +282,6 @@ function Invoke-DailySignalRadar {
   }
 }
 
-function Invoke-DailyLivePush {
-  param(
-    [string]$Date,
-    [string]$FeedPath,
-    [string]$ScorePath,
-    [string]$Endpoint,
-    [bool]$DryRun,
-    [bool]$LiveCollection,
-    [bool]$Skip
-  )
-
-  $wrapper = Join-Path $PSScriptRoot "invoke-ai-daily-live-push.ps1"
-  if (-not (Test-Path -LiteralPath $wrapper)) {
-    throw "Briefing chain failed: missing live push wrapper: $wrapper"
-  }
-  return & $wrapper -Date $Date -FeedPath $FeedPath -ScorePath $ScorePath -Endpoint $Endpoint -DryRun:$DryRun -LiveCollection:$LiveCollection -Skip:$Skip
-}
-
 $generatorScript = Join-Path $PSScriptRoot "new-ai-daily-briefing.ps1"
 $resolvedOutputRoot = Resolve-OutputRoot -WorkspaceRoot $WorkspaceRoot -KnowledgeRoot $KnowledgeRoot -OutputRoot $OutputRoot
 $expectedOutputPath = Resolve-OutputPath -Date $Date -WorkspaceRoot $WorkspaceRoot -KnowledgeRoot $KnowledgeRoot -OutputRoot $OutputRoot
@@ -304,7 +297,7 @@ $trendRadarResult = [pscustomobject]@{
 }
 
 if ($LiveCollection -and -not $SkipTrendRadarSideRadar) {
-  $trendRadarResult = Invoke-TrendRadarSideRadar -Date $Date -LiveCollection $true
+  $trendRadarResult = Invoke-TrendRadarSideRadar -Date $Date -ConfigDir $TrendRadarConfigDir -NewsNowApiBase $TrendRadarNewsNowApiBase -LiveCollection $true
 }
 
 $signalRadarResult = [pscustomobject]@{
@@ -326,6 +319,7 @@ if (-not $SkipSignalRadar -and ($LiveCollection -or -not [string]::IsNullOrWhite
     -TrendRadarPath $sideRadarPath `
     -OutputRoot $SignalRadarOutputRoot `
     -AIHotInputPath $SignalRadarAIHotInputPath `
+    -AIHotEndpoint $SignalRadarAIHotEndpoint `
     -LiveCollection ([bool]$LiveCollection)
 }
 
@@ -354,8 +348,6 @@ if ($shouldReuseExisting) {
   Assert-OutputFileReady -Path $expectedOutputPath
   Assert-RequiredSections -Path $expectedOutputPath -Date $Date
 
-  $livePushResult = Invoke-DailyLivePush -Date $Date -FeedPath $LiveFeedPath -ScorePath $LiveScorePath -Endpoint $LiveEndpoint -DryRun $LiveDryRun -LiveCollection $LiveCollection -Skip $SkipLivePush
-
   [pscustomobject]@{
     Success       = $true
     Date          = $Date
@@ -367,7 +359,6 @@ if ($shouldReuseExisting) {
     OverwroteFile = $false
     SignalRadar   = $signalRadarResult
     TrendRadarSideRadar = $trendRadarResult
-    LivePush      = $livePushResult
   }
   return
 }
@@ -400,7 +391,6 @@ $outputPath = [string]$result.OutputPath
 
 Assert-OutputFileReady -Path $outputPath
 Assert-RequiredSections -Path $outputPath -Date $Date
-$livePushResult = Invoke-DailyLivePush -Date $Date -FeedPath $LiveFeedPath -ScorePath $LiveScorePath -Endpoint $LiveEndpoint -DryRun $LiveDryRun -LiveCollection $LiveCollection -Skip $SkipLivePush
 
 [pscustomobject]@{
   Success        = $true
@@ -413,5 +403,4 @@ $livePushResult = Invoke-DailyLivePush -Date $Date -FeedPath $LiveFeedPath -Scor
   OverwroteFile  = $true
   SignalRadar    = $signalRadarResult
   TrendRadarSideRadar = $trendRadarResult
-  LivePush       = $livePushResult
 }

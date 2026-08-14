@@ -125,6 +125,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\initialize-video-r
 
 - `.local.json`、个人项目文件、Cookie、Token、API Key、声音样本和本机路径不得提交。
 - API Base 只从命令行、环境变量或 `providers.local.json` 读取，公开仓库不预设第三方中转地址。
+- AI Hot、NewsNow 等实时发现源默认不联网。只有显式加上 `-LiveCollection`，并通过参数或环境变量提供 HTTPS 地址后，脚本才会请求对应服务。
 - 默认生成可复核的发布包，不自动上传。
 - 自动 QA 和 human-visual-review 是两道不同的门。
 - 这套仓库负责把链路跑通，不替任何人承诺流量、账号定位或内容判断。

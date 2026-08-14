@@ -126,6 +126,33 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\invoke-video-wrap-
 
 API Base 没有公开默认值。启用第三方视频生成时，从命令行、环境变量或 `config\providers.local.json` 明确填写服务地址和密钥环境变量。缺失配置就把该能力视为不可用。
 
+### 可选的实时选题发现
+
+实时发现默认关闭，也不会自动下载 TrendRadar 或替你选择数据服务。启用前先确认服务来源、使用条款和网络风险，再准备自己的 HTTPS 地址：
+
+```powershell
+$env:AIHOT_PUBLIC_ENDPOINT = 'https://your-provider.example/api/items'
+$env:NEWSNOW_API_BASE = 'https://your-provider.example/api/s'
+
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run-ai-daily-briefing-chain.ps1 `
+  -LiveCollection `
+  -TrendRadarConfigDir .\config\trendradar.local
+```
+
+也可以不用环境变量，改传 `-SignalRadarAIHotEndpoint` 和 `-TrendRadarNewsNowApiBase`。地址必须是绝对 HTTPS URL。TrendRadar 平台源还需要你在 `-TrendRadarConfigDir` 指向的目录中创建 `config.yaml`：
+
+```yaml
+platforms:
+  sources:
+    - id: "your-source-id"
+      name: "Your source"
+      expected_domain: "example.com"
+rss:
+  feeds: []
+```
+
+如果缺少配置，脚本会停下并说明所需参数，不会自行下载依赖、登录账号或写入凭据。只使用本地 AI Hot JSON 时，可传 `-SignalRadarAIHotInputPath`，不需要启用实时网络采集。
+
 ## Full 探测
 
 ```powershell
