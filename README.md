@@ -1,6 +1,8 @@
 # CreatorFlow
 
-把一个选题一路做成脚本、配音、素材、成片和发布包的 Agent Skills 工作流，可在 Codex 和 TRAE Work（Code Mode）中使用。
+把一个选题一路做成脚本、配音、素材、成片和发布包的 Agent Skills 工作流。
+
+**支持平台：** Codex · TRAE Work · Claude Code · OpenClaw · Hermes
 
 `选题 → 评分 → 脚本 → 素材 → visual plan → 组装 → 渲染 → QA → 发布包 → 收尾`
 
@@ -27,29 +29,15 @@ Publish Wrap Up    成片、封面、发布文案和 publish/ 发布包
 
 ## 最快开始
 
-### 交给 Codex
+### 交给你的 Agent
 
-把下面这段直接发给 Codex：
-
-```text
-请帮我使用 CreatorFlow：https://github.com/Damonhhh/creator-flow
-先克隆仓库并只做 Core 能力检查。把缺失项、用途、官方下载来源、准备执行的命令和风险列给我；未经我明确同意，不要下载、安装、登录或写入凭据。检查通过后，用仓库模板创建一个新视频项目，停在 Topic 阶段，告诉我需要填写哪些个人输入。
-```
-
-### 交给 TRAE Work
-
-先克隆仓库并用 TRAE Work 的 Code Mode 打开仓库根目录，再从 `Settings → Rule & Skills → Skills → Create` 导入这两个 Skill：
-
-- `.agents/skills/zimeiti-video-workflow/SKILL.md`：六阶段主流程；
-- `.agents/skills/zimeiti-video-wrap-up/SKILL.md`：发布包与收尾。
-
-导入后把这段发给 TRAE Work：
+克隆仓库，用具备本地文件和终端能力的 Agent 打开仓库根目录，再发送：
 
 ```text
 请使用 CreatorFlow 的 zimeiti-video-workflow。先只做 Core 能力检查，把缺失项、用途、官方下载来源、准备执行的命令和风险列给我；未经我明确同意，不要下载、安装、登录或写入凭据。检查通过后，用仓库模板创建一个新视频项目，停在 Topic 阶段，告诉我需要填写哪些个人输入。
 ```
 
-两个平台共用仓库里的同一份 Skill、脚本和检查规则，不需要复制一套 TRAE 专用目录。完整导入步骤和适用边界见[安装与第一次运行](docs/installation.md#7-在-codex-或-trae-work-中推进六个阶段)。
+所有平台共用 `.agents/skills/` 中的主流程、脚本和检查规则。Claude Code 的薄入口位于 `.claude/skills/`；它只负责发现主 Skill，不复制工作流。第一次运行见[安装与第一次运行](docs/installation.md#7-在-agent-中推进六个阶段)。
 
 ### 手动开始
 

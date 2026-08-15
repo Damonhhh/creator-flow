@@ -147,6 +147,7 @@ function Test-PublicRequiredLayout {
     'README.md', 'LICENSE',
     'config/workflow.example.json', 'config/tts.example.json', 'config/providers.example.json', 'config/publish.example.json',
     '.agents/skills/zimeiti-video-workflow/SKILL.md', '.agents/skills/zimeiti-video-wrap-up/SKILL.md',
+    '.claude/skills/zimeiti-video-workflow/SKILL.md', '.claude/skills/zimeiti-video-wrap-up/SKILL.md',
     '.agents/skills/zimeiti-video-workflow/references/stage-topic.md',
     '.agents/skills/zimeiti-video-workflow/references/stage-script-tts.md',
     '.agents/skills/zimeiti-video-workflow/references/stage-material.md',
@@ -157,9 +158,12 @@ function Test-PublicRequiredLayout {
     'examples/ai-mainline-topic/README.md', 'examples/minimal-video-project/README.md',
     'scripts/test-workflow-capabilities.ps1', 'scripts/initialize-video-renderer.ps1',
     'scripts/test-video-orientation-decision.ps1', 'scripts/test-narration-pacing.ps1',
+    'scripts/export-trae-work-brand-package.ps1', 'scripts/test-trae-work-package.ps1',
+    'packaging/trae-work/README.md', 'packaging/trae-work/installation.md',
     'scripts/test-public-release.ps1',
     'tests/video-renderer-initializer.tests.ps1',
     'tests/agent-platform-support.tests.ps1',
+    'tests/trae-work-brand-package.tests.ps1',
     'tests/public-network-boundary.tests.ps1',
     'tests/public-release.tests.ps1'
   )
@@ -260,6 +264,7 @@ function Invoke-PublicReleaseAudit {
     'tests/workflow-capabilities.tests.ps1',
     'tests/video-renderer-initializer.tests.ps1',
     'tests/agent-platform-support.tests.ps1',
+    'tests/trae-work-brand-package.tests.ps1',
     'tests/public-doc-links.tests.ps1',
     'tests/public-network-boundary.tests.ps1',
     'tests/video-workflow-contract.tests.ps1',

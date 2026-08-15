@@ -69,35 +69,19 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\new-video-project.
 
 不要把声音样本、音色 ID 或凭据提交到仓库。
 
-## 7. 在 Codex 或 TRAE Work 中推进六个阶段
+## 7. 在 Agent 中推进六个阶段
 
-CreatorFlow 的两个入口都使用开放的 `SKILL.md` 目录结构。Codex 和 TRAE Work 共用 `.agents\skills\` 里的同一份源文件，不维护第二套平台专用 Skill。
+CreatorFlow 支持 Codex、TRAE Work、Claude Code、OpenClaw 和 Hermes。主流程只维护在 `.agents\skills\`；平台需要单独发现入口时，也只做薄适配，不复制流程规则。
 
-### Codex
-
-让 Codex 使用 `.agents\skills\zimeiti-video-workflow\SKILL.md`，每次从 `project-state.json` 读取当前阶段：
+用具备本地文件和终端能力的 Agent 打开仓库根目录，让它从 `project-state.json` 读取当前阶段：
 
 ```text
 使用 zimeiti-video-workflow，读取 videos\2026-08-14-my-first-video\project-state.json，只完成当前阶段并保存证据。遇到缺失依赖或需要下载、安装、登录、配置凭据时先停下，说明用途、官方来源、拟执行命令和风险，未经我明确同意不要继续。
 ```
 
-### TRAE Work
+不要只复制一个 `SKILL.md`。主 Skill 还会读取仓库里的 `references\`、`scripts\`、`docs\`、`config\` 和项目文件。完整链路也要求平台能够运行本机 PowerShell、Python、FFmpeg 和 ffprobe；仅能识别 Agent Skills，不等于整条视频链路已经在该平台实测通过。
 
-完整本地链路需要访问仓库文件并运行 PowerShell，因此请使用 TRAE Work 桌面端的 **Code Mode**。纯对话、网页端或移动端没有在本仓库中作为完整生产环境验证。
-
-1. 克隆 CreatorFlow，用 TRAE Work 的 Code Mode 打开仓库根目录；不要只复制单个 `SKILL.md`，否则它引用的 `references\`、`scripts\` 和 `docs\` 会丢失。
-2. 打开 `Settings → Rule & Skills → Skills → Create`。
-3. 从本地仓库导入 `.agents\skills\zimeiti-video-workflow\SKILL.md`。
-4. 再导入 `.agents\skills\zimeiti-video-wrap-up\SKILL.md`，供生成发布包和收尾时调用。
-5. 首次建议显式点名主 Skill，并让它只推进当前阶段：
-
-```text
-请使用 CreatorFlow 的 zimeiti-video-workflow，读取 videos\2026-08-14-my-first-video\project-state.json，只完成当前阶段并保存证据。遇到缺失依赖或需要下载、安装、登录、配置凭据时先停下，说明用途、官方来源、拟执行命令和风险，未经我明确同意不要继续。
-```
-
-当你说“收尾”“可以发”或“准备发布”时，调用 `zimeiti-video-wrap-up`。它仍会先检查成片、QA、封面和发布文案，不会因为换到 TRAE Work 就跳过门禁。
-
-TRAE 官方的 Agent Skills 导入说明见 [Use Skills in TRAE](https://www.trae.ai/blog/trae_tutorial_0115)。如果你的界面里没有 `Rule & Skills` 或 `Skills`，先检查当前版本是否提供 Agent Skills；任何更新、下载、登录或写入凭据仍要先取得你的明确同意。
+当你说“收尾”“可以发”或“准备发布”时，调用 `zimeiti-video-wrap-up`。它会先检查成片、QA、封面和发布文案，再生成发布包。
 
 流程依次推进 `Topic`、`Script TTS`、`Material`、`Assembly`、`QA`、`Publish Wrap Up`。每个阶段的输入、输出、检查和返回条件都在[六阶段执行图](../.agents/skills/zimeiti-video-workflow/references/pipeline.md)中。
 
