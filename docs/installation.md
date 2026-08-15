@@ -69,13 +69,19 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\new-video-project.
 
 不要把声音样本、音色 ID 或凭据提交到仓库。
 
-## 7. 在 Codex 中推进六个阶段
+## 7. 在 Agent 中推进六个阶段
 
-让 Codex 使用 `.agents\skills\zimeiti-video-workflow\SKILL.md`，每次从 `project-state.json` 读取当前阶段：
+CreatorFlow 支持 Codex、TRAE Work、Claude Code、OpenClaw 和 Hermes。主流程只维护在 `.agents\skills\`；平台需要单独发现入口时，也只做薄适配，不复制流程规则。
+
+用具备本地文件和终端能力的 Agent 打开仓库根目录，让它从 `project-state.json` 读取当前阶段：
 
 ```text
 使用 zimeiti-video-workflow，读取 videos\2026-08-14-my-first-video\project-state.json，只完成当前阶段并保存证据。遇到缺失依赖或需要下载、安装、登录、配置凭据时先停下，说明用途、官方来源、拟执行命令和风险，未经我明确同意不要继续。
 ```
+
+不要只复制一个 `SKILL.md`。主 Skill 还会读取仓库里的 `references\`、`scripts\`、`docs\`、`config\` 和项目文件。完整链路也要求平台能够运行本机 PowerShell、Python、FFmpeg 和 ffprobe；仅能识别 Agent Skills，不等于整条视频链路已经在该平台实测通过。
+
+当你说“收尾”“可以发”或“准备发布”时，调用 `zimeiti-video-wrap-up`。它会先检查成片、QA、封面和发布文案，再生成发布包。
 
 流程依次推进 `Topic`、`Script TTS`、`Material`、`Assembly`、`QA`、`Publish Wrap Up`。每个阶段的输入、输出、检查和返回条件都在[六阶段执行图](../.agents/skills/zimeiti-video-workflow/references/pipeline.md)中。
 

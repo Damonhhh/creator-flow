@@ -119,6 +119,41 @@ function Test-PublicTextSafety {
   }
 }
 
+function Get-PublicCanonicalSha256 {
+  param(
+    [Parameter(Mandatory = $true)][string]$PathValue,
+    [ValidateSet('LF', 'CRLF')][string]$TextLineEnding = 'LF'
+  )
+  $textExtensions = @('', '.md', '.txt', '.json', '.jsonl', '.ps1', '.psm1', '.py', '.mjs', '.js', '.ts', '.tsx', '.css', '.html', '.yml', '.yaml', '.toml', '.gitignore')
+  $extension = [IO.Path]::GetExtension($PathValue).ToLowerInvariant()
+  $isText = $textExtensions -contains $extension -or (Split-Path -Leaf $PathValue) -eq '.gitignore'
+  if (-not $isText) {
+    return (Get-FileHash -LiteralPath $PathValue -Algorithm SHA256).Hash.ToLowerInvariant()
+  }
+
+  $inputBytes = [IO.File]::ReadAllBytes($PathValue)
+  $normalized = New-Object IO.MemoryStream
+  try {
+    for ($index = 0; $index -lt $inputBytes.Length; $index++) {
+      $byte = $inputBytes[$index]
+      if ($byte -eq 13 -and $index + 1 -lt $inputBytes.Length -and $inputBytes[$index + 1] -eq 10) {
+        if ($TextLineEnding -eq 'CRLF') { $normalized.WriteByte(13) }
+        $normalized.WriteByte(10)
+        $index++
+        continue
+      }
+      if ($byte -eq 10 -and $TextLineEnding -eq 'CRLF') { $normalized.WriteByte(13) }
+      $normalized.WriteByte($byte)
+    }
+    $sha = [Security.Cryptography.SHA256]::Create()
+    try {
+      return ([BitConverter]::ToString($sha.ComputeHash($normalized.ToArray()))).Replace('-', '').ToLowerInvariant()
+    }
+    finally { $sha.Dispose() }
+  }
+  finally { $normalized.Dispose() }
+}
+
 $resolvedManifest = Get-NormalizedFullPath $ManifestPath
 $sourceRoot = Split-Path -Parent $resolvedManifest
 $manifest = Read-PublicExportManifest -PathValue $resolvedManifest
@@ -205,7 +240,7 @@ try {
     }
     if ([string]$manifestEntry.destination -ne 'public-export-manifest.json') {
       $stagedFile = Resolve-ManifestRelativePath -Root $stagingRoot -RelativePath $validatedEntry.Destination -Label "destination"
-      $publishedEntry.sha256 = (Get-FileHash -LiteralPath $stagedFile -Algorithm SHA256).Hash.ToLowerInvariant()
+      $publishedEntry.sha256 = Get-PublicCanonicalSha256 -PathValue $stagedFile
     }
     $publishedFiles += $publishedEntry
   }

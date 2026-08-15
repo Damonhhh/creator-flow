@@ -51,6 +51,10 @@ try {
   $integrity = Test-PublicManifestIntegrity -PackageRoot $testRoot -Manifest $parsed
   Assert-True ($integrity.CheckedFiles -eq 2) 'Expected two hashed fixture files'
 
+  [IO.File]::WriteAllText((Join-Path $testRoot 'README.md'), "# Fixture`r`n", [Text.UTF8Encoding]::new($false))
+  $crlfIntegrity = Test-PublicManifestIntegrity -PackageRoot $testRoot -Manifest $parsed
+  Assert-True ($crlfIntegrity.CheckedFiles -eq 2) 'Text SHA256 verification must ignore Git line-ending conversion'
+
   [IO.File]::AppendAllText((Join-Path $testRoot 'README.md'), "tampered`n", [Text.UTF8Encoding]::new($false))
   $tamperRejected = $false
   try {

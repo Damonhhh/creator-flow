@@ -6,7 +6,7 @@
                   {
                       "source":  "open-source/README.md",
                       "destination":  "README.md",
-                      "sha256":  "eb93bc7e55f7818e53abe0d83d4a0302ac984155ca499ec296b46469b187dbbb"
+                      "sha256":  "379586df979d7d5912ad1419abdcfa2a4c9b19aacb4e63c2e386beb60d83441b"
                   },
                   {
                       "source":  "open-source/LICENSE",
@@ -26,7 +26,7 @@
                   {
                       "source":  "open-source/docs/installation.md",
                       "destination":  "docs/installation.md",
-                      "sha256":  "ea447231bf7f1828a90fc7d909832d62020cd7919518525fd00b046dd7f85d27"
+                      "sha256":  "56ea75041285e959ad4e574b6412d4fbb88bedad0bef2d6f78cbb9c25d1f3d10"
                   },
                   {
                       "source":  "open-source/docs/dependency-matrix.md",
@@ -166,7 +166,7 @@
                   {
                       "source":  "scripts/export-public-workflow.ps1",
                       "destination":  "scripts/export-public-workflow.ps1",
-                      "sha256":  "c08cf0c20e18abc8a211165bba4aeaaf9a715a3a5d5b85635bcbcea5cb3d3fe0"
+                      "sha256":  "1c781314a26ce11348d54b2c46768e7e098e9220ec99b9aabe856f0ec792f964"
                   },
                   {
                       "source":  "scripts/lib/resolve-zimeiti-config.ps1",
@@ -286,7 +286,7 @@
                   {
                       "source":  "scripts/test-public-release.ps1",
                       "destination":  "scripts/test-public-release.ps1",
-                      "sha256":  "8b22d142b77eb983a41eec435aba23ec985159d073e234b54f4ecae7a844bad3"
+                      "sha256":  "ad51cd06e7b4097b0e28fea10ec85827f14661603db9620f4d146e2602b9b519"
                   },
                   {
                       "source":  "scripts/update-video-project-state.ps1",
@@ -331,7 +331,7 @@
                   {
                       "source":  "tests/public-export.tests.ps1",
                       "destination":  "tests/public-export.tests.ps1",
-                      "sha256":  "f7d557b5e080ddc4211038c9f0c5f1c74e675386372005e57af722f0c89b1f61"
+                      "sha256":  "ce1c37dcc2d3cdab6fedff68f8df6571d7b75be11fd9971ea18b73c48af50fbd"
                   },
                   {
                       "source":  "tests/workflow-config.tests.ps1",
@@ -384,9 +384,14 @@
                       "sha256":  "5a7813004fe23cda2b4a105109883ae79b1d730fbcdbfb66ef76dee20d7e79ec"
                   },
                   {
+                      "source":  "tests/agent-platform-support.tests.ps1",
+                      "destination":  "tests/agent-platform-support.tests.ps1",
+                      "sha256":  "622774fc9d86b5d47bfbaa64d587c344ad5340c4c62b05989a9b2cae38eceb6e"
+                  },
+                  {
                       "source":  "tests/public-doc-links.tests.ps1",
                       "destination":  "tests/public-doc-links.tests.ps1",
-                      "sha256":  "c4807d4621d579e48b6c97afabfadc6c22cb1c012a6afb6f92f73acd75067872"
+                      "sha256":  "0154d65487cafa023c145214a547402e09f966d1d37f4070ddeef6dfec51f241"
                   },
                   {
                       "source":  "tests/public-network-boundary.tests.ps1",
@@ -421,7 +426,7 @@
                   {
                       "source":  "tests/public-release.tests.ps1",
                       "destination":  "tests/public-release.tests.ps1",
-                      "sha256":  "8dc673e1d091dd207df0bba1f03faff4959168338e9c2a862478235ff89465ed"
+                      "sha256":  "52e6453c9de5fcad3ba054bebbf902ea8bce668cce256c1025fa36ea9a7d68e4"
                   },
                   {
                       "source":  ".agents/skills/zimeiti-video-workflow/SKILL.md",
@@ -477,6 +482,41 @@
                       "source":  ".agents/skills/zimeiti-video-wrap-up/references/wrap-up-checklist.md",
                       "destination":  ".agents/skills/zimeiti-video-wrap-up/references/wrap-up-checklist.md",
                       "sha256":  "c7c64739e1cfddc0c482d64de87ca992b060af4f5e6e81d3b5fc8cb673c271ab"
+                  },
+                  {
+                      "source":  "packaging/trae-work/README.md",
+                      "destination":  "packaging/trae-work/README.md",
+                      "sha256":  "dcf10921291c30b1e5feacee1a2c7d7f3d034c33748ad45ac99b326a0f9345bc"
+                  },
+                  {
+                      "source":  "packaging/trae-work/installation.md",
+                      "destination":  "packaging/trae-work/installation.md",
+                      "sha256":  "dfad23b0ae86865bc680446172490091e9b0b9276333ad23269a7fe165c9ec09"
+                  },
+                  {
+                      "source":  "scripts/export-trae-work-brand-package.ps1",
+                      "destination":  "scripts/export-trae-work-brand-package.ps1",
+                      "sha256":  "1d617a5c150c11b2e440ebb04a03433e3c5356f417addb12c7f53db8685497e8"
+                  },
+                  {
+                      "source":  "scripts/test-trae-work-package.ps1",
+                      "destination":  "scripts/test-trae-work-package.ps1",
+                      "sha256":  "23058c7b0ecf4412f171f7f3a5936b1d6323bb79b34f1804a1f436189d057958"
+                  },
+                  {
+                      "source":  "tests/trae-work-brand-package.tests.ps1",
+                      "destination":  "tests/trae-work-brand-package.tests.ps1",
+                      "sha256":  "14d38cba8c31bb6cd4e194e74fa528ba7ea84c702a2aa01add9f3db8e4d7d9c6"
+                  },
+                  {
+                      "source":  ".claude/skills/zimeiti-video-workflow/SKILL.md",
+                      "destination":  ".claude/skills/zimeiti-video-workflow/SKILL.md",
+                      "sha256":  "107c222da377f9f1dec9037b24d73daa0b4149746201932ccf1731567bda4605"
+                  },
+                  {
+                      "source":  ".claude/skills/zimeiti-video-wrap-up/SKILL.md",
+                      "destination":  ".claude/skills/zimeiti-video-wrap-up/SKILL.md",
+                      "sha256":  "17d7d2db761d46d86e2e329c11c1d440da47b4fadac80890170dbdd19e4cde6b"
                   },
                   {
                       "source":  "public-export-manifest.json",

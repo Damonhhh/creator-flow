@@ -27,7 +27,10 @@ foreach ($entry in $manifest.files) {
   $destinationSet[([string]$entry.destination).Replace('\', '/')] = $true
 }
 
-$markdownEntries = @($manifest.files | Where-Object { [string]$_.destination -match '\.md$' })
+$markdownEntries = @($manifest.files | Where-Object {
+  [string]$_.destination -match '\.md$' -and
+  [string]$_.destination -notmatch '^packaging/trae-work/'
+})
 $forbidden = @(
   'videos/WORKFLOW.md',
   'videos\WORKFLOW.md',
