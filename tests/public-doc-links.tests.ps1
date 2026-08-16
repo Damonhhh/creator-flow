@@ -105,12 +105,21 @@ foreach ($needle in @(
     'Publish Wrap Up',
     'human-visual-review',
     'human-visual-review-vNN.md',
+    'docs/workflow-thread-map.md',
     'docs/installation.md'
   )) {
   Assert-True ($readmeText.Contains($needle)) "README product entry is missing: $needle"
 }
 Assert-True (-not $readmeText.Contains('one-click fully automated account machine')) 'README must not make the one-click automation claim'
 Assert-True ($readmeText.Contains('-AcceptAction hyperframes')) 'README must explain consent-gated renderer setup'
+
+$threadMapText = Get-PublicDocumentText -Destination 'docs/workflow-thread-map.md'
+foreach ($needle in @('```mermaid', 'flowchart TB', 'subgraph MAIN', 'subgraph USER', 'subgraph DEP', 'subgraph CHECK', 'project-state.json', 'SHA256', '-AcceptAction')) {
+  Assert-True ($threadMapText.Contains($needle)) "Workflow thread map is missing: $needle"
+}
+Assert-True ($threadMapText.Contains('Agent Reach')) 'Workflow thread map must explain the material dependency sidecar'
+Assert-True ($threadMapText.Contains('IndexTTS2')) 'Workflow thread map must explain the TTS dependency sidecar'
+Assert-True ($threadMapText.Contains('HyperFrames')) 'Workflow thread map must explain the assembly dependency sidecar'
 
 $installationText = Get-PublicDocumentText -Destination 'docs/installation.md'
 foreach ($needle in @(

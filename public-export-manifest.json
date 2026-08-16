@@ -6,7 +6,7 @@
     {
       "source": "README.md",
       "destination": "README.md",
-      "sha256": "91d61cf1f9456b5eafad3d8d4e46b6a1f99bdacf3c99b089279e91ff3ae08c9c"
+      "sha256": "48c72085a785167202c3127620affd2902d017f781b90c354236baaff5afa09c"
     },
     {
       "source": "LICENSE",
@@ -32,6 +32,11 @@
       "source": "docs/dependency-matrix.md",
       "destination": "docs/dependency-matrix.md",
       "sha256": "113dffda07f6b20fd9e4d8a3a71334c70711a8848c9a597e9e986608d2e8b034"
+    },
+    {
+      "source": "docs/workflow-thread-map.md",
+      "destination": "docs/workflow-thread-map.md",
+      "sha256": "3de873f4585353823d31010e578d81072ffa5100ac681ab752f00c497d1bdda6"
     },
     {
       "source": "docs/project-contract.md",
@@ -401,7 +406,7 @@
     {
       "source": "tests/public-doc-links.tests.ps1",
       "destination": "tests/public-doc-links.tests.ps1",
-      "sha256": "b9a47a85cbc77da81a5bb7379861a5f880cf1a6ee07f90e47f411ae71c035823"
+      "sha256": "bf586c2f8fa591aed44fedd52674c5672f9e44cf023b6d023ef3a252ad96b1b5"
     },
     {
       "source": "tests/public-network-boundary.tests.ps1",
