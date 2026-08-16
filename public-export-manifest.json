@@ -36,7 +36,12 @@
     {
       "source": "docs/workflow-thread-map.md",
       "destination": "docs/workflow-thread-map.md",
-      "sha256": "3de873f4585353823d31010e578d81072ffa5100ac681ab752f00c497d1bdda6"
+      "sha256": "f2367d6ab880dd69696741d9c6919d6d30355d4f7fcd48e95605a4573df07081"
+    },
+    {
+      "source": "docs/assets/creatorflow-workflow-roadmap.png",
+      "destination": "docs/assets/creatorflow-workflow-roadmap.png",
+      "sha256": "a8ce850a12f8a69011987992325907bda07fc290913a071eef788096d12b1901"
     },
     {
       "source": "docs/project-contract.md",

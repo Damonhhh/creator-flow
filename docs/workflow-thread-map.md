@@ -2,6 +2,10 @@
 
 这张图把 CreatorFlow 里同时运行的几条线放在一起：视频往前做，用户在关键点做判断，外部工具按需接入，QA 发现问题后退回真正负责的阶段。
 
+![CreatorFlow 从选题到发布的四线程路线图](assets/creatorflow-workflow-roadmap.png)
+
+下面的 Mermaid 版本保留了完整节点和连接关系，适合继续修改或核对细节。
+
 ```mermaid
 flowchart TB
   subgraph MAIN["主生产线程：把一个选题做成发布包"]
