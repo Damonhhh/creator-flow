@@ -92,7 +92,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-d
 使用 zimeiti-video-workflow，读取 videos\2026-08-14-my-first-video\project-state.json，只完成当前阶段并保存证据。不要提前推进下一阶段，也不要把文件存在当成已经验收。
 ```
 
-工作流会读取 `currentStage`、`stageStatus`、`nextAction` 和 `blockers`，再选择对应阶段。六个阶段的完整映射见[执行图](.agents/skills/zimeiti-video-workflow/references/pipeline.md)。
+工作流会读取 `currentStage`、`stageStatus`、`nextAction` 和 `blockers`，再选择对应阶段。想先看懂主生产、用户判断、按需依赖和 QA 返工如何交汇，见[工作流线程图](docs/workflow-thread-map.md)；六个阶段的完整字段和门禁见[执行图](.agents/skills/zimeiti-video-workflow/references/pipeline.md)。
 
 | 阶段 | 主要工作 | 完成证据 |
 | --- | --- | --- |

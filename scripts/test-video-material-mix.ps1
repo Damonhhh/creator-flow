@@ -678,13 +678,13 @@ if ($visualTaskContractMode) {
                     $issues.Add("Agent Reach sourced status requires at least one candidate block with Status: accepted/selected/ready/downloaded/sourced.")
                 }
                 $requiredSourceEvidence = @(
-                    [pscustomobject]@{ Label = "LINE## and time"; Pattern = '(?im)^[ \t]*-[ \t]*Spoken[ \t]+line[ \t]+ID[ \t]*/[ \t]*time[ \t]*:[ \t]*LINE\d{2,}\b[^\r\n]+$' },
-                    [pscustomobject]@{ Label = "visual task"; Pattern = '(?im)^[ \t]*-[ \t]*Visual[ \t]+task[ \t]*:[ \t]*(prove|explain|analogize|transition|close)[ \t]*$' },
-                    [pscustomobject]@{ Label = "Agent Reach route/command"; Pattern = '(?im)^[ \t]*-[ \t]*Agent[ \t]+Reach[ \t]+route[ \t]*/[ \t]*command[ \t]*:[ \t]*\S[^\r\n]*$' },
-                    [pscustomobject]@{ Label = "search query"; Pattern = '(?im)^[ \t]*-[ \t]*Search[ \t]+query[ \t]*:[ \t]*\S[^\r\n]*$' },
-                    [pscustomobject]@{ Label = "source URL"; Pattern = '(?im)^[ \t]*-[ \t]*Source[ \t]+URL[ \t]*:[ \t]*https?://\S+[ \t]*$' },
-                    [pscustomobject]@{ Label = "useful timestamp/page region"; Pattern = '(?im)^[ \t]*-[ \t]*Useful[ \t]+source[ \t]+timestamp[ \t]*/[ \t]*page[ \t]+region[ \t]*:[ \t]*\S[^\r\n]*$' },
-                    [pscustomobject]@{ Label = "sentence alignment"; Pattern = '(?im)^[ \t]*-[ \t]*Why[ \t]+it[ \t]+aligns[ \t]+with[ \t]+the[ \t]+spoken[ \t]+sentence[ \t]*:[ \t]*\S[^\r\n]*$' }
+                    [pscustomobject]@{ Label = "LINE## and time"; Pattern = '(?im)^[ \t]*-[ \t]*Spoken[ \t]+line[ \t]+ID[ \t]*/[ \t]*time[ \t]*:[ \t]*LINE\d{2,}\b[^\r\n]+\r?$' },
+                    [pscustomobject]@{ Label = "visual task"; Pattern = '(?im)^[ \t]*-[ \t]*Visual[ \t]+task[ \t]*:[ \t]*(prove|explain|analogize|transition|close)[ \t]*\r?$' },
+                    [pscustomobject]@{ Label = "Agent Reach route/command"; Pattern = '(?im)^[ \t]*-[ \t]*Agent[ \t]+Reach[ \t]+route[ \t]*/[ \t]*command[ \t]*:[ \t]*\S[^\r\n]*\r?$' },
+                    [pscustomobject]@{ Label = "search query"; Pattern = '(?im)^[ \t]*-[ \t]*Search[ \t]+query[ \t]*:[ \t]*\S[^\r\n]*\r?$' },
+                    [pscustomobject]@{ Label = "source URL"; Pattern = '(?im)^[ \t]*-[ \t]*Source[ \t]+URL[ \t]*:[ \t]*https?://\S+[ \t]*\r?$' },
+                    [pscustomobject]@{ Label = "useful timestamp/page region"; Pattern = '(?im)^[ \t]*-[ \t]*Useful[ \t]+source[ \t]+timestamp[ \t]*/[ \t]*page[ \t]+region[ \t]*:[ \t]*\S[^\r\n]*\r?$' },
+                    [pscustomobject]@{ Label = "sentence alignment"; Pattern = '(?im)^[ \t]*-[ \t]*Why[ \t]+it[ \t]+aligns[ \t]+with[ \t]+the[ \t]+spoken[ \t]+sentence[ \t]*:[ \t]*\S[^\r\n]*\r?$' }
                 )
                 foreach ($candidate in $acceptedCandidates) {
                     $candidateText = $candidate.Value
