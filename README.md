@@ -8,6 +8,10 @@
 
 CreatorFlow 来自真实使用中的自媒体生产链路。你可以跑完整流程，也可以只调用其中一个阶段。仓库提供流程、脚本、检查规则和项目模板；账号定位、个人判断、写作风格与知识库由你自己补入。
 
+[![CreatorFlow 从选题到发布的四线程路线图](docs/assets/creatorflow-workflow-roadmap.png)](docs/workflow-thread-map.md)
+
+点击路线图可查看完整节点、阶段交付和 QA 返工规则。
+
 V1 面向 Windows。Core 使用 PowerShell、Python、FFmpeg 和 ffprobe；HyperFrames、IndexTTS2、ASR、视频生成适配器与上传工具按需启用。
 
 ## 它会交付什么
