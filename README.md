@@ -59,6 +59,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\new-video-project.
 
 只有能力检查返回 `ready: true` 才继续。完整步骤和每条命令见[安装与第一次运行](docs/installation.md)。
 
+走到配音、素材或成片阶段时，用统一入口检查当前阶段。它默认只说明缺什么、从哪里获取、会执行什么、还有哪些后续动作，以及不安装时怎么降级：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 -Stage Material
+```
+
+下载和安装必须通过一个明确的 `-AcceptAction` 单独授权。Agent Reach、IndexTTS2 和 HyperFrames 都按需接入，不是开局一次性装完。
+
 ## 先换成你自己的内容
 
 新项目会从 `Topic / topic_ready` 开始。先填写四个文件：
@@ -118,11 +126,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run-ai-daily-topic
 第一次进入 Assembly 且项目还没有渲染器时，先查看初始化方案：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\initialize-video-renderer.ps1 `
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 `
+  -Stage Assembly `
   -ProjectDir .\videos\2026-08-14-my-first-video
 ```
 
-这条命令不下载内容。确认方案后，如果愿意下载，再明确加上 `-AcceptDownload`。其他依赖和可用降级路线见[依赖矩阵](docs/dependency-matrix.md)。
+这条命令不下载内容。确认方案后，如果愿意下载，再明确加上 `-AcceptAction hyperframes`。其他依赖和可用降级路线见[依赖矩阵](docs/dependency-matrix.md)。
 
 ## 边界
 

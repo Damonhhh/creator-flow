@@ -69,6 +69,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\new-video-project.
 
 不要把声音样本、音色 ID 或凭据提交到仓库。
 
+进入某个重工具阶段时，先让统一入口给方案：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 `
+  -Stage ScriptTTS `
+  -TtsConfigPath .\config\tts.local.json
+```
+
+默认不会安装。IndexTTS2 会把源码、运行环境、模型和私人参考音频分开检查；即使同意下载源码，也不会连带下载模型。若选择 `existing-audio`，整条链路不要求安装本地 TTS。
+
 ## 7. 在 Agent 中推进六个阶段
 
 CreatorFlow 支持 Codex、TRAE Work、Claude Code、OpenClaw 和 Hermes。主流程只维护在 `.agents\skills\`；平台需要单独发现入口时，也只做薄适配，不复制流程规则。
@@ -85,16 +95,25 @@ CreatorFlow 支持 Codex、TRAE Work、Claude Code、OpenClaw 和 Hermes。主�
 
 流程依次推进 `Topic`、`Script TTS`、`Material`、`Assembly`、`QA`、`Publish Wrap Up`。每个阶段的输入、输出、检查和返回条件都在[六阶段执行图](../.agents/skills/zimeiti-video-workflow/references/pipeline.md)中。
 
-## 8. 按需初始化渲染器
+## 8. 按阶段接入外部工具
+
+Material 阶段先检查素材发现路线：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 -Stage Material
+```
+
+Agent Reach 是首选发现路由，但不是全局硬依赖。缺失时，命令会展示用户级安装方案；不安装也可以改用现有渠道工具、浏览器检索或用户提供的素材，只需把降级路线写进来源记录。
 
 第一次进入 Assembly 且项目还没有渲染器时，先查看方案：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\initialize-video-renderer.ps1 `
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 `
+  -Stage Assembly `
   -ProjectDir .\videos\2026-08-14-my-first-video
 ```
 
-这条命令不会下载内容。确认用途和来源后，如果愿意下载，再明确加上 `-AcceptDownload`。
+这条命令不会下载内容。确认用途和来源后，如果愿意下载，再明确加上 `-AcceptAction hyperframes`。执行结束后会自动复检，不需要凭终端里的一句“安装成功”判断是否可用。
 
 HyperFrames 是参考装配器，也可以换成满足[项目契约](project-contract.md)的其他渲染器。
 
@@ -169,15 +188,16 @@ Full 会按配置检查参考渲染和声音路线。它缺项时应列出缺少
 
 ## 缺失依赖的处理原则
 
-探测脚本只报告，不自动安装。缺少外部依赖时，执行者需要先告诉你：
+统一入口默认只报告，不自动安装。缺少外部依赖时，执行者需要先告诉你：
 
 - 缺少什么；
 - 它用来做什么；
 - 官方下载地址；
 - 准备执行的命令；
 - 是否会下载或运行第三方代码，是否涉及登录或凭据。
+- 即使完成这一步，后面还剩哪些动作。
 
-只有得到明确同意后，才能继续安装、初始化、登录或写入凭据。无法安装时，应说明现有降级路线，例如使用已有音频、已核对 SRT、静态或本地动效、其他兼容渲染器。
+只有得到明确同意后，才能通过一个准确的 `-AcceptAction` 继续。一次同意只覆盖一个动作；下载源码不代表同意下载模型，安装工具不代表同意登录，登录也不代表同意写入凭据。无法安装时，应说明现有降级路线，例如使用已有音频、已核对 SRT、静态或本地动效、其他兼容渲染器。
 
 遇到错误再看[故障排查](troubleshooting.md)和[依赖矩阵](dependency-matrix.md)。
 

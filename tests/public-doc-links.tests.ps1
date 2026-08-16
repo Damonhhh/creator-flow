@@ -110,7 +110,7 @@ foreach ($needle in @(
   Assert-True ($readmeText.Contains($needle)) "README product entry is missing: $needle"
 }
 Assert-True (-not $readmeText.Contains('one-click fully automated account machine')) 'README must not make the one-click automation claim'
-Assert-True ($readmeText.Contains('-AcceptDownload')) 'README must explain consent-gated renderer setup'
+Assert-True ($readmeText.Contains('-AcceptAction hyperframes')) 'README must explain consent-gated renderer setup'
 
 $installationText = Get-PublicDocumentText -Destination 'docs/installation.md'
 foreach ($needle in @(
@@ -120,7 +120,7 @@ foreach ($needle in @(
     'providers.local.json',
     'publish.local.json',
     'new-video-project.ps1',
-    'initialize-video-renderer.ps1',
+    'resolve-workflow-dependencies.ps1',
     'run-video-draft-qa.ps1',
     'invoke-video-wrap-up.ps1',
     'account-profile.md',
@@ -129,13 +129,13 @@ foreach ($needle in @(
     'Script TTS',
     'Publish Wrap Up',
     'human-visual-review',
-    '-AcceptDownload'
+    '-AcceptAction hyperframes'
   )) {
   Assert-True ($installationText.Contains($needle)) "Installation guide is missing: $needle"
 }
 
 $dependencyText = Get-PublicDocumentText -Destination 'docs/dependency-matrix.md'
-foreach ($dependency in @('PowerShell', 'Python', 'FFmpeg', 'ffprobe', 'Node.js', 'npm', 'HyperFrames', 'IndexTTS2', 'ASR', 'Grok', 'MiniMax', 'Uploader')) {
+foreach ($dependency in @('PowerShell', 'Python', 'FFmpeg', 'ffprobe', 'Agent Reach', 'Node.js', 'npm', 'HyperFrames', 'IndexTTS2', 'ASR', 'Grok', 'MiniMax', 'Uploader')) {
   Assert-True ($dependencyText.Contains($dependency)) "Dependency matrix is missing: $dependency"
 }
 Assert-True (-not $dependencyText.Contains('https://api.apikey.fun/v1')) 'Public docs must not bake in a third-party API endpoint'

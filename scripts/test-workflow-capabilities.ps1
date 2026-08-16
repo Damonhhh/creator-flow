@@ -50,6 +50,53 @@ function Test-IndexTtsSelected {
   return $mode -match '^(indextts|indextts2|clone-voice)$'
 }
 
+function Resolve-ConfiguredPath {
+  param([string]$PathValue, [string]$BasePath = $script:RepoRoot)
+  if ([string]::IsNullOrWhiteSpace($PathValue)) { return '' }
+  $candidate = [Environment]::ExpandEnvironmentVariables($PathValue)
+  if (-not [IO.Path]::IsPathRooted($candidate)) { $candidate = Join-Path $BasePath $candidate }
+  return [IO.Path]::GetFullPath($candidate)
+}
+
+function Get-IndexTtsReadiness {
+  param([object]$TtsConfig = $null)
+
+  $indexTts = Get-PropertyValue -Object $TtsConfig -Name 'indexTts'
+  $configuredRepo = [string](Get-PropertyValue -Object $indexTts -Name 'repo' -Default '')
+  $repo = if (-not [string]::IsNullOrWhiteSpace($env:INDEXTTS_REPO)) {
+    Resolve-ConfiguredPath -PathValue $env:INDEXTTS_REPO
+  }
+  else {
+    Resolve-ConfiguredPath -PathValue $configuredRepo
+  }
+
+  $sourceAvailable = -not [string]::IsNullOrWhiteSpace($repo) -and (Test-Path -LiteralPath $repo -PathType Container)
+  $configuredPython = [string](Get-PropertyValue -Object $indexTts -Name 'python' -Default '')
+  $python = Resolve-ConfiguredPath -PathValue $configuredPython
+  if ([string]::IsNullOrWhiteSpace($python) -and $sourceAvailable) {
+    $defaultPython = Join-Path $repo '.venv\Scripts\python.exe'
+    if (Test-Path -LiteralPath $defaultPython -PathType Leaf) { $python = $defaultPython }
+  }
+  $runtimeAvailable = -not [string]::IsNullOrWhiteSpace($python) -and (Test-Path -LiteralPath $python -PathType Leaf)
+  $modelConfig = if ($sourceAvailable) { Join-Path $repo 'checkpoints\config.yaml' } else { '' }
+  $modelAvailable = -not [string]::IsNullOrWhiteSpace($modelConfig) -and (Test-Path -LiteralPath $modelConfig -PathType Leaf)
+  $referenceAudio = [string](Get-PropertyValue -Object (Get-PropertyValue -Object $TtsConfig -Name 'referenceAudio') -Name 'path' -Default '')
+  $referenceAudioPath = Resolve-ConfiguredPath -PathValue $referenceAudio
+  $referenceAudioAvailable = -not [string]::IsNullOrWhiteSpace($referenceAudioPath) -and (Test-Path -LiteralPath $referenceAudioPath -PathType Leaf)
+
+  return [ordered]@{
+    ready = $sourceAvailable -and $runtimeAvailable -and $modelAvailable -and $referenceAudioAvailable
+    repo = $repo
+    python = $python
+    modelConfig = $modelConfig
+    referenceAudio = $referenceAudioPath
+    sourceAvailable = $sourceAvailable
+    runtimeAvailable = $runtimeAvailable
+    modelAvailable = $modelAvailable
+    referenceAudioAvailable = $referenceAudioAvailable
+  }
+}
+
 function New-CapabilityRecord {
   param(
     [bool]$Available,
@@ -99,19 +146,8 @@ function Get-WorkflowCapabilities {
   }
 
   $indexTtsRequired = $isFull -and (Test-IndexTtsSelected -TtsConfig $TtsConfig)
-  $indexTtsAvailable = $false
-  if ($env:INDEXTTS_REPO) {
-    $indexTtsAvailable = Test-Path -LiteralPath $env:INDEXTTS_REPO -PathType Container
-  }
-  if (-not $indexTtsAvailable -and $null -ne $TtsConfig) {
-    $indexTts = Get-PropertyValue -Object $TtsConfig -Name 'indexTts'
-    $repo = [string](Get-PropertyValue -Object $indexTts -Name 'repo' -Default '')
-    if (-not [string]::IsNullOrWhiteSpace($repo)) {
-      $candidate = [Environment]::ExpandEnvironmentVariables($repo)
-      if (-not [IO.Path]::IsPathRooted($candidate)) { $candidate = Join-Path $script:RepoRoot $candidate }
-      $indexTtsAvailable = Test-Path -LiteralPath $candidate -PathType Container
-    }
-  }
+  $indexTtsReadiness = Get-IndexTtsReadiness -TtsConfig $TtsConfig
+  $indexTtsAvailable = [bool]$indexTtsReadiness.ready
 
   $powershellCap = (New-CapabilityRecord -Available ([bool](& $CommandResolver 'powershell')) -Required $true -Purpose 'Run workflow entry points and quality gates.' -InstallUrl 'https://learn.microsoft.com/powershell/' -Invocation 'powershell');
   $pythonCap = (New-CapabilityRecord -Available (-not [string]::IsNullOrWhiteSpace($pythonCommand)) -Required $true -Purpose 'Run topic, subtitle, and helper scripts.' -InstallUrl 'https://www.python.org/downloads/' -Invocation $pythonCommand);
@@ -123,6 +159,7 @@ function Get-WorkflowCapabilities {
   $hyperFramesCap = (New-CapabilityRecord -Available ($nodeAvailable -and $npmAvailable -and $npxAvailable) -Required ($isFull -and $usesHyperFrames) -Purpose 'Reference Assembly renderer; first setup may download an npm package.' -InstallUrl 'https://www.npmjs.com/package/hyperframes' -Invocation 'npx --yes hyperframes@0.7.55' -DownloadMayBeRequired:$usesHyperFrames);
   $customRendererCap = (New-CapabilityRecord -Available $customRendererAvailable -Required ($isFull -and -not $usesHyperFrames) -Purpose 'Run the alternate renderer selected in workflow.local.json.' -InstallUrl '' -Invocation $rendererCommand);
   $indexTtsCap = (New-CapabilityRecord -Available $indexTtsAvailable -Required $indexTtsRequired -Purpose 'Generate narration only when the IndexTTS or clone-voice route is selected.' -InstallUrl 'https://github.com/index-tts/index-tts' -Invocation '' -DownloadMayBeRequired:$indexTtsRequired);
+  $indexTtsCap['details'] = $indexTtsReadiness
 
   $capabilities = [ordered]@{
     powershell = $powershellCap

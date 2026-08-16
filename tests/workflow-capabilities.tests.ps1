@@ -48,6 +48,25 @@ try {
   Assert-True $fullTts.capabilities['indextts']['required'] 'Selected clone voice must require IndexTTS'
   Assert-True (-not $fullTts.ready) 'Selected IndexTTS route must fail when its repository is unavailable'
 
+  $partialRoot = Join-Path ([IO.Path]::GetTempPath()) ("creatorflow-indextts-capability-" + [guid]::NewGuid().ToString('N'))
+  New-Item -ItemType Directory -Force -Path $partialRoot | Out-Null
+  try {
+    $partialConfig = [pscustomobject]@{
+      mode = 'clone-voice'
+      indexTts = [pscustomobject]@{ repo = $partialRoot; python = ''; cacheRoot = '' }
+      referenceAudio = [pscustomobject]@{ path = ''; sha256 = '' }
+    }
+    $partial = Get-WorkflowCapabilities -SelectedProfile Full -TtsConfig $partialConfig -CommandResolver $allResolver
+    Assert-True (-not $partial.capabilities['indextts']['available']) 'A source directory alone must not claim IndexTTS readiness'
+    Assert-True $partial.capabilities['indextts']['details']['sourceAvailable'] 'IndexTTS diagnostics must distinguish source availability'
+    Assert-True (-not $partial.capabilities['indextts']['details']['runtimeAvailable']) 'IndexTTS diagnostics must report a missing runtime'
+    Assert-True (-not $partial.capabilities['indextts']['details']['modelAvailable']) 'IndexTTS diagnostics must report missing checkpoints'
+    Assert-True (-not $partial.capabilities['indextts']['details']['referenceAudioAvailable']) 'Clone voice must report a missing private reference audio file'
+  }
+  finally {
+    Remove-Item -LiteralPath $partialRoot -Recurse -Force
+  }
+
   $customWorkflow = [pscustomobject]@{
     renderer = [pscustomobject]@{ engine = 'custom'; command = 'my-renderer build' }
   }

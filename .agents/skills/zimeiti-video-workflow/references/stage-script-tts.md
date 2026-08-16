@@ -19,6 +19,8 @@ Use this stage when writing the spoken script, polishing titles or openings, pre
 
 ## Actions
 
+- Run `scripts\resolve-workflow-dependencies.ps1 -Stage ScriptTTS -TtsConfigPath <local-config>` before generating narration. In its default mode it only reports readiness and fallbacks.
+- Keep `existing-audio` as a complete supported route. When IndexTTS2 is selected, treat source, Python runtime, model checkpoints, and private reference audio as separate gates. Ask for approval for only the next proposed action; cloning source does not authorize package or model downloads.
 - Write `录音稿.txt` as spoken narration only.
 - Remove production notes, internal labels, scoring fields, and visual instructions from viewer-facing copy.
 - Keep concrete source deliverables, names, numbers, and examples when they help the viewer.
@@ -52,6 +54,7 @@ Use this stage when writing the spoken script, polishing titles or openings, pre
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run-mainline-topic-decision.ps1 -Write
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 -Stage ScriptTTS -TtsConfigPath .\config\tts.local.json
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-video-orientation-decision.ps1 -VideoDir <video-dir>
 python .\scripts\verify-srt-timeline.py --audio <audio-path> --srt <srt-path>
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-narration-pacing.ps1 -AudioPath <audio-path> -ReportPath <review-report.md>

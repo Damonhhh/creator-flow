@@ -260,7 +260,7 @@ try {
   $generatedSource = Get-Content -LiteralPath (Join-Path $generated "draft\web-assets\source-candidates.md") -Raw -Encoding UTF8
   $generatedJson = Get-Content -LiteralPath (Join-Path $generated "draft\web-assets\source-candidates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
   $generatedState = Get-Content -LiteralPath (Join-Path $generated "project-state.json") -Raw -Encoding UTF8 | ConvertFrom-Json
-  Assert-True ($generatedSource -match "Agent Reach skill routing=available") "Expected generated source template to record skill routing"
+  Assert-True ($generatedSource -match "Agent Reach route=(available|unavailable)") "Expected generated source template to record the real Agent Reach preflight"
   Assert-True (-not [string]::IsNullOrWhiteSpace([string]$generatedJson.channelAvailabilitySummary)) "Expected generated JSON route availability"
   Assert-True ($generatedState.currentStage -eq "Material" -and $generatedState.stageStatus -eq "in_progress") "Expected generator to initialize Material project state"
   Assert-True ((Get-Content -LiteralPath (Join-Path $generated "draft\visual-plan\generated-motion-asset-plan.md") -Raw -Encoding UTF8) -match "generated-material-readiness-v1") "Expected generated readiness contract"
