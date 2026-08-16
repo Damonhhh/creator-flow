@@ -326,7 +326,7 @@
     {
       "source": "scripts/test-video-material-mix.ps1",
       "destination": "scripts/test-video-material-mix.ps1",
-      "sha256": "4bbd700022997fd91d513827041dc320b9b91cf9a0c55a56ab76eb0cd4309b01"
+      "sha256": "b45782a93f56d744559f9db8d6ebfe93c76ef2aff67d83a564e0ea4a354e5136"
     },
     {
       "source": "scripts/new-video-source-candidates.ps1",
