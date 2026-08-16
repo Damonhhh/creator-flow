@@ -33,7 +33,8 @@ foreach ($needle in @(
     'OpenClaw',
     'Hermes',
     '.agents/skills/',
-    '-AcceptDownload'
+    'resolve-workflow-dependencies.ps1',
+    '-AcceptAction'
   )) {
   Assert-True ($normalizedInstallation.Contains($needle)) "Installation guide is missing portable Agent guidance: $needle"
 }

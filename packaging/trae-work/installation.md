@@ -54,6 +54,15 @@ Core 需要：
 
 没有得到你的明确同意，不得自动下载、安装、登录或写入凭据。
 
+进入 Script TTS、Material 或 Assembly 时，使用统一的阶段检查：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 `
+  -Stage Material
+```
+
+默认只展示方案。确认后，每次只批准一个 `-AcceptAction`；安装完成后脚本会重新检查。Agent Reach 安装在当前用户目录，IndexTTS2 的源码、运行环境和模型分别确认，声音样本仍只保存在本地。
+
 ## 5. 建立本地配置
 
 ```powershell
@@ -106,11 +115,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\new-video-project.
 第一次进入 Assembly 且项目没有渲染器时，先查看方案：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\initialize-video-renderer.ps1 `
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 `
+  -Stage Assembly `
   -ProjectDir .\videos\my-first-video
 ```
 
-这条命令只展示计划，不下载。确认愿意下载后再明确加上 `-AcceptDownload`。
+这条命令只展示计划，不下载。确认愿意下载后再明确加上 `-AcceptAction hyperframes`。
 
 ## 9. QA 与收尾
 

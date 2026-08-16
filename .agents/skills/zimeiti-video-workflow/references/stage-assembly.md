@@ -22,7 +22,7 @@ Use this stage when building or revising the HyperFrames composition, captions, 
 ## Actions
 
 - Build or update the composition using the recorded orientation.
-- If the project has no renderer app, run `scripts\initialize-video-renderer.ps1` without `-AcceptDownload` first. Present its missing items, purpose, source, and proposed command; only rerun with `-AcceptDownload` after the user agrees. A custom renderer may be used when it satisfies the same project and QA contracts.
+- Run `scripts\resolve-workflow-dependencies.ps1 -Stage Assembly -ProjectDir <video-dir>` before assembly. It delegates the actual scaffold to `initialize-video-renderer.ps1`; only rerun it with `-AcceptAction hyperframes` after the user approves that exact download. A custom renderer may be used when it satisfies the same project and QA contracts.
 - If `draft\production-director-plan.md` exists, implement only the constraints owned by Assembly: accepted shot order, J/L-cut intent, track hierarchy, color/input notes, and export requirements. Return missing shots or unsupported source assumptions to Material instead of improvising around them.
 - Run or rely on `test-video-orientation-decision.ps1` before changing the HyperFrames canvas.
 - Rebuild captions from verified SRT/ASR data; do not hand-write a fake timing track.
@@ -79,6 +79,7 @@ Use this stage when building or revising the HyperFrames composition, captions, 
 cd <video-dir>\hyperframes-app
 npm run check
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\initialize-video-renderer.ps1 -ProjectDir <video-dir>
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 -Stage Assembly -ProjectDir <video-dir>
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-video-orientation-decision.ps1 -VideoDir <video-dir>
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-video-visual-task-coverage.ps1 -VideoDir <video-dir>
 python .\scripts\rebuild-hyperframes-captions-from-asr.py --video-dir <video-dir>

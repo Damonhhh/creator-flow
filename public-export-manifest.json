@@ -1,526 +1,536 @@
 {
-    "schemaVersion":  1,
-    "repository":  "creator-flow",
-    "license":  "MIT",
-    "files":  [
-                  {
-                      "source":  "open-source/README.md",
-                      "destination":  "README.md",
-                      "sha256":  "379586df979d7d5912ad1419abdcfa2a4c9b19aacb4e63c2e386beb60d83441b"
-                  },
-                  {
-                      "source":  "open-source/LICENSE",
-                      "destination":  "LICENSE",
-                      "sha256":  "8c476110f57c447e8851fef9faaf85fb1af8da7b7596172c062dcb9603d61fc0"
-                  },
-                  {
-                      "source":  "open-source/.gitignore",
-                      "destination":  ".gitignore",
-                      "sha256":  "d687a2b21699e7f31a4a5c7c2f4a27d1c3782f456f062804c186723c93006b07"
-                  },
-                  {
-                      "source":  "pytest.ini",
-                      "destination":  "pytest.ini",
-                      "sha256":  "ca4b82760538130959a0fbe25c21fc5d28cd46fb7a63b1209def6d19e2b40a62"
-                  },
-                  {
-                      "source":  "open-source/docs/installation.md",
-                      "destination":  "docs/installation.md",
-                      "sha256":  "56ea75041285e959ad4e574b6412d4fbb88bedad0bef2d6f78cbb9c25d1f3d10"
-                  },
-                  {
-                      "source":  "open-source/docs/dependency-matrix.md",
-                      "destination":  "docs/dependency-matrix.md",
-                      "sha256":  "4ab79d32b456f7f8175f8ee5265c17c3c45c4f77dd739443662e30975996cb20"
-                  },
-                  {
-                      "source":  "open-source/docs/project-contract.md",
-                      "destination":  "docs/project-contract.md",
-                      "sha256":  "9590cd6b610acccfce7c1c69291fedff6b85c0bec91f3497df36c9015ffa832a"
-                  },
-                  {
-                      "source":  "open-source/docs/cover-system.md",
-                      "destination":  "docs/cover-system.md",
-                      "sha256":  "b6d2c5224b4041e528540c6dd0bb88c25d7aacdfd545a5254a4529aac1bbaa3a"
-                  },
-                  {
-                      "source":  "open-source/docs/privacy-boundary.md",
-                      "destination":  "docs/privacy-boundary.md",
-                      "sha256":  "03c1137105e6b34ae264f2ae108581f4cee416cf4c62ce2a01c6342bfce6838c"
-                  },
-                  {
-                      "source":  "open-source/docs/troubleshooting.md",
-                      "destination":  "docs/troubleshooting.md",
-                      "sha256":  "a7fe51bf51d1f7207f8026969f5b531168a6a2d1b701f098078b270faf12bfde"
-                  },
-                  {
-                      "source":  "open-source/docs/writing-style.example.md",
-                      "destination":  "docs/writing-style.example.md",
-                      "sha256":  "37eff3beb4c43f2496d760275a2fca7871f19da1b13ea2ceaf0688441815e079"
-                  },
-                  {
-                      "source":  "docs/failure-pattern-index.md",
-                      "destination":  "docs/failure-pattern-index.md",
-                      "sha256":  "f6a3d46e53440fb34aafc323a45ccfee85713a0c63101f9d893c62e2a8eac133"
-                  },
-                  {
-                      "source":  "open-source/docs/failure-patterns.md",
-                      "destination":  "docs/failure-patterns.md",
-                      "sha256":  "c35690e9d8091cf6eebc6c3def1a4498ffe1eb547a044535460546febb7ee943"
-                  },
-                  {
-                      "source":  "open-source/docs/tts-natural-pace-acceptance.md",
-                      "destination":  "docs/tts-natural-pace-acceptance.md",
-                      "sha256":  "40c139c06e7d27fe6223d9481c6678940e7279906008ccd1d4bd4109bb752bab"
-                  },
-                  {
-                      "source":  "open-source/docs/video-editing-skill-integration.md",
-                      "destination":  "docs/video-editing-skill-integration.md",
-                      "sha256":  "bd6c2ade10ab738bfaf3a4c41cef593f0cbb1beb172d5404414a7b177f16f1c4"
-                  },
-                  {
-                      "source":  "open-source/docs/video-workflow-current-state.md",
-                      "destination":  "docs/video-workflow-current-state.md",
-                      "sha256":  "ed02ca2a577cd40bb5825f5796e7042b4ac8dfec195007829fd03d65f34b35ea"
-                  },
-                  {
-                      "source":  "open-source/config/workflow.example.json",
-                      "destination":  "config/workflow.example.json",
-                      "sha256":  "d64ada01978d0cb980f096b4ffc9a5ea0dbf884e464e29f05b5586dd6b2cd739"
-                  },
-                  {
-                      "source":  "open-source/config/tts.example.json",
-                      "destination":  "config/tts.example.json",
-                      "sha256":  "dc29c9ee8e21c151a5f9cf768a6ff5795bb2c68f09b9cd944426b583ebbca221"
-                  },
-                  {
-                      "source":  "open-source/config/providers.example.json",
-                      "destination":  "config/providers.example.json",
-                      "sha256":  "60425e6edbd75d702ff1e50beaa49e9f0133fb5e7bd795e4d9df48e988ec8f22"
-                  },
-                  {
-                      "source":  "open-source/config/publish.example.json",
-                      "destination":  "config/publish.example.json",
-                      "sha256":  "76a9e3d8f9171cff70e4c6d742cb37f612813f86c9afba8ab99625801715908b"
-                  },
-                  {
-                      "source":  "open-source/config/ai-daily-signal-radar.example.json",
-                      "destination":  "config/ai-daily-briefing-public-rules.json",
-                      "sha256":  "6b818fd97500f4e9cc4527323ba9791068690d1334ca9c22493bb2503dd65d1e"
-                  },
-                  {
-                      "source":  "open-source/examples/ai-mainline-topic/README.md",
-                      "destination":  "examples/ai-mainline-topic/README.md",
-                      "sha256":  "6ef5cc2e7896af9740c3310d1dbd549d6c84206bd3c6eb270c001c0f6d414e8a"
-                  },
-                  {
-                      "source":  "open-source/examples/ai-mainline-topic/rubric.example.json",
-                      "destination":  "examples/ai-mainline-topic/rubric.example.json",
-                      "sha256":  "8646da974bdfd1f5b195c67319cff1e6b7accd4b97502a6da05cc1ce0b35676c"
-                  },
-                  {
-                      "source":  "open-source/examples/ai-mainline-topic/candidates.example.json",
-                      "destination":  "examples/ai-mainline-topic/candidates.example.json",
-                      "sha256":  "15dd671e38b077c42f93891093b0696616c3c776fee935278a313f0960e74466"
-                  },
-                  {
-                      "source":  "open-source/examples/minimal-video-project/README.md",
-                      "destination":  "examples/minimal-video-project/README.md",
-                      "sha256":  "bb534044fbd3c404aa7923d3aacefdcb8836448a81e30cbb2ebf052182585649"
-                  },
-                  {
-                      "source":  "open-source/examples/minimal-video-project/account-profile.example.md",
-                      "destination":  "examples/minimal-video-project/account-profile.example.md",
-                      "sha256":  "1d1696432d6accf1db6e0bfeb189e997e0e27242bc68418bf5c66ec1f9c6a11b"
-                  },
-                  {
-                      "source":  "open-source/examples/minimal-video-project/writing-style.example.md",
-                      "destination":  "examples/minimal-video-project/writing-style.example.md",
-                      "sha256":  "693e054ff5bbca9c88173a4afc310d7c915da0c3a4e1e7aebd5bfe020251dc9d"
-                  },
-                  {
-                      "source":  "open-source/examples/minimal-video-project/knowledge-sources.example.md",
-                      "destination":  "examples/minimal-video-project/knowledge-sources.example.md",
-                      "sha256":  "64be483cc1ac8a963c4c47c726a1daf08e7a6ac67c34ac95069cdf8fd4751eee"
-                  },
-                  {
-                      "source":  "open-source/examples/minimal-video-project/source-content.md",
-                      "destination":  "examples/minimal-video-project/source-content.md",
-                      "sha256":  "9491fc477bcdf86f64e1b6447e94da3716925e5e3358c5bda317c1a3c4eb387d"
-                  },
-                  {
-                      "source":  "open-source/examples/minimal-video-project/project-state.json",
-                      "destination":  "examples/minimal-video-project/project-state.json",
-                      "sha256":  "34231cb704c5a25ed0b334234fcf92b07a6ebd50e9cac200973644c15a818074"
-                  },
-                  {
-                      "source":  "open-source/examples/minimal-video-project/draft/visual-plan/material-beat-map.md",
-                      "destination":  "examples/minimal-video-project/draft/visual-plan/material-beat-map.md",
-                      "sha256":  "a87049ea7b5cbc35cc5210b1bb8c66a66152f2d0ee043f08a24073e7fa1b620f"
-                  },
-                  {
-                      "source":  "open-source/examples/minimal-video-project/draft/web-assets/source-candidates.md",
-                      "destination":  "examples/minimal-video-project/draft/web-assets/source-candidates.md",
-                      "sha256":  "ebacb39594783ec6879f8b192642bc8d83eb4ee5a943673340739c2053b31b11"
-                  },
-                  {
-                      "source":  "scripts/export-public-workflow.ps1",
-                      "destination":  "scripts/export-public-workflow.ps1",
-                      "sha256":  "1c781314a26ce11348d54b2c46768e7e098e9220ec99b9aabe856f0ec792f964"
-                  },
-                  {
-                      "source":  "scripts/lib/resolve-zimeiti-config.ps1",
-                      "destination":  "scripts/lib/resolve-zimeiti-config.ps1",
-                      "sha256":  "a34d1ef664a419511b2ceede09e38d84efa11885524930d60ceecd53a18a08da"
-                  },
-                  {
-                      "source":  "scripts/workflow_config.py",
-                      "destination":  "scripts/workflow_config.py",
-                      "sha256":  "8aada5e5de8664857d831bdc9de9f7a700efd69fe3eb42e153c40b4489d63583"
-                  },
-                  {
-                      "source":  "scripts/portable_runtime.py",
-                      "destination":  "scripts/portable_runtime.py",
-                      "sha256":  "755514765b621552243aa6e8d133a32991820ae5440cd83fa327de5df2de63a7"
-                  },
-                  {
-                      "source":  "scripts/resolve-python-command.ps1",
-                      "destination":  "scripts/resolve-python-command.ps1",
-                      "sha256":  "d6ace5f3a9f4adc87ff855edaa19ce9ba0e9365a7715ef9b3911bad89eb7e74b"
-                  },
-                  {
-                      "source":  "scripts/generate_mainline_topic_decision.py",
-                      "destination":  "scripts/generate_mainline_topic_decision.py",
-                      "sha256":  "531d909faad404c3f2a601bc19fb9fba22dfcf451cf5d0b40d781e3b12d88f17"
-                  },
-                  {
-                      "source":  "scripts/run-mainline-topic-decision.ps1",
-                      "destination":  "scripts/run-mainline-topic-decision.ps1",
-                      "sha256":  "09bff3136e6640135c1e5725628e31617b936f5d3538ee899ac31626549eeebc"
-                  },
-                  {
-                      "source":  "scripts/run-ai-daily-topic-chain.ps1",
-                      "destination":  "scripts/run-ai-daily-topic-chain.ps1",
-                      "sha256":  "5311ba08dc1f04591627061141cfbf824b7d46fe78c9a6cf05f3246d712b7ded"
-                  },
-                  {
-                      "source":  "scripts/run-ai-daily-topic-preflight.ps1",
-                      "destination":  "scripts/run-ai-daily-topic-preflight.ps1",
-                      "sha256":  "730c9cde97e502d7ae653f2d308c1715cd6e0771d3bfd5def7802ca509d6cc3a"
-                  },
-                  {
-                      "source":  "scripts/run-ai-daily-briefing-chain.ps1",
-                      "destination":  "scripts/run-ai-daily-briefing-chain.ps1",
-                      "sha256":  "7d0072dc708ef67c3358fe9d14db1fc90cb9777f59a83a3525ee8a4bbc430f1c"
-                  },
-                  {
-                      "source":  "scripts/new-ai-daily-briefing.ps1",
-                      "destination":  "scripts/new-ai-daily-briefing.ps1",
-                      "sha256":  "fe91421ffd3c602083c1d51aca9e6cbd5631d502e58d32cf2f675b5faa494d18"
-                  },
-                  {
-                      "source":  "scripts/new-video-project.ps1",
-                      "destination":  "scripts/new-video-project.ps1",
-                      "sha256":  "9047dd44c0ba3abe7270194ffb8a29dd935dbb2e99d58c8876af8bd2336a27ae"
-                  },
-                  {
-                      "source":  "scripts/initialize-video-renderer.ps1",
-                      "destination":  "scripts/initialize-video-renderer.ps1",
-                      "sha256":  "d46f210ad6b11378591fe82f695d672fbd14410207a1de1209f66a32f4ea321e"
-                  },
-                  {
-                      "source":  "scripts/collect-ai-daily-signal-radar.mjs",
-                      "destination":  "scripts/collect-ai-daily-signal-radar.mjs",
-                      "sha256":  "deb2fb02efc0c55e963d4794d0a6271818ebc3760e8b947519e62a68c7b8ef6e"
-                  },
-                  {
-                      "source":  "scripts/run-trendradar-ai-radar.ps1",
-                      "destination":  "scripts/run-trendradar-ai-radar.ps1",
-                      "sha256":  "85b41c6a7b528b7e2f5868183a419b46bd57456c830f8484af57f38bc76b206d"
-                  },
-                  {
-                      "source":  "scripts/run-trendradar-ai-radar-lite.ps1",
-                      "destination":  "scripts/run-trendradar-ai-radar-lite.ps1",
-                      "sha256":  "ea8661dd39c34a23c68d1ccaf5c65594af455b2b743880fe0b52f82bbc15a355"
-                  },
-                  {
-                      "source":  "scripts/run-indextts2-batch.py",
-                      "destination":  "scripts/run-indextts2-batch.py",
-                      "sha256":  "16c14af387db2273a237bedcf3d9dd3dd8251390bd58a5774f1241a58df7a41d"
-                  },
-                  {
-                      "source":  "scripts/run-indextts2-long.py",
-                      "destination":  "scripts/run-indextts2-long.py",
-                      "sha256":  "476a1a1309d7ecbc1cdd1409fcaabad5dbd71ae27e6824cecf794d56565a5fe3"
-                  },
-                  {
-                      "source":  "scripts/run-indextts2-chapters.ps1",
-                      "destination":  "scripts/run-indextts2-chapters.ps1",
-                      "sha256":  "c452c82352400ac22e9a5911e22c43903f3f08ed48a2fab4fc5c297399ecca6b"
-                  },
-                  {
-                      "source":  "scripts/rebuild-hyperframes-captions-from-asr.py",
-                      "destination":  "scripts/rebuild-hyperframes-captions-from-asr.py",
-                      "sha256":  "64d83270ea31926dbf59b4cb8db15137c25edf91f3485bf3c4345368a8866b84"
-                  },
-                  {
-                      "source":  "scripts/verify-srt-timeline.py",
-                      "destination":  "scripts/verify-srt-timeline.py",
-                      "sha256":  "619d177d255ad4e1cdfc15fc171a28a183157d9c69501c66afe9a9f7f9e727e1"
-                  },
-                  {
-                      "source":  "scripts/invoke-video-wrap-up.ps1",
-                      "destination":  "scripts/invoke-video-wrap-up.ps1",
-                      "sha256":  "95e3658c95265424b519694b441d213216cd1a9c64e8e4ebf5ec4506279061f3"
-                  },
-                  {
-                      "source":  "scripts/run-video-draft-qa.ps1",
-                      "destination":  "scripts/run-video-draft-qa.ps1",
-                      "sha256":  "aec8e9411b2844d8125004ef642b99b151b4b6a870f4b801817462c795f71c30"
-                  },
-                  {
-                      "source":  "scripts/test-workflow-capabilities.ps1",
-                      "destination":  "scripts/test-workflow-capabilities.ps1",
-                      "sha256":  "0c9339fd73f47e2a9a12ae085df227e83c1bb39e3d3cf4d9efe5ae768644ba9f"
-                  },
-                  {
-                      "source":  "scripts/test-public-release.ps1",
-                      "destination":  "scripts/test-public-release.ps1",
-                      "sha256":  "ad51cd06e7b4097b0e28fea10ec85827f14661603db9620f4d146e2602b9b519"
-                  },
-                  {
-                      "source":  "scripts/update-video-project-state.ps1",
-                      "destination":  "scripts/update-video-project-state.ps1",
-                      "sha256":  "09967821f6aed08158cffc5632731f76278e26d0806ec9525eabb3c92ff14fad"
-                  },
-                  {
-                      "source":  "scripts/test-video-human-visual-review.ps1",
-                      "destination":  "scripts/test-video-human-visual-review.ps1",
-                      "sha256":  "5c0e7e59852dd5ff03fee722a7e47956654420cb2f483e123f4918439cfec659"
-                  },
-                  {
-                      "source":  "scripts/test-video-orientation-decision.ps1",
-                      "destination":  "scripts/test-video-orientation-decision.ps1",
-                      "sha256":  "cad7e877b430f398c9f3484b4c1cb33e21627cfdb69e3f249f0fef1d0a8d64a6"
-                  },
-                  {
-                      "source":  "scripts/test-narration-pacing.ps1",
-                      "destination":  "scripts/test-narration-pacing.ps1",
-                      "sha256":  "e7f905a95e240376c76acad40814bb9449f0fa6c578162fe18f7367bf608cdb6"
-                  },
-                  {
-                      "source":  "scripts/test-video-visual-task-coverage.ps1",
-                      "destination":  "scripts/test-video-visual-task-coverage.ps1",
-                      "sha256":  "3598dcffa5847ea2fc7d450e032010fb58280ee084f453af78799bd7d39c1801"
-                  },
-                  {
-                      "source":  "scripts/test-video-material-mix.ps1",
-                      "destination":  "scripts/test-video-material-mix.ps1",
-                      "sha256":  "4bbd700022997fd91d513827041dc320b9b91cf9a0c55a56ab76eb0cd4309b01"
-                  },
-                  {
-                      "source":  "scripts/new-video-source-candidates.ps1",
-                      "destination":  "scripts/new-video-source-candidates.ps1",
-                      "sha256":  "aa6cb931e26477942e472c3d73b4c33422fed65378c38c06f77e834895e560bd"
-                  },
-                  {
-                      "source":  "tests/public-export-manifest.tests.ps1",
-                      "destination":  "tests/public-export-manifest.tests.ps1",
-                      "sha256":  "60c52f032e57c7ac1ce9d60820b2d31fa48fc4958faeb981bbe8da4c973531ef"
-                  },
-                  {
-                      "source":  "tests/public-export.tests.ps1",
-                      "destination":  "tests/public-export.tests.ps1",
-                      "sha256":  "ce1c37dcc2d3cdab6fedff68f8df6571d7b75be11fd9971ea18b73c48af50fbd"
-                  },
-                  {
-                      "source":  "tests/workflow-config.tests.ps1",
-                      "destination":  "tests/workflow-config.tests.ps1",
-                      "sha256":  "6cdbee267f3bd2ec46604027a3f8a9307abcc7d5bf9493add2ccd35109e93985"
-                  },
-                  {
-                      "source":  "tests/test_workflow_config.py",
-                      "destination":  "tests/test_workflow_config.py",
-                      "sha256":  "64663d0b124592f76a4891a7b629c60b3aa7aff10bec134f42239d7715bfb6c5"
-                  },
-                  {
-                      "source":  "tests/tts-portability.tests.ps1",
-                      "destination":  "tests/tts-portability.tests.ps1",
-                      "sha256":  "eeca5a557a7e9cc61362b785dab30124c7c5e57c42b139ffbe5c676fb0efbcb7"
-                  },
-                  {
-                      "source":  "tests/test_tts_portability.py",
-                      "destination":  "tests/test_tts_portability.py",
-                      "sha256":  "264cd075a34d1040d2a0d2dfe255bb7d45deb45f05c4bd5be5dce25f4042125d"
-                  },
-                  {
-                      "source":  "tests/generate_mainline_topic_decision.tests.py",
-                      "destination":  "tests/generate_mainline_topic_decision.tests.py",
-                      "sha256":  "08503a4c4a6daa49915606f60bf13f4ce657ec0c6e426c63557e4ac227f6ccf5"
-                  },
-                  {
-                      "source":  "tests/ai-mainline-public-example.tests.ps1",
-                      "destination":  "tests/ai-mainline-public-example.tests.ps1",
-                      "sha256":  "a5c887ceb194813197f4bb52ffbf66d4b5e348689484f0cd0e5aef531e7eefb0"
-                  },
-                  {
-                      "source":  "tests/minimal-video-project.tests.ps1",
-                      "destination":  "tests/minimal-video-project.tests.ps1",
-                      "sha256":  "2705a4924137f0e48fe29e96c0ae1f40ceb0ed4aabd8d81e8d4567702d95e5bb"
-                  },
-                  {
-                      "source":  "tests/video-wrap-up-portability.tests.ps1",
-                      "destination":  "tests/video-wrap-up-portability.tests.ps1",
-                      "sha256":  "db0edd127f1ba6a3f932ff2d27f7c7a37f4fe97608310d24d1f55455dee436a9"
-                  },
-                  {
-                      "source":  "tests/workflow-capabilities.tests.ps1",
-                      "destination":  "tests/workflow-capabilities.tests.ps1",
-                      "sha256":  "6e58357ba7dfbb3f30f7e415be8b6952cda9b709ae7dea3687c3c3f1823a32df"
-                  },
-                  {
-                      "source":  "tests/video-renderer-initializer.tests.ps1",
-                      "destination":  "tests/video-renderer-initializer.tests.ps1",
-                      "sha256":  "5a7813004fe23cda2b4a105109883ae79b1d730fbcdbfb66ef76dee20d7e79ec"
-                  },
-                  {
-                      "source":  "tests/agent-platform-support.tests.ps1",
-                      "destination":  "tests/agent-platform-support.tests.ps1",
-                      "sha256":  "622774fc9d86b5d47bfbaa64d587c344ad5340c4c62b05989a9b2cae38eceb6e"
-                  },
-                  {
-                      "source":  "tests/public-doc-links.tests.ps1",
-                      "destination":  "tests/public-doc-links.tests.ps1",
-                      "sha256":  "0154d65487cafa023c145214a547402e09f966d1d37f4070ddeef6dfec51f241"
-                  },
-                  {
-                      "source":  "tests/public-network-boundary.tests.ps1",
-                      "destination":  "tests/public-network-boundary.tests.ps1",
-                      "sha256":  "089c9bf943552fcf96da37720e5a48109def5bcb58d230446e92856cbe22c4bb"
-                  },
-                  {
-                      "source":  "tests/video-workflow-contract.tests.ps1",
-                      "destination":  "tests/video-workflow-contract.tests.ps1",
-                      "sha256":  "ee4332968c6a20dadcb9a262c8c9401bd2a042d3fba2c97dd7b07d8242e895d9"
-                  },
-                  {
-                      "source":  "tests/video-project-state.tests.ps1",
-                      "destination":  "tests/video-project-state.tests.ps1",
-                      "sha256":  "23e705d03a9e2032f8ce2d50d0a6d109bafa6e731e063675be312ca5fba26472"
-                  },
-                  {
-                      "source":  "tests/video-visual-task-coverage.tests.ps1",
-                      "destination":  "tests/video-visual-task-coverage.tests.ps1",
-                      "sha256":  "773e672f262a9fd2511f2e294e582b8e1c18192b3db0a6cb6d53a8c69bf7d544"
-                  },
-                  {
-                      "source":  "tests/video-human-visual-review.tests.ps1",
-                      "destination":  "tests/video-human-visual-review.tests.ps1",
-                      "sha256":  "5b6f9982f9f5bf5b73e622004785bb353c85fb3065f2f06370ee71c4b0ddf7b3"
-                  },
-                  {
-                      "source":  "tests/video-material-visual-task.tests.ps1",
-                      "destination":  "tests/video-material-visual-task.tests.ps1",
-                      "sha256":  "7a091232e9769d054fe7565c2186787fe4e177bbb20209f8fddfb91e437dbf1b"
-                  },
-                  {
-                      "source":  "tests/public-release.tests.ps1",
-                      "destination":  "tests/public-release.tests.ps1",
-                      "sha256":  "52e6453c9de5fcad3ba054bebbf902ea8bce668cce256c1025fa36ea9a7d68e4"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-workflow/SKILL.md",
-                      "destination":  ".agents/skills/zimeiti-video-workflow/SKILL.md",
-                      "sha256":  "8ef6920a33ce8e8def3461eec902e4b8aae6f9785528142b5468a1f1fb6c1511"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-workflow/references/pipeline.md",
-                      "destination":  ".agents/skills/zimeiti-video-workflow/references/pipeline.md",
-                      "sha256":  "4e72ab0b60963d265b1c369421be8d2463a92c30ab1160c506efe8b88e40581e"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-workflow/references/stage-topic.md",
-                      "destination":  ".agents/skills/zimeiti-video-workflow/references/stage-topic.md",
-                      "sha256":  "f7a09e2bd2756154cf5dc7a402b461985c481f6b722f4745d2d153aa6e6c36e6"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-workflow/references/stage-script-tts.md",
-                      "destination":  ".agents/skills/zimeiti-video-workflow/references/stage-script-tts.md",
-                      "sha256":  "2893712c0295892d726dbe544791cfcc0b3abce55cee5557bf507aa7c9134b28"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-workflow/references/stage-material.md",
-                      "destination":  ".agents/skills/zimeiti-video-workflow/references/stage-material.md",
-                      "sha256":  "1c48ccb1135f73400f1f3fa706b70473430def36740cac3346475eeeeb5fd3fc"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-workflow/references/stage-assembly.md",
-                      "destination":  ".agents/skills/zimeiti-video-workflow/references/stage-assembly.md",
-                      "sha256":  "af927aa2e21567a7a1d44462caf60cac28c8c0e7a79c5d6e2da381e87ddba6ea"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-workflow/references/stage-qa.md",
-                      "destination":  ".agents/skills/zimeiti-video-workflow/references/stage-qa.md",
-                      "sha256":  "de834fe36b5f737a5504ee8533d73f11f0aa4a13bc44b251eaeaa5e4a8a237f3"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-workflow/references/stage-publish-wrap-up.md",
-                      "destination":  ".agents/skills/zimeiti-video-workflow/references/stage-publish-wrap-up.md",
-                      "sha256":  "97626b20246e7001391a3d32c9ce9d89be02b951e18fc14c84dfee1e550975f2"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-workflow/references/visual-task-coverage-contract.md",
-                      "destination":  ".agents/skills/zimeiti-video-workflow/references/visual-task-coverage-contract.md",
-                      "sha256":  "df02cb9a941466fe0c9248b088aed1afd725604d76b583e36df1854fe4a4c8f4"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-wrap-up/SKILL.md",
-                      "destination":  ".agents/skills/zimeiti-video-wrap-up/SKILL.md",
-                      "sha256":  "bd972ef7872b2b9f0063b14d1b41de6178f0a8b60eb05f032bca2192ee77000a"
-                  },
-                  {
-                      "source":  ".agents/skills/zimeiti-video-wrap-up/references/wrap-up-checklist.md",
-                      "destination":  ".agents/skills/zimeiti-video-wrap-up/references/wrap-up-checklist.md",
-                      "sha256":  "c7c64739e1cfddc0c482d64de87ca992b060af4f5e6e81d3b5fc8cb673c271ab"
-                  },
-                  {
-                      "source":  "packaging/trae-work/README.md",
-                      "destination":  "packaging/trae-work/README.md",
-                      "sha256":  "dcf10921291c30b1e5feacee1a2c7d7f3d034c33748ad45ac99b326a0f9345bc"
-                  },
-                  {
-                      "source":  "packaging/trae-work/installation.md",
-                      "destination":  "packaging/trae-work/installation.md",
-                      "sha256":  "dfad23b0ae86865bc680446172490091e9b0b9276333ad23269a7fe165c9ec09"
-                  },
-                  {
-                      "source":  "scripts/export-trae-work-brand-package.ps1",
-                      "destination":  "scripts/export-trae-work-brand-package.ps1",
-                      "sha256":  "1d617a5c150c11b2e440ebb04a03433e3c5356f417addb12c7f53db8685497e8"
-                  },
-                  {
-                      "source":  "scripts/test-trae-work-package.ps1",
-                      "destination":  "scripts/test-trae-work-package.ps1",
-                      "sha256":  "23058c7b0ecf4412f171f7f3a5936b1d6323bb79b34f1804a1f436189d057958"
-                  },
-                  {
-                      "source":  "tests/trae-work-brand-package.tests.ps1",
-                      "destination":  "tests/trae-work-brand-package.tests.ps1",
-                      "sha256":  "14d38cba8c31bb6cd4e194e74fa528ba7ea84c702a2aa01add9f3db8e4d7d9c6"
-                  },
-                  {
-                      "source":  ".claude/skills/zimeiti-video-workflow/SKILL.md",
-                      "destination":  ".claude/skills/zimeiti-video-workflow/SKILL.md",
-                      "sha256":  "107c222da377f9f1dec9037b24d73daa0b4149746201932ccf1731567bda4605"
-                  },
-                  {
-                      "source":  ".claude/skills/zimeiti-video-wrap-up/SKILL.md",
-                      "destination":  ".claude/skills/zimeiti-video-wrap-up/SKILL.md",
-                      "sha256":  "17d7d2db761d46d86e2e329c11c1d440da47b4fadac80890170dbdd19e4cde6b"
-                  },
-                  {
-                      "source":  "public-export-manifest.json",
-                      "destination":  "public-export-manifest.json"
-                  }
-              ]
+  "schemaVersion": 1,
+  "repository": "creator-flow",
+  "license": "MIT",
+  "files": [
+    {
+      "source": "README.md",
+      "destination": "README.md",
+      "sha256": "91d61cf1f9456b5eafad3d8d4e46b6a1f99bdacf3c99b089279e91ff3ae08c9c"
+    },
+    {
+      "source": "LICENSE",
+      "destination": "LICENSE",
+      "sha256": "8c476110f57c447e8851fef9faaf85fb1af8da7b7596172c062dcb9603d61fc0"
+    },
+    {
+      "source": ".gitignore",
+      "destination": ".gitignore",
+      "sha256": "d687a2b21699e7f31a4a5c7c2f4a27d1c3782f456f062804c186723c93006b07"
+    },
+    {
+      "source": "pytest.ini",
+      "destination": "pytest.ini",
+      "sha256": "ca4b82760538130959a0fbe25c21fc5d28cd46fb7a63b1209def6d19e2b40a62"
+    },
+    {
+      "source": "docs/installation.md",
+      "destination": "docs/installation.md",
+      "sha256": "3a11a1a0799a7675969a127877baa5654595bcd933c0164c98ba421a4f8141e5"
+    },
+    {
+      "source": "docs/dependency-matrix.md",
+      "destination": "docs/dependency-matrix.md",
+      "sha256": "113dffda07f6b20fd9e4d8a3a71334c70711a8848c9a597e9e986608d2e8b034"
+    },
+    {
+      "source": "docs/project-contract.md",
+      "destination": "docs/project-contract.md",
+      "sha256": "9590cd6b610acccfce7c1c69291fedff6b85c0bec91f3497df36c9015ffa832a"
+    },
+    {
+      "source": "docs/cover-system.md",
+      "destination": "docs/cover-system.md",
+      "sha256": "b6d2c5224b4041e528540c6dd0bb88c25d7aacdfd545a5254a4529aac1bbaa3a"
+    },
+    {
+      "source": "docs/privacy-boundary.md",
+      "destination": "docs/privacy-boundary.md",
+      "sha256": "03c1137105e6b34ae264f2ae108581f4cee416cf4c62ce2a01c6342bfce6838c"
+    },
+    {
+      "source": "docs/troubleshooting.md",
+      "destination": "docs/troubleshooting.md",
+      "sha256": "ba99117cdb101e6fbaa39a10b99c207c284a12947c5585f31d1d90ae03fa5c3c"
+    },
+    {
+      "source": "docs/writing-style.example.md",
+      "destination": "docs/writing-style.example.md",
+      "sha256": "37eff3beb4c43f2496d760275a2fca7871f19da1b13ea2ceaf0688441815e079"
+    },
+    {
+      "source": "docs/failure-pattern-index.md",
+      "destination": "docs/failure-pattern-index.md",
+      "sha256": "f6a3d46e53440fb34aafc323a45ccfee85713a0c63101f9d893c62e2a8eac133"
+    },
+    {
+      "source": "docs/failure-patterns.md",
+      "destination": "docs/failure-patterns.md",
+      "sha256": "2efb8f32ba675a27ef8419be479f3f44a2fa485649f8799103caf5924064f818"
+    },
+    {
+      "source": "docs/tts-natural-pace-acceptance.md",
+      "destination": "docs/tts-natural-pace-acceptance.md",
+      "sha256": "40c139c06e7d27fe6223d9481c6678940e7279906008ccd1d4bd4109bb752bab"
+    },
+    {
+      "source": "docs/video-editing-skill-integration.md",
+      "destination": "docs/video-editing-skill-integration.md",
+      "sha256": "bd6c2ade10ab738bfaf3a4c41cef593f0cbb1beb172d5404414a7b177f16f1c4"
+    },
+    {
+      "source": "docs/video-workflow-current-state.md",
+      "destination": "docs/video-workflow-current-state.md",
+      "sha256": "ed02ca2a577cd40bb5825f5796e7042b4ac8dfec195007829fd03d65f34b35ea"
+    },
+    {
+      "source": "config/workflow.example.json",
+      "destination": "config/workflow.example.json",
+      "sha256": "d64ada01978d0cb980f096b4ffc9a5ea0dbf884e464e29f05b5586dd6b2cd739"
+    },
+    {
+      "source": "config/tts.example.json",
+      "destination": "config/tts.example.json",
+      "sha256": "dc29c9ee8e21c151a5f9cf768a6ff5795bb2c68f09b9cd944426b583ebbca221"
+    },
+    {
+      "source": "config/providers.example.json",
+      "destination": "config/providers.example.json",
+      "sha256": "60425e6edbd75d702ff1e50beaa49e9f0133fb5e7bd795e4d9df48e988ec8f22"
+    },
+    {
+      "source": "config/publish.example.json",
+      "destination": "config/publish.example.json",
+      "sha256": "76a9e3d8f9171cff70e4c6d742cb37f612813f86c9afba8ab99625801715908b"
+    },
+    {
+      "source": "config/ai-daily-briefing-public-rules.json",
+      "destination": "config/ai-daily-briefing-public-rules.json",
+      "sha256": "6b818fd97500f4e9cc4527323ba9791068690d1334ca9c22493bb2503dd65d1e"
+    },
+    {
+      "source": "examples/ai-mainline-topic/README.md",
+      "destination": "examples/ai-mainline-topic/README.md",
+      "sha256": "6ef5cc2e7896af9740c3310d1dbd549d6c84206bd3c6eb270c001c0f6d414e8a"
+    },
+    {
+      "source": "examples/ai-mainline-topic/rubric.example.json",
+      "destination": "examples/ai-mainline-topic/rubric.example.json",
+      "sha256": "8646da974bdfd1f5b195c67319cff1e6b7accd4b97502a6da05cc1ce0b35676c"
+    },
+    {
+      "source": "examples/ai-mainline-topic/candidates.example.json",
+      "destination": "examples/ai-mainline-topic/candidates.example.json",
+      "sha256": "15dd671e38b077c42f93891093b0696616c3c776fee935278a313f0960e74466"
+    },
+    {
+      "source": "examples/minimal-video-project/README.md",
+      "destination": "examples/minimal-video-project/README.md",
+      "sha256": "bb534044fbd3c404aa7923d3aacefdcb8836448a81e30cbb2ebf052182585649"
+    },
+    {
+      "source": "examples/minimal-video-project/account-profile.example.md",
+      "destination": "examples/minimal-video-project/account-profile.example.md",
+      "sha256": "1d1696432d6accf1db6e0bfeb189e997e0e27242bc68418bf5c66ec1f9c6a11b"
+    },
+    {
+      "source": "examples/minimal-video-project/writing-style.example.md",
+      "destination": "examples/minimal-video-project/writing-style.example.md",
+      "sha256": "693e054ff5bbca9c88173a4afc310d7c915da0c3a4e1e7aebd5bfe020251dc9d"
+    },
+    {
+      "source": "examples/minimal-video-project/knowledge-sources.example.md",
+      "destination": "examples/minimal-video-project/knowledge-sources.example.md",
+      "sha256": "64be483cc1ac8a963c4c47c726a1daf08e7a6ac67c34ac95069cdf8fd4751eee"
+    },
+    {
+      "source": "examples/minimal-video-project/source-content.md",
+      "destination": "examples/minimal-video-project/source-content.md",
+      "sha256": "9491fc477bcdf86f64e1b6447e94da3716925e5e3358c5bda317c1a3c4eb387d"
+    },
+    {
+      "source": "examples/minimal-video-project/project-state.json",
+      "destination": "examples/minimal-video-project/project-state.json",
+      "sha256": "34231cb704c5a25ed0b334234fcf92b07a6ebd50e9cac200973644c15a818074"
+    },
+    {
+      "source": "examples/minimal-video-project/draft/visual-plan/material-beat-map.md",
+      "destination": "examples/minimal-video-project/draft/visual-plan/material-beat-map.md",
+      "sha256": "a87049ea7b5cbc35cc5210b1bb8c66a66152f2d0ee043f08a24073e7fa1b620f"
+    },
+    {
+      "source": "examples/minimal-video-project/draft/web-assets/source-candidates.md",
+      "destination": "examples/minimal-video-project/draft/web-assets/source-candidates.md",
+      "sha256": "ebacb39594783ec6879f8b192642bc8d83eb4ee5a943673340739c2053b31b11"
+    },
+    {
+      "source": "scripts/export-public-workflow.ps1",
+      "destination": "scripts/export-public-workflow.ps1",
+      "sha256": "1c781314a26ce11348d54b2c46768e7e098e9220ec99b9aabe856f0ec792f964"
+    },
+    {
+      "source": "scripts/lib/resolve-zimeiti-config.ps1",
+      "destination": "scripts/lib/resolve-zimeiti-config.ps1",
+      "sha256": "a34d1ef664a419511b2ceede09e38d84efa11885524930d60ceecd53a18a08da"
+    },
+    {
+      "source": "scripts/workflow_config.py",
+      "destination": "scripts/workflow_config.py",
+      "sha256": "8aada5e5de8664857d831bdc9de9f7a700efd69fe3eb42e153c40b4489d63583"
+    },
+    {
+      "source": "scripts/portable_runtime.py",
+      "destination": "scripts/portable_runtime.py",
+      "sha256": "755514765b621552243aa6e8d133a32991820ae5440cd83fa327de5df2de63a7"
+    },
+    {
+      "source": "scripts/resolve-python-command.ps1",
+      "destination": "scripts/resolve-python-command.ps1",
+      "sha256": "d6ace5f3a9f4adc87ff855edaa19ce9ba0e9365a7715ef9b3911bad89eb7e74b"
+    },
+    {
+      "source": "scripts/generate_mainline_topic_decision.py",
+      "destination": "scripts/generate_mainline_topic_decision.py",
+      "sha256": "895d0b4eb863445ca13ad397e173dc8e079dc24ae58f24d2d064e1d7bcdeb4be"
+    },
+    {
+      "source": "scripts/run-mainline-topic-decision.ps1",
+      "destination": "scripts/run-mainline-topic-decision.ps1",
+      "sha256": "09bff3136e6640135c1e5725628e31617b936f5d3538ee899ac31626549eeebc"
+    },
+    {
+      "source": "scripts/run-ai-daily-topic-chain.ps1",
+      "destination": "scripts/run-ai-daily-topic-chain.ps1",
+      "sha256": "5311ba08dc1f04591627061141cfbf824b7d46fe78c9a6cf05f3246d712b7ded"
+    },
+    {
+      "source": "scripts/run-ai-daily-topic-preflight.ps1",
+      "destination": "scripts/run-ai-daily-topic-preflight.ps1",
+      "sha256": "730c9cde97e502d7ae653f2d308c1715cd6e0771d3bfd5def7802ca509d6cc3a"
+    },
+    {
+      "source": "scripts/run-ai-daily-briefing-chain.ps1",
+      "destination": "scripts/run-ai-daily-briefing-chain.ps1",
+      "sha256": "7d0072dc708ef67c3358fe9d14db1fc90cb9777f59a83a3525ee8a4bbc430f1c"
+    },
+    {
+      "source": "scripts/new-ai-daily-briefing.ps1",
+      "destination": "scripts/new-ai-daily-briefing.ps1",
+      "sha256": "fe91421ffd3c602083c1d51aca9e6cbd5631d502e58d32cf2f675b5faa494d18"
+    },
+    {
+      "source": "scripts/new-video-project.ps1",
+      "destination": "scripts/new-video-project.ps1",
+      "sha256": "9047dd44c0ba3abe7270194ffb8a29dd935dbb2e99d58c8876af8bd2336a27ae"
+    },
+    {
+      "source": "scripts/initialize-video-renderer.ps1",
+      "destination": "scripts/initialize-video-renderer.ps1",
+      "sha256": "d46f210ad6b11378591fe82f695d672fbd14410207a1de1209f66a32f4ea321e"
+    },
+    {
+      "source": "scripts/resolve-workflow-dependencies.ps1",
+      "destination": "scripts/resolve-workflow-dependencies.ps1",
+      "sha256": "dc09c940262495348e2468b3135b32f9a3c0845d4b956b2578e82fa16f395557"
+    },
+    {
+      "source": "scripts/collect-ai-daily-signal-radar.mjs",
+      "destination": "scripts/collect-ai-daily-signal-radar.mjs",
+      "sha256": "deb2fb02efc0c55e963d4794d0a6271818ebc3760e8b947519e62a68c7b8ef6e"
+    },
+    {
+      "source": "scripts/run-trendradar-ai-radar.ps1",
+      "destination": "scripts/run-trendradar-ai-radar.ps1",
+      "sha256": "85b41c6a7b528b7e2f5868183a419b46bd57456c830f8484af57f38bc76b206d"
+    },
+    {
+      "source": "scripts/run-trendradar-ai-radar-lite.ps1",
+      "destination": "scripts/run-trendradar-ai-radar-lite.ps1",
+      "sha256": "ea8661dd39c34a23c68d1ccaf5c65594af455b2b743880fe0b52f82bbc15a355"
+    },
+    {
+      "source": "scripts/run-indextts2-batch.py",
+      "destination": "scripts/run-indextts2-batch.py",
+      "sha256": "16c14af387db2273a237bedcf3d9dd3dd8251390bd58a5774f1241a58df7a41d"
+    },
+    {
+      "source": "scripts/run-indextts2-long.py",
+      "destination": "scripts/run-indextts2-long.py",
+      "sha256": "476a1a1309d7ecbc1cdd1409fcaabad5dbd71ae27e6824cecf794d56565a5fe3"
+    },
+    {
+      "source": "scripts/run-indextts2-chapters.ps1",
+      "destination": "scripts/run-indextts2-chapters.ps1",
+      "sha256": "c452c82352400ac22e9a5911e22c43903f3f08ed48a2fab4fc5c297399ecca6b"
+    },
+    {
+      "source": "scripts/rebuild-hyperframes-captions-from-asr.py",
+      "destination": "scripts/rebuild-hyperframes-captions-from-asr.py",
+      "sha256": "64d83270ea31926dbf59b4cb8db15137c25edf91f3485bf3c4345368a8866b84"
+    },
+    {
+      "source": "scripts/verify-srt-timeline.py",
+      "destination": "scripts/verify-srt-timeline.py",
+      "sha256": "619d177d255ad4e1cdfc15fc171a28a183157d9c69501c66afe9a9f7f9e727e1"
+    },
+    {
+      "source": "scripts/invoke-video-wrap-up.ps1",
+      "destination": "scripts/invoke-video-wrap-up.ps1",
+      "sha256": "494f1bb2a8a1eb8b2c06e9464dc06ca62cbe9d1dd12ab593163a0489176e3326"
+    },
+    {
+      "source": "scripts/run-video-draft-qa.ps1",
+      "destination": "scripts/run-video-draft-qa.ps1",
+      "sha256": "aec8e9411b2844d8125004ef642b99b151b4b6a870f4b801817462c795f71c30"
+    },
+    {
+      "source": "scripts/test-workflow-capabilities.ps1",
+      "destination": "scripts/test-workflow-capabilities.ps1",
+      "sha256": "c20f08eac376c3722b42ce6802b0a4c91d0d6d7aa616bb42ee4c1ca825898011"
+    },
+    {
+      "source": "scripts/test-public-release.ps1",
+      "destination": "scripts/test-public-release.ps1",
+      "sha256": "fc6fdbd71367a35e094a9fdee600ad27a023763ba269fdc60191e26fa9459b59"
+    },
+    {
+      "source": "scripts/update-video-project-state.ps1",
+      "destination": "scripts/update-video-project-state.ps1",
+      "sha256": "09967821f6aed08158cffc5632731f76278e26d0806ec9525eabb3c92ff14fad"
+    },
+    {
+      "source": "scripts/test-video-human-visual-review.ps1",
+      "destination": "scripts/test-video-human-visual-review.ps1",
+      "sha256": "5c0e7e59852dd5ff03fee722a7e47956654420cb2f483e123f4918439cfec659"
+    },
+    {
+      "source": "scripts/test-video-orientation-decision.ps1",
+      "destination": "scripts/test-video-orientation-decision.ps1",
+      "sha256": "cad7e877b430f398c9f3484b4c1cb33e21627cfdb69e3f249f0fef1d0a8d64a6"
+    },
+    {
+      "source": "scripts/test-narration-pacing.ps1",
+      "destination": "scripts/test-narration-pacing.ps1",
+      "sha256": "e7f905a95e240376c76acad40814bb9449f0fa6c578162fe18f7367bf608cdb6"
+    },
+    {
+      "source": "scripts/test-video-visual-task-coverage.ps1",
+      "destination": "scripts/test-video-visual-task-coverage.ps1",
+      "sha256": "3598dcffa5847ea2fc7d450e032010fb58280ee084f453af78799bd7d39c1801"
+    },
+    {
+      "source": "scripts/test-video-material-mix.ps1",
+      "destination": "scripts/test-video-material-mix.ps1",
+      "sha256": "4bbd700022997fd91d513827041dc320b9b91cf9a0c55a56ab76eb0cd4309b01"
+    },
+    {
+      "source": "scripts/new-video-source-candidates.ps1",
+      "destination": "scripts/new-video-source-candidates.ps1",
+      "sha256": "6f97e9586472dd7e94a2faebc46c2d0464e33ac292ebb47d973f5fea3c692ef1"
+    },
+    {
+      "source": "tests/public-export-manifest.tests.ps1",
+      "destination": "tests/public-export-manifest.tests.ps1",
+      "sha256": "a020ad47806cccd15ff7503bb2202bb2b834bd2c18ecafe8c74f3c0d20dbe135"
+    },
+    {
+      "source": "tests/public-export.tests.ps1",
+      "destination": "tests/public-export.tests.ps1",
+      "sha256": "ce1c37dcc2d3cdab6fedff68f8df6571d7b75be11fd9971ea18b73c48af50fbd"
+    },
+    {
+      "source": "tests/workflow-config.tests.ps1",
+      "destination": "tests/workflow-config.tests.ps1",
+      "sha256": "6cdbee267f3bd2ec46604027a3f8a9307abcc7d5bf9493add2ccd35109e93985"
+    },
+    {
+      "source": "tests/test_workflow_config.py",
+      "destination": "tests/test_workflow_config.py",
+      "sha256": "64663d0b124592f76a4891a7b629c60b3aa7aff10bec134f42239d7715bfb6c5"
+    },
+    {
+      "source": "tests/tts-portability.tests.ps1",
+      "destination": "tests/tts-portability.tests.ps1",
+      "sha256": "eeca5a557a7e9cc61362b785dab30124c7c5e57c42b139ffbe5c676fb0efbcb7"
+    },
+    {
+      "source": "tests/test_tts_portability.py",
+      "destination": "tests/test_tts_portability.py",
+      "sha256": "264cd075a34d1040d2a0d2dfe255bb7d45deb45f05c4bd5be5dce25f4042125d"
+    },
+    {
+      "source": "tests/generate_mainline_topic_decision.tests.py",
+      "destination": "tests/generate_mainline_topic_decision.tests.py",
+      "sha256": "08503a4c4a6daa49915606f60bf13f4ce657ec0c6e426c63557e4ac227f6ccf5"
+    },
+    {
+      "source": "tests/ai-mainline-public-example.tests.ps1",
+      "destination": "tests/ai-mainline-public-example.tests.ps1",
+      "sha256": "a5c887ceb194813197f4bb52ffbf66d4b5e348689484f0cd0e5aef531e7eefb0"
+    },
+    {
+      "source": "tests/minimal-video-project.tests.ps1",
+      "destination": "tests/minimal-video-project.tests.ps1",
+      "sha256": "2705a4924137f0e48fe29e96c0ae1f40ceb0ed4aabd8d81e8d4567702d95e5bb"
+    },
+    {
+      "source": "tests/video-wrap-up-portability.tests.ps1",
+      "destination": "tests/video-wrap-up-portability.tests.ps1",
+      "sha256": "db0edd127f1ba6a3f932ff2d27f7c7a37f4fe97608310d24d1f55455dee436a9"
+    },
+    {
+      "source": "tests/workflow-capabilities.tests.ps1",
+      "destination": "tests/workflow-capabilities.tests.ps1",
+      "sha256": "7315fade3b4c0d11db0cf94b0ee39620f8af45ab71dc3240bf1e35bb83f9bbc9"
+    },
+    {
+      "source": "tests/workflow-dependency-resolver.tests.ps1",
+      "destination": "tests/workflow-dependency-resolver.tests.ps1",
+      "sha256": "4e07dd221a12f1e434b0c877f5e27e9ff5f6e53820261e41e85f861173f26158"
+    },
+    {
+      "source": "tests/video-renderer-initializer.tests.ps1",
+      "destination": "tests/video-renderer-initializer.tests.ps1",
+      "sha256": "5a7813004fe23cda2b4a105109883ae79b1d730fbcdbfb66ef76dee20d7e79ec"
+    },
+    {
+      "source": "tests/agent-platform-support.tests.ps1",
+      "destination": "tests/agent-platform-support.tests.ps1",
+      "sha256": "761939af03c9ac5eec8655ede2f169f28a918d5aa5f5367bda21a600a30e4e96"
+    },
+    {
+      "source": "tests/public-doc-links.tests.ps1",
+      "destination": "tests/public-doc-links.tests.ps1",
+      "sha256": "b9a47a85cbc77da81a5bb7379861a5f880cf1a6ee07f90e47f411ae71c035823"
+    },
+    {
+      "source": "tests/public-network-boundary.tests.ps1",
+      "destination": "tests/public-network-boundary.tests.ps1",
+      "sha256": "089c9bf943552fcf96da37720e5a48109def5bcb58d230446e92856cbe22c4bb"
+    },
+    {
+      "source": "tests/video-workflow-contract.tests.ps1",
+      "destination": "tests/video-workflow-contract.tests.ps1",
+      "sha256": "ee4332968c6a20dadcb9a262c8c9401bd2a042d3fba2c97dd7b07d8242e895d9"
+    },
+    {
+      "source": "tests/video-project-state.tests.ps1",
+      "destination": "tests/video-project-state.tests.ps1",
+      "sha256": "23e705d03a9e2032f8ce2d50d0a6d109bafa6e731e063675be312ca5fba26472"
+    },
+    {
+      "source": "tests/video-visual-task-coverage.tests.ps1",
+      "destination": "tests/video-visual-task-coverage.tests.ps1",
+      "sha256": "773e672f262a9fd2511f2e294e582b8e1c18192b3db0a6cb6d53a8c69bf7d544"
+    },
+    {
+      "source": "tests/video-human-visual-review.tests.ps1",
+      "destination": "tests/video-human-visual-review.tests.ps1",
+      "sha256": "5b6f9982f9f5bf5b73e622004785bb353c85fb3065f2f06370ee71c4b0ddf7b3"
+    },
+    {
+      "source": "tests/video-material-visual-task.tests.ps1",
+      "destination": "tests/video-material-visual-task.tests.ps1",
+      "sha256": "f0e020f4fb66da653cc431fd5fb4d9628e8accc83c0f1042f851eba2fa2b5231"
+    },
+    {
+      "source": "tests/public-release.tests.ps1",
+      "destination": "tests/public-release.tests.ps1",
+      "sha256": "52e6453c9de5fcad3ba054bebbf902ea8bce668cce256c1025fa36ea9a7d68e4"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/SKILL.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/SKILL.md",
+      "sha256": "1a61a4076d470388b6e8bda9f14c06132d169f163a6aa27dbdac5a7802ecafc1"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/pipeline.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/pipeline.md",
+      "sha256": "4e72ab0b60963d265b1c369421be8d2463a92c30ab1160c506efe8b88e40581e"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/stage-topic.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/stage-topic.md",
+      "sha256": "f7a09e2bd2756154cf5dc7a402b461985c481f6b722f4745d2d153aa6e6c36e6"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/stage-script-tts.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/stage-script-tts.md",
+      "sha256": "703a637f026f033e2acbd26c1400086079c29ce3290b9e14ba2292e0c22670bb"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/stage-material.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/stage-material.md",
+      "sha256": "44b183d2b37c33d008d3b8d146ad232f17366a82b73e869724eebb7432776f8b"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/stage-assembly.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/stage-assembly.md",
+      "sha256": "272a64216f57e3413cb97a220bd42b4a18e884dc464f3b14fb02430dbf6c74eb"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/stage-qa.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/stage-qa.md",
+      "sha256": "de834fe36b5f737a5504ee8533d73f11f0aa4a13bc44b251eaeaa5e4a8a237f3"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/stage-publish-wrap-up.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/stage-publish-wrap-up.md",
+      "sha256": "97626b20246e7001391a3d32c9ce9d89be02b951e18fc14c84dfee1e550975f2"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/visual-task-coverage-contract.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/visual-task-coverage-contract.md",
+      "sha256": "df02cb9a941466fe0c9248b088aed1afd725604d76b583e36df1854fe4a4c8f4"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-wrap-up/SKILL.md",
+      "destination": ".agents/skills/zimeiti-video-wrap-up/SKILL.md",
+      "sha256": "bd972ef7872b2b9f0063b14d1b41de6178f0a8b60eb05f032bca2192ee77000a"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-wrap-up/references/wrap-up-checklist.md",
+      "destination": ".agents/skills/zimeiti-video-wrap-up/references/wrap-up-checklist.md",
+      "sha256": "c7c64739e1cfddc0c482d64de87ca992b060af4f5e6e81d3b5fc8cb673c271ab"
+    },
+    {
+      "source": "packaging/trae-work/README.md",
+      "destination": "packaging/trae-work/README.md",
+      "sha256": "2f31eb378e652a412d70702c96da1a4904d2170afb9c679a217e980d4b388b1a"
+    },
+    {
+      "source": "packaging/trae-work/installation.md",
+      "destination": "packaging/trae-work/installation.md",
+      "sha256": "9ba1457d16bf59ec78bd44a6a44883dc1434b92d0f0255853717fab288a5b5d9"
+    },
+    {
+      "source": "scripts/export-trae-work-brand-package.ps1",
+      "destination": "scripts/export-trae-work-brand-package.ps1",
+      "sha256": "e844e293237be325342d0149af62789c6e4c3ee53d7fc7ed360f4dbb1cb67af0"
+    },
+    {
+      "source": "scripts/test-trae-work-package.ps1",
+      "destination": "scripts/test-trae-work-package.ps1",
+      "sha256": "c73c57c91926221cc2eae8d331503e70172329c079ee0ef9906001c8dce5fa97"
+    },
+    {
+      "source": "tests/trae-work-brand-package.tests.ps1",
+      "destination": "tests/trae-work-brand-package.tests.ps1",
+      "sha256": "c85aef40a4e132bdd283016408d5fb58529faff678e2c3ac488bc01257898e24"
+    },
+    {
+      "source": ".claude/skills/zimeiti-video-workflow/SKILL.md",
+      "destination": ".claude/skills/zimeiti-video-workflow/SKILL.md",
+      "sha256": "107c222da377f9f1dec9037b24d73daa0b4149746201932ccf1731567bda4605"
+    },
+    {
+      "source": ".claude/skills/zimeiti-video-wrap-up/SKILL.md",
+      "destination": ".claude/skills/zimeiti-video-wrap-up/SKILL.md",
+      "sha256": "17d7d2db761d46d86e2e329c11c1d440da47b4fadac80890170dbdd19e4cde6b"
+    },
+    {
+      "source": "public-export-manifest.json",
+      "destination": "public-export-manifest.json"
+    }
+  ]
 }

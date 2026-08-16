@@ -8,7 +8,7 @@
 
 Full 是所选完整路线的能力检查，不是最低运行门。没有 HyperFrames 时可以使用另一套装配器；没有 IndexTTS2 时把 `tts.local.json` 保持为 `existing-audio`。未安装的路线应标为不可用，不能写成 PASS。
 
-若选择 HyperFrames，可先运行 `initialize-video-renderer.ps1 -ProjectDir <video-dir>` 查看缺项和拟执行命令。只有你确认愿意下载后，才加 `-AcceptDownload`。脚本不会静默安装 Node.js、FFmpeg 或 TTS。
+若选择 HyperFrames，可先运行 `resolve-workflow-dependencies.ps1 -Stage Assembly -ProjectDir <video-dir>` 查看缺项、来源、拟执行命令和替代方案。只有你明确同意后，才使用 `-AcceptAction hyperframes`。脚本不会静默安装 Node.js、FFmpeg 或 TTS。
 
 ## 找不到 `.local.json`
 

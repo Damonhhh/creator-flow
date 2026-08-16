@@ -22,6 +22,7 @@ Use this stage after the spoken script is locked and before assembly, when the v
 
 ## Actions
 
+- Run `scripts\resolve-workflow-dependencies.ps1 -Stage Material` before external search. If Agent Reach is absent, show its user-scoped installation proposal and ask before running it. If the user declines, continue through an installed routed tool, browser research, or user-provided assets and mark the discovery route as degraded.
 - Create or update `draft\web-assets\source-candidates.md` and `draft\visual-plan\material-beat-map.md`.
 - Run Material in this order: `source search -> coverage audit -> still prompt pack -> user still handoff -> still intake -> motion decision -> motion intake -> material-ready`. Do not collapse these into one speculative visual plan.
 - Build the beat map from the locked script and real audio/SRT timing when available. Give every complete spoken sentence or semantic unit a stable `LINE##` ID and one primary visual task: `prove`, `explain`, `analogize`, `transition`, or `close`.
@@ -102,6 +103,7 @@ Use this stage after the spoken script is locked and before assembly, when the v
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\new-video-source-candidates.ps1 -VideoDir <video-dir>
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 -Stage Material
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-video-material-mix.ps1 -VideoDir <video-dir>
 ffprobe -hide_banner <media-path>
 ```

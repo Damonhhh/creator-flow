@@ -31,9 +31,9 @@ foreach ($entry in @($manifest.files)) {
 }
 
 $requiredMappings = @{
-  "open-source/README.md" = "README.md"
-  "open-source/LICENSE" = "LICENSE"
-  "open-source/.gitignore" = ".gitignore"
+  "README.md" = "README.md"
+  "LICENSE" = "LICENSE"
+  ".gitignore" = ".gitignore"
   "public-export-manifest.json" = "public-export-manifest.json"
 }
 foreach ($source in $requiredMappings.Keys) {

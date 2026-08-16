@@ -52,7 +52,7 @@ $ghCommand = Get-Command gh -ErrorAction SilentlyContinue
 $ytDlpCommand = Get-Command yt-dlp -ErrorAction SilentlyContinue
 $curlCommand = Get-Command curl.exe -ErrorAction SilentlyContinue
 $channelAvailabilitySummary = @(
-  "Agent Reach skill routing=available",
+  "Agent Reach route=$(if ($agentReachCommand) { 'available' } else { 'unavailable' })",
   "agent-reach wrapper=$(if ($agentReachCommand) { 'available' } else { 'unavailable' })",
   "mcporter=$(if ($mcporterCommand) { 'available' } else { 'unavailable' })",
   "gh=$(if ($ghCommand) { 'available' } else { 'unavailable' })",
@@ -93,7 +93,7 @@ $markdown = @'
 - Topic: {{TOPIC}}
 - Created at: {{CREATED_AT}}
 - Contract: agent-reach-material-v1
-- Discovery layer: Agent Reach skill routes; use only channels that pass local preflight
+- Discovery layer: Agent Reach when installed; otherwise use only fallback channels that pass local preflight
 - Extraction/download layer: Scrapling / media-downloader
 - External sourcing status: not-assessed
 - Channel availability summary: {{CHANNEL_AVAILABILITY}}
