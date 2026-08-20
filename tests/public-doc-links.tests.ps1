@@ -105,6 +105,8 @@ foreach ($needle in @(
     'Publish Wrap Up',
     'human-visual-review',
     'human-visual-review-vNN.md',
+    'docs/first-real-run.md',
+    'docs/robot-factory-tutorial.md',
     'docs/workflow-thread-map.md',
     'docs/installation.md'
   )) {
@@ -120,6 +122,44 @@ foreach ($needle in @('```mermaid', 'flowchart TB', 'subgraph MAIN', 'subgraph U
 Assert-True ($threadMapText.Contains('Agent Reach')) 'Workflow thread map must explain the material dependency sidecar'
 Assert-True ($threadMapText.Contains('IndexTTS2')) 'Workflow thread map must explain the TTS dependency sidecar'
 Assert-True ($threadMapText.Contains('HyperFrames')) 'Workflow thread map must explain the assembly dependency sidecar'
+
+$realCaseText = Get-PublicDocumentText -Destination 'docs/first-real-run.md'
+foreach ($needle in @(
+    'ready_for_wrap_up',
+    '152.085',
+    '61',
+    '47',
+    'human-visual-review-v01.md',
+    'Publish Wrap Up',
+    'currentStage',
+    'stageStatus',
+    'assets/real-case-ai-literacy-ep02-keyframes.jpg'
+  )) {
+  Assert-True ($realCaseText.Contains($needle)) "Real case guide is missing: $needle"
+}
+Assert-True (-not $realCaseText.Contains('published: true')) 'Real case guide must not claim a successful publish state'
+
+$robotTutorialText = Get-PublicDocumentText -Destination 'docs/robot-factory-tutorial.md'
+foreach ($needle in @(
+    '91.6',
+    'pending_manual_publish',
+    '63',
+    'Seedance',
+    'Agent Reach',
+    'my-first-video',
+    'Core',
+    'Topic',
+    'Script',
+    'assets/robot-factory-showcase-preview.mp4',
+    'assets/robot-keyframes-contact.jpg',
+    'assets/robot-frame-opening.jpg',
+    'assets/robot-frame-evidence.jpg',
+    'assets/robot-frame-ending.jpg'
+  )) {
+  Assert-True ($robotTutorialText.Contains($needle)) "Robot factory tutorial is missing: $needle"
+}
+Assert-True (-not $robotTutorialText.Contains('internal-api-drive-stream.feishu.cn')) 'Robot factory tutorial must not contain expiring Feishu media URLs'
+Assert-True (-not $robotTutorialText.Contains('published: true')) 'Robot factory tutorial must not claim successful platform publishing'
 
 $installationText = Get-PublicDocumentText -Destination 'docs/installation.md'
 foreach ($needle in @(

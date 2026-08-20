@@ -12,6 +12,8 @@ CreatorFlow 来自真实使用中的自媒体生产链路。你可以跑完整�
 
 点击路线图可查看完整节点、阶段交付和 QA 返工规则。
 
+想先看一条实际跑出来的记录，可以读[第一次真实运行：一条 2 分 32 秒的科普视频如何走到可收尾](docs/first-real-run.md)。如果你更想跟着一个完整案例理解流程，可读[机器人工厂实战教程：从一个选题到通过人工验收](docs/robot-factory-tutorial.md)，里面附有 91.6 秒成片和关键帧。
+
 V1 面向 Windows。Core 使用 PowerShell、Python、FFmpeg 和 ffprobe；HyperFrames、IndexTTS2、ASR、视频生成适配器与上传工具按需启用。
 
 ## 它会交付什么
@@ -107,8 +109,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-d
 | QA | 自动检查与人工关键帧复核 | QA 报告、`human-visual-review-vNN.md` |
 | Publish Wrap Up | 封面、文案、发布包与收尾 | `publish\`、状态与同步记录 |
 
-## 仓库里的两个真实起点
+## 真实案例与两个可运行起点
 
+- [第一次真实运行](docs/first-real-run.md)：一条 152 秒科普视频从选题走到自动 QA 和人工关键帧复核；案例准确停在 `ready_for_wrap_up`，没有把尚未执行的发布收尾写成完成。
+- [机器人工厂实战教程](docs/robot-factory-tutorial.md)：用 91.6 秒真实成片讲清选题、脚本、素材、数字人、自动 QA 与人工验收，也解释视频生成模型和视频生产工作流的区别。
 - [离线选题评分示例](examples/ai-mainline-topic/README.md)：用固定候选和可见评分表生成排名、入选理由与淘汰理由，不联网，也不读取个人知识库。
 - [最小视频项目模板](examples/minimal-video-project/README.md)：创建真实项目目录和初始状态，不预填 QA、人工验收或发布成功。
 
@@ -121,7 +125,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run-ai-daily-topic
   -OutputRoot .\output\ai-mainline-topic
 ```
 
-它会生成 `topic-ranking.json` 和 `topic-decision.md`。仓库没有放一条伪装成真实验收结果的成片；视频、人工复核和发布包必须由你在实际项目中生成。
+它会生成 `topic-ranking.json` 和 `topic-decision.md`。真实案例页只展示经过脱敏的生产证据和关键帧，并明确标出尚未执行的 Publish Wrap Up；你自己的视频、人工复核和发布包仍要在实际项目中生成。
 
 ## 缺少依赖时
 
@@ -146,7 +150,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-d
 - 自动 QA 和 human-visual-review 是两道不同的门。
 - 这套仓库负责把链路跑通，不替任何人承诺流量、账号定位或内容判断。
 
-进一步阅读：[完整安装](docs/installation.md) · [项目契约](docs/project-contract.md) · [隐私边界](docs/privacy-boundary.md) · [故障排查](docs/troubleshooting.md)
+进一步阅读：[真实案例](docs/first-real-run.md) · [机器人工厂教程](docs/robot-factory-tutorial.md) · [完整安装](docs/installation.md) · [项目契约](docs/project-contract.md) · [隐私边界](docs/privacy-boundary.md) · [故障排查](docs/troubleshooting.md)
 
 ## 发布前自检
 

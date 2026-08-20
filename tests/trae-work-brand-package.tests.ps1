@@ -20,6 +20,14 @@ try {
   $archive = Join-Path $testRoot 'CreatorFlow-TRAE-Work.zip'
   Assert-True (Test-Path -LiteralPath $packageRoot -PathType Container) 'Package directory was not created'
   Assert-True (Test-Path -LiteralPath $archive -PathType Leaf) 'Package archive was not created'
+  foreach ($relative in @(
+      'docs\first-real-run.md',
+      'docs\workflow-thread-map.md',
+      'docs\assets\real-case-ai-literacy-ep02-keyframes.jpg',
+      'docs\assets\creatorflow-workflow-roadmap.png'
+    )) {
+    Assert-True (Test-Path -LiteralPath (Join-Path $packageRoot $relative) -PathType Leaf) "Brand package is missing required guide asset: $relative"
+  }
 
   $validator = Join-Path $packageRoot 'scripts\test-trae-work-package.ps1'
   & powershell -NoProfile -ExecutionPolicy Bypass -File $validator -PackageRoot $packageRoot
@@ -54,6 +62,16 @@ try {
 
   foreach ($excluded in @('tests', 'public-export-manifest.json', 'scripts\export-public-workflow.ps1', 'scripts\test-public-release.ps1')) {
     Assert-True (-not (Test-Path -LiteralPath (Join-Path $packageRoot $excluded))) "Development-only path included: $excluded"
+  }
+  foreach ($excluded in @(
+      'docs\robot-factory-tutorial.md',
+      'docs\assets\robot-factory-showcase-preview.mp4',
+      'docs\assets\robot-keyframes-contact.jpg',
+      'docs\assets\robot-frame-opening.jpg',
+      'docs\assets\robot-frame-evidence.jpg',
+      'docs\assets\robot-frame-ending.jpg'
+    )) {
+    Assert-True (-not (Test-Path -LiteralPath (Join-Path $packageRoot $excluded))) "Public multi-platform tutorial leaked into TRAE package: $excluded"
   }
 
   Add-Type -AssemblyName System.IO.Compression.FileSystem
