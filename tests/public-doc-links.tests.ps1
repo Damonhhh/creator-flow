@@ -106,7 +106,7 @@ foreach ($needle in @(
     'human-visual-review',
     'human-visual-review-vNN.md',
     'docs/first-real-run.md',
-    'docs/robot-factory-tutorial.md',
+    'https://my.feishu.cn/docx/Lit8djyV9ouskExB6mkcHDPxnee',
     'docs/workflow-thread-map.md',
     'docs/installation.md'
   )) {
@@ -138,28 +138,6 @@ foreach ($needle in @(
   Assert-True ($realCaseText.Contains($needle)) "Real case guide is missing: $needle"
 }
 Assert-True (-not $realCaseText.Contains('published: true')) 'Real case guide must not claim a successful publish state'
-
-$robotTutorialText = Get-PublicDocumentText -Destination 'docs/robot-factory-tutorial.md'
-foreach ($needle in @(
-    '91.6',
-    'pending_manual_publish',
-    '63',
-    'Seedance',
-    'Agent Reach',
-    'my-first-video',
-    'Core',
-    'Topic',
-    'Script',
-    'assets/robot-factory-showcase-preview.mp4',
-    'assets/robot-keyframes-contact.jpg',
-    'assets/robot-frame-opening.jpg',
-    'assets/robot-frame-evidence.jpg',
-    'assets/robot-frame-ending.jpg'
-  )) {
-  Assert-True ($robotTutorialText.Contains($needle)) "Robot factory tutorial is missing: $needle"
-}
-Assert-True (-not $robotTutorialText.Contains('internal-api-drive-stream.feishu.cn')) 'Robot factory tutorial must not contain expiring Feishu media URLs'
-Assert-True (-not $robotTutorialText.Contains('published: true')) 'Robot factory tutorial must not claim successful platform publishing'
 
 $installationText = Get-PublicDocumentText -Destination 'docs/installation.md'
 foreach ($needle in @(
