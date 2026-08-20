@@ -6,7 +6,7 @@
     {
       "source": "README.md",
       "destination": "README.md",
-      "sha256": "5ee22e0f1ded54a0fdb027b3a1742a1c2096c07a6c7acf2f5244ff54630bb3f7"
+      "sha256": "cd36749d151cbb528f1a6032b6cf5b5dffaad0d2dc58b18e2c6d899519d41623"
     },
     {
       "source": "LICENSE",
@@ -44,39 +44,9 @@
       "sha256": "9e1c21a7867bf5bb81fe8fdb6ce53a0c2e3341b36764962fb19327c7d114bcc2"
     },
     {
-      "source": "docs/robot-factory-tutorial.md",
-      "destination": "docs/robot-factory-tutorial.md",
-      "sha256": "99b994c988baf000c1dc4fd377ee318bbac01b7efe112b0b288ed84e38884aae"
-    },
-    {
       "source": "docs/assets/creatorflow-workflow-roadmap.png",
       "destination": "docs/assets/creatorflow-workflow-roadmap.png",
       "sha256": "a8ce850a12f8a69011987992325907bda07fc290913a071eef788096d12b1901"
-    },
-    {
-      "source": "docs/assets/robot-factory-showcase-preview.mp4",
-      "destination": "docs/assets/robot-factory-showcase-preview.mp4",
-      "sha256": "16dd28a0d2cbb303ea02f4518760f353179cbd7f5cf8ba67818ccab843955da0"
-    },
-    {
-      "source": "docs/assets/robot-keyframes-contact.jpg",
-      "destination": "docs/assets/robot-keyframes-contact.jpg",
-      "sha256": "099a19ef6e5a4da4ee5cca3edf686be0691a069681b3c44c6e7ccbfbf27624cd"
-    },
-    {
-      "source": "docs/assets/robot-frame-opening.jpg",
-      "destination": "docs/assets/robot-frame-opening.jpg",
-      "sha256": "25a0d7f6a8668f1c5335c6342f366c2d92ef4dededcafaa189ca7d8387f5539f"
-    },
-    {
-      "source": "docs/assets/robot-frame-evidence.jpg",
-      "destination": "docs/assets/robot-frame-evidence.jpg",
-      "sha256": "ca0ebce23dd071fe1eb00e24baf1007522f74805cfb10fb9bfbafa9afbda2ac0"
-    },
-    {
-      "source": "docs/assets/robot-frame-ending.jpg",
-      "destination": "docs/assets/robot-frame-ending.jpg",
-      "sha256": "f9e3cd95c14f70335289786bb8148c0205597324414a13f11965d2d796ea2f99"
     },
     {
       "source": "docs/assets/real-case-ai-literacy-ep02-keyframes.jpg",
@@ -341,7 +311,7 @@
     {
       "source": "scripts/test-public-release.ps1",
       "destination": "scripts/test-public-release.ps1",
-      "sha256": "4aa72019f342044772e4c7952c99fa85b4f216c2626767433e3c49dcbe0fa17c"
+      "sha256": "5e650377e00d7e7f938ff6bc8296d9129b6fa198d102b7c16db693f1d0803f93"
     },
     {
       "source": "scripts/update-video-project-state.ps1",
@@ -451,7 +421,7 @@
     {
       "source": "tests/public-doc-links.tests.ps1",
       "destination": "tests/public-doc-links.tests.ps1",
-      "sha256": "ba52ac79e36dda4d9c077c0a7c4d7eb16a46cfe8ac5d497ddf4bae33a7047ac2"
+      "sha256": "b4b00d074c7fd5477287a2a75af055cf1f285e16ecd4b36359eeba6fdc57dd98"
     },
     {
       "source": "tests/public-network-boundary.tests.ps1",
@@ -556,7 +526,7 @@
     {
       "source": "scripts/export-trae-work-brand-package.ps1",
       "destination": "scripts/export-trae-work-brand-package.ps1",
-      "sha256": "50c10f534362ba08a001a924b92cc1567416fa3c3c144ac04e7030f8f5c966eb"
+      "sha256": "e844e293237be325342d0149af62789c6e4c3ee53d7fc7ed360f4dbb1cb67af0"
     },
     {
       "source": "scripts/test-trae-work-package.ps1",
@@ -566,7 +536,7 @@
     {
       "source": "tests/trae-work-brand-package.tests.ps1",
       "destination": "tests/trae-work-brand-package.tests.ps1",
-      "sha256": "fe96bb368fd260e1313d6548a296326e5d97868deab884d6c0328b34627db76f"
+      "sha256": "dc40e27d7fbcd681af051a7d73549fe3b1864ce314cbc6bbcdc86ac984788f39"
     },
     {
       "source": ".claude/skills/zimeiti-video-workflow/SKILL.md",

@@ -63,16 +63,6 @@ try {
   foreach ($excluded in @('tests', 'public-export-manifest.json', 'scripts\export-public-workflow.ps1', 'scripts\test-public-release.ps1')) {
     Assert-True (-not (Test-Path -LiteralPath (Join-Path $packageRoot $excluded))) "Development-only path included: $excluded"
   }
-  foreach ($excluded in @(
-      'docs\robot-factory-tutorial.md',
-      'docs\assets\robot-factory-showcase-preview.mp4',
-      'docs\assets\robot-keyframes-contact.jpg',
-      'docs\assets\robot-frame-opening.jpg',
-      'docs\assets\robot-frame-evidence.jpg',
-      'docs\assets\robot-frame-ending.jpg'
-    )) {
-    Assert-True (-not (Test-Path -LiteralPath (Join-Path $packageRoot $excluded))) "Public multi-platform tutorial leaked into TRAE package: $excluded"
-  }
 
   Add-Type -AssemblyName System.IO.Compression.FileSystem
   $zip = [IO.Compression.ZipFile]::OpenRead($archive)
