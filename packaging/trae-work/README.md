@@ -2,11 +2,15 @@
 
 这是交付给 TRAE Work 用户的自媒体视频工作流包，适用于 Windows 桌面端的 Code Mode。
 
+CreatorFlow 管理从选题到发布包的完整生产链路。AIGC、视频生成和数字人只在素材阶段按需要调用，不决定整套工作流。
+
 它把一次内容生产拆成六个可检查的阶段：
 
 `Topic → Script TTS → Material → Assembly → QA → Publish Wrap Up`
 
 你可以跑完整链路，也可以只处理当前阶段。包内提供 Skill、脚本、检查规则和项目模板；账号定位、个人判断、写作风格、知识来源和本次选题需要由使用者自己填写。
+
+想先看实际运行结果，可以读[第一次真实运行](docs/first-real-run.md)；想看四条线程如何交汇，可以打开[工作流线程图](docs/workflow-thread-map.md)。
 
 ## 项目主页
 

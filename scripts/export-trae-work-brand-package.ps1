@@ -65,10 +65,19 @@ $excludedScripts = @(
   'scripts/export-trae-work-brand-package.ps1',
   'scripts/test-trae-work-package.ps1'
 )
+$excludedPublicTutorial = @(
+  'docs/robot-factory-tutorial.md',
+  'docs/assets/robot-factory-showcase-preview.mp4',
+  'docs/assets/robot-keyframes-contact.jpg',
+  'docs/assets/robot-frame-opening.jpg',
+  'docs/assets/robot-frame-evidence.jpg',
+  'docs/assets/robot-frame-ending.jpg'
+)
 $entries = @($manifest.files | Where-Object {
   $relative = ([string]$_.destination -replace '\\', '/')
   ($relative -eq 'LICENSE' -or $relative -match '^(\.agents|config|docs|examples|scripts)/') -and
   $relative -ne 'docs/installation.md' -and
+  $excludedPublicTutorial -notcontains $relative -and
   $excludedScripts -notcontains $relative
 })
 if ($entries.Count -lt 20) { throw "Brand package whitelist is unexpectedly small: $($entries.Count)" }

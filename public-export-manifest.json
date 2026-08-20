@@ -6,7 +6,7 @@
     {
       "source": "README.md",
       "destination": "README.md",
-      "sha256": "a7fd9309551a99c3e0b44d9c9990f7456e9f11bd51eb9af8980139c03acf53f5"
+      "sha256": "5ee22e0f1ded54a0fdb027b3a1742a1c2096c07a6c7acf2f5244ff54630bb3f7"
     },
     {
       "source": "LICENSE",
@@ -39,9 +39,49 @@
       "sha256": "f2367d6ab880dd69696741d9c6919d6d30355d4f7fcd48e95605a4573df07081"
     },
     {
+      "source": "docs/first-real-run.md",
+      "destination": "docs/first-real-run.md",
+      "sha256": "9e1c21a7867bf5bb81fe8fdb6ce53a0c2e3341b36764962fb19327c7d114bcc2"
+    },
+    {
+      "source": "docs/robot-factory-tutorial.md",
+      "destination": "docs/robot-factory-tutorial.md",
+      "sha256": "99b994c988baf000c1dc4fd377ee318bbac01b7efe112b0b288ed84e38884aae"
+    },
+    {
       "source": "docs/assets/creatorflow-workflow-roadmap.png",
       "destination": "docs/assets/creatorflow-workflow-roadmap.png",
       "sha256": "a8ce850a12f8a69011987992325907bda07fc290913a071eef788096d12b1901"
+    },
+    {
+      "source": "docs/assets/robot-factory-showcase-preview.mp4",
+      "destination": "docs/assets/robot-factory-showcase-preview.mp4",
+      "sha256": "16dd28a0d2cbb303ea02f4518760f353179cbd7f5cf8ba67818ccab843955da0"
+    },
+    {
+      "source": "docs/assets/robot-keyframes-contact.jpg",
+      "destination": "docs/assets/robot-keyframes-contact.jpg",
+      "sha256": "099a19ef6e5a4da4ee5cca3edf686be0691a069681b3c44c6e7ccbfbf27624cd"
+    },
+    {
+      "source": "docs/assets/robot-frame-opening.jpg",
+      "destination": "docs/assets/robot-frame-opening.jpg",
+      "sha256": "25a0d7f6a8668f1c5335c6342f366c2d92ef4dededcafaa189ca7d8387f5539f"
+    },
+    {
+      "source": "docs/assets/robot-frame-evidence.jpg",
+      "destination": "docs/assets/robot-frame-evidence.jpg",
+      "sha256": "ca0ebce23dd071fe1eb00e24baf1007522f74805cfb10fb9bfbafa9afbda2ac0"
+    },
+    {
+      "source": "docs/assets/robot-frame-ending.jpg",
+      "destination": "docs/assets/robot-frame-ending.jpg",
+      "sha256": "f9e3cd95c14f70335289786bb8148c0205597324414a13f11965d2d796ea2f99"
+    },
+    {
+      "source": "docs/assets/real-case-ai-literacy-ep02-keyframes.jpg",
+      "destination": "docs/assets/real-case-ai-literacy-ep02-keyframes.jpg",
+      "sha256": "e63d10635142d02ebd37689a165547d72759961dca4f27fadd3692f470c5150d"
     },
     {
       "source": "docs/project-contract.md",
@@ -301,7 +341,7 @@
     {
       "source": "scripts/test-public-release.ps1",
       "destination": "scripts/test-public-release.ps1",
-      "sha256": "fc6fdbd71367a35e094a9fdee600ad27a023763ba269fdc60191e26fa9459b59"
+      "sha256": "4aa72019f342044772e4c7952c99fa85b4f216c2626767433e3c49dcbe0fa17c"
     },
     {
       "source": "scripts/update-video-project-state.ps1",
@@ -411,7 +451,7 @@
     {
       "source": "tests/public-doc-links.tests.ps1",
       "destination": "tests/public-doc-links.tests.ps1",
-      "sha256": "bf586c2f8fa591aed44fedd52674c5672f9e44cf023b6d023ef3a252ad96b1b5"
+      "sha256": "ba52ac79e36dda4d9c077c0a7c4d7eb16a46cfe8ac5d497ddf4bae33a7047ac2"
     },
     {
       "source": "tests/public-network-boundary.tests.ps1",
@@ -506,7 +546,7 @@
     {
       "source": "packaging/trae-work/README.md",
       "destination": "packaging/trae-work/README.md",
-      "sha256": "2f31eb378e652a412d70702c96da1a4904d2170afb9c679a217e980d4b388b1a"
+      "sha256": "708f885e237adc2798a6a3d8cd0bd79fe21ab0bb82ff7b7bfe5e661e81e53d53"
     },
     {
       "source": "packaging/trae-work/installation.md",
@@ -516,17 +556,17 @@
     {
       "source": "scripts/export-trae-work-brand-package.ps1",
       "destination": "scripts/export-trae-work-brand-package.ps1",
-      "sha256": "e844e293237be325342d0149af62789c6e4c3ee53d7fc7ed360f4dbb1cb67af0"
+      "sha256": "50c10f534362ba08a001a924b92cc1567416fa3c3c144ac04e7030f8f5c966eb"
     },
     {
       "source": "scripts/test-trae-work-package.ps1",
       "destination": "scripts/test-trae-work-package.ps1",
-      "sha256": "c73c57c91926221cc2eae8d331503e70172329c079ee0ef9906001c8dce5fa97"
+      "sha256": "2dd630823fe6f77f64b817067a48596ebd4d1fd1fad9c3f7cdd10f2905ca79f3"
     },
     {
       "source": "tests/trae-work-brand-package.tests.ps1",
       "destination": "tests/trae-work-brand-package.tests.ps1",
-      "sha256": "c85aef40a4e132bdd283016408d5fb58529faff678e2c3ac488bc01257898e24"
+      "sha256": "fe96bb368fd260e1313d6548a296326e5d97868deab884d6c0328b34627db76f"
     },
     {
       "source": ".claude/skills/zimeiti-video-workflow/SKILL.md",
