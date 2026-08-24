@@ -6,7 +6,12 @@
     {
       "source": "README.md",
       "destination": "README.md",
-      "sha256": "60aa98c8a198887815568185a9b6f501ba040255ffb6b54bd6c1c07c63ae49cc"
+      "sha256": "ba3a9e4714ff0515ca45b379aef44b034d022f58b492dddc9d511dad17c6e040"
+    },
+    {
+      "source": "CHANGELOG.md",
+      "destination": "CHANGELOG.md",
+      "sha256": "12e61c0771ff603d30fb1048a5944280d2179c31adff4a1b8e6396813aa23829"
     },
     {
       "source": "LICENSE",
