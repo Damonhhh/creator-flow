@@ -511,7 +511,7 @@
     {
       "source": "tests/video-material-visual-task.tests.ps1",
       "destination": "tests/video-material-visual-task.tests.ps1",
-      "sha256": "baf959731172a2dbc3eaa0d655e5bbf054ec575505d0749ee91e20726ccf8203"
+      "sha256": "d7a814e7a139bf01c0e92052714c41b98ffc0c7d17059839e8ae0b0e9c4957df"
     },
     {
       "source": "tests/public-release.tests.ps1",

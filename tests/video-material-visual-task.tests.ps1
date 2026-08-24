@@ -43,8 +43,8 @@ function New-VisualTaskFixture {
 # Internet Source Candidates
 - Contract: agent-reach-material-v1
 - External sourcing status: sourced
-- Channel availability summary: agent-reach wrapper unavailable; mcporter Exa and gh available
-- Search fallback: mcporter Exa -> gh -> local diagram
+- Channel availability summary: browser and direct URL route available
+- Search fallback: direct official URL -> local product capture
 
 ### 1. Official product source
 - Source URL: https://example.com/source
@@ -52,8 +52,8 @@ function New-VisualTaskFixture {
 - Spoken line ID / time: LINE01 00:00-00:08
 - Visual task: prove
 - Material role: prove
-- Agent Reach route / command: mcporter call exa.web_search_exa
-- Channel preflight: mcporter available
+- Agent Reach route / command: browser direct URL capture
+- Channel preflight: browser route available
 $queryLine
 - Useful source timestamp / page region: hero product panel
 - Matched visible subject / action: product input becomes visible result
