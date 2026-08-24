@@ -491,7 +491,7 @@
     {
       "source": "tests/video-screen-ownership.tests.ps1",
       "destination": "tests/video-screen-ownership.tests.ps1",
-      "sha256": "386d0d6197d59d5c3b10c2d546e1835bdf8ba058ba2b58c6bf83936effdb609c"
+      "sha256": "0cf728fee675cc255c7c95ff3064b8ca7bf3c0d38d27d7e0e90282bcb623a0b6"
     },
     {
       "source": "tests/video-project-state.tests.ps1",
