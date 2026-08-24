@@ -59,7 +59,7 @@ try {
 | LINE01 | 00:00-00:04 | Opening. | VT01 | transition | PERSON | avatar-talk | full | n/a | continue-listening | opening | no | n/a | advance | assets/avatar/static-portrait.png | enter | n/a |
 "@
   $result = Invoke-OwnershipCheck -Root $tempRoot
-  Assert-True ($result.ExitCode -ne 0 -and $result.Output -match "talking video") "Expected static avatar to fail"
+  Assert-True ($result.ExitCode -ne 0 -and $result.Output -match "talking video") "Expected static avatar to fail. ExitCode=$($result.ExitCode); Output=$($result.Output)"
 
   Write-BeatMap -Body @"
 | LINE01 | 00:00-00:05 | Generated proof. | VT01 | prove | EVIDENCE | official-proof | full | generated | belief | official-proof | no | https://example.test/proof | prove | generated product page | hold | n/a |
