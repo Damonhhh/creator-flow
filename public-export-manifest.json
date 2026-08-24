@@ -396,7 +396,7 @@
     {
       "source": "tests/public-export.tests.ps1",
       "destination": "tests/public-export.tests.ps1",
-      "sha256": "ce1c37dcc2d3cdab6fedff68f8df6571d7b75be11fd9971ea18b73c48af50fbd"
+      "sha256": "6a20b77c4cffa6339008af9270ae9db7ddca1f507ff55e4a24917a50d6c51782"
     },
     {
       "source": "tests/video-publish-copy.tests.ps1",
@@ -491,7 +491,7 @@
     {
       "source": "tests/video-screen-ownership.tests.ps1",
       "destination": "tests/video-screen-ownership.tests.ps1",
-      "sha256": "a3afa3f6c5d82831c4aeb71e157c8c03b9833b62c22f4272d8a46e19320c0921"
+      "sha256": "bb3c0c152f9d70ed98f9c677bd1cba980fde054819579b0b3d8a117cf9f1dd57"
     },
     {
       "source": "tests/video-project-state.tests.ps1",
@@ -501,7 +501,7 @@
     {
       "source": "tests/video-visual-task-coverage.tests.ps1",
       "destination": "tests/video-visual-task-coverage.tests.ps1",
-      "sha256": "773e672f262a9fd2511f2e294e582b8e1c18192b3db0a6cb6d53a8c69bf7d544"
+      "sha256": "10f5c77cabc2a1549eaaf8a03519a472f0304d5fad7e37ffe3e90205acff3e3d"
     },
     {
       "source": "tests/video-human-visual-review.tests.ps1",
@@ -511,7 +511,7 @@
     {
       "source": "tests/video-material-visual-task.tests.ps1",
       "destination": "tests/video-material-visual-task.tests.ps1",
-      "sha256": "f0e020f4fb66da653cc431fd5fb4d9628e8accc83c0f1042f851eba2fa2b5231"
+      "sha256": "baf959731172a2dbc3eaa0d655e5bbf054ec575505d0749ee91e20726ccf8203"
     },
     {
       "source": "tests/public-release.tests.ps1",

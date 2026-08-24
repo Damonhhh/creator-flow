@@ -2,6 +2,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+. (Join-Path (Join-Path $repoRoot 'scripts') (Join-Path 'lib' 'creatorflow-platform.ps1'))
+$powershellCommand = Get-CreatorFlowPowerShellCommand
 $validator = Join-Path $repoRoot "scripts\test-video-screen-ownership.ps1"
 $tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("zimeiti-screen-owner-test-" + [guid]::NewGuid().ToString("N"))
 
@@ -14,7 +16,7 @@ function Invoke-OwnershipCheck {
   param([string]$Root)
   $previousPreference = $ErrorActionPreference
   $ErrorActionPreference = "Continue"
-  $output = & powershell -NoProfile -ExecutionPolicy Bypass -File $validator -VideoDir $Root 2>&1
+  $output = & $powershellCommand -NoProfile -ExecutionPolicy Bypass -File $validator -VideoDir $Root 2>&1
   $exitCode = $LASTEXITCODE
   $ErrorActionPreference = $previousPreference
   return [pscustomobject]@{ ExitCode = $exitCode; Output = (@($output) -join "`n") }
