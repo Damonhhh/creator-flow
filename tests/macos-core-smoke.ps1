@@ -64,3 +64,7 @@ finally {
     Remove-Item -LiteralPath $testRoot -Recurse -Force
   }
 }
+
+# The renderer consent probe intentionally returns 2. Do not leak that expected
+# child-process status as this smoke test's own exit code.
+exit 0

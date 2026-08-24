@@ -441,7 +441,7 @@
     {
       "source": "tests/macos-core-smoke.ps1",
       "destination": "tests/macos-core-smoke.ps1",
-      "sha256": "b96b96d22bb7a3929b31d63f422ad5d3178327ff3e10874a9380b39042fb8690"
+      "sha256": "20dcce170f6b64a6e7e6d4bcd8d86257cbca1080188c9104e5dbf303396d43f9"
     },
     {
       "source": "tests/video-wrap-up-portability.tests.ps1",
