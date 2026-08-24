@@ -102,11 +102,11 @@ function Resolve-ProjectDeclaredPath {
     )
 
     if ([string]::IsNullOrWhiteSpace($PathValue)) { return $null }
-    $clean = $PathValue.Trim().Trim('`').Trim() -replace '/', '\'
+    $clean = $PathValue.Trim().Trim('`').Trim()
     if ([System.IO.Path]::IsPathRooted($clean)) {
         return [System.IO.Path]::GetFullPath($clean)
     }
-    return [System.IO.Path]::GetFullPath((Join-Path $ProjectRoot $clean))
+    return [System.IO.Path]::GetFullPath((Join-CreatorFlowPath -BasePath $ProjectRoot -RelativePath $clean))
 }
 
 function Get-StableAssetRows {
@@ -138,9 +138,9 @@ function Test-SamePath {
 
     if (-not $Left -or -not $Right) { return $false }
     return [string]::Equals(
-        [System.IO.Path]::GetFullPath($Left).TrimEnd('\'),
-        [System.IO.Path]::GetFullPath($Right).TrimEnd('\'),
-        [System.StringComparison]::OrdinalIgnoreCase
+        [System.IO.Path]::GetFullPath($Left).TrimEnd([char]'\', [char]'/'),
+        [System.IO.Path]::GetFullPath($Right).TrimEnd([char]'\', [char]'/'),
+        (Get-CreatorFlowPathComparison)
     )
 }
 

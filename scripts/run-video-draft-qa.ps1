@@ -224,7 +224,7 @@ function Resolve-MediaSourcePath {
 
     $relativeSrc = $Src -replace '^\./', ''
     $relativeSrc = $relativeSrc -replace '[?#].*$', ''
-    $relativeSrc = $relativeSrc -replace '/', '\'
+    $relativeSrc = $relativeSrc.Replace([char]'\', [System.IO.Path]::DirectorySeparatorChar).Replace([char]'/', [System.IO.Path]::DirectorySeparatorChar)
     $srcPath = Join-Path $AssetsRoot $relativeSrc
     if (Test-Path -LiteralPath $srcPath) {
         return $srcPath
@@ -258,7 +258,7 @@ function Resolve-BackgroundSourcePath {
 
     $relativeUrl = $Url.Trim()
     $relativeUrl = $relativeUrl -replace '[?#].*$', ''
-    $relativeUrl = $relativeUrl -replace '/', '\'
+    $relativeUrl = $relativeUrl.Replace([char]'\', [System.IO.Path]::DirectorySeparatorChar).Replace([char]'/', [System.IO.Path]::DirectorySeparatorChar)
     if ([System.IO.Path]::IsPathRooted($relativeUrl)) {
         return $relativeUrl
     }
@@ -269,7 +269,7 @@ function Resolve-BackgroundSourcePath {
     }
     $candidates.Add((Join-Path $HyperframesDir $relativeUrl))
 
-    $assetRelative = $relativeUrl -replace '^[Aa][Ss][Ss][Ee][Tt][Ss]\\', ''
+    $assetRelative = $relativeUrl -replace '^[Aa][Ss][Ss][Ee][Tt][Ss][\\/]', ''
     $candidates.Add((Join-Path $AssetsRoot $assetRelative))
     $candidates.Add((Join-Path $AssetsRoot ([System.IO.Path]::GetFileName($assetRelative))))
 

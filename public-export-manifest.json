@@ -336,7 +336,7 @@
     {
       "source": "scripts/run-video-draft-qa.ps1",
       "destination": "scripts/run-video-draft-qa.ps1",
-      "sha256": "7d84e88258689f8f78f5f748c652a4d2b8131d7f6199f05ddb4b77d2f7458c79"
+      "sha256": "2da074f5d71ba234c32b85bd0866fa7ac62a29faf996e63373be07c1399681d1"
     },
     {
       "source": "scripts/test-workflow-capabilities.ps1",
@@ -376,7 +376,7 @@
     {
       "source": "scripts/test-video-material-mix.ps1",
       "destination": "scripts/test-video-material-mix.ps1",
-      "sha256": "dacabf6baf1b840ad14f4b845699bac84afcb4015420e38ec6bc35047ba9e19d"
+      "sha256": "8d57cf0c27ba22f0c2301f40339de74557fd8c36a25125978e9fc343c91ec1b6"
     },
     {
       "source": "scripts/test-video-screen-ownership.ps1",
