@@ -476,7 +476,7 @@
     {
       "source": "tests/public-doc-links.tests.ps1",
       "destination": "tests/public-doc-links.tests.ps1",
-      "sha256": "b4b00d074c7fd5477287a2a75af055cf1f285e16ecd4b36359eeba6fdc57dd98"
+      "sha256": "a8fdc870f1c4bd00dfde5816f2a46afcca22d0c76d5fa87e0401cc3a2d7100b4"
     },
     {
       "source": "tests/public-network-boundary.tests.ps1",

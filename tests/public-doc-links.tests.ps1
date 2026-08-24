@@ -56,7 +56,7 @@ foreach ($entry in $markdownEntries) {
     $target = $match.Groups[1].Value.Trim().Split('#')[0]
     if (-not $target -or $target -match '^(https?://|mailto:)') { continue }
     $combined = if ($destinationDir) { Join-Path $destinationDir $target } else { $target }
-    $normalized = [IO.Path]::GetFullPath((Join-Path $repoRoot $combined)).Substring($repoRoot.Length).TrimStart('\').Replace('\', '/')
+    $normalized = [IO.Path]::GetFullPath((Join-Path $repoRoot $combined)).Substring($repoRoot.Length).TrimStart([char]'\', [char]'/').Replace('\', '/')
     Assert-True $destinationSet.ContainsKey($normalized) "Unexported Markdown link '$target' in $($entry.destination)"
   }
 
