@@ -22,9 +22,10 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 $ProjectRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
-. (Join-Path $PSScriptRoot "lib\resolve-zimeiti-config.ps1")
+. (Join-Path (Join-Path $PSScriptRoot "lib") "resolve-zimeiti-config.ps1")
 
 $publishConfig = Get-ZimeitiConfig -RepoRoot $ProjectRoot -Name "publish" -ConfigPath $PublishConfigPath
 if (-not $OutputRoot) {
@@ -149,7 +150,7 @@ function Copy-IfChanged {
   if (Test-Path -LiteralPath $Destination) {
     $srcResolved = (Resolve-Path -LiteralPath $Source).Path
     $destResolved = (Resolve-Path -LiteralPath $Destination).Path
-    if ([string]::Equals($srcResolved, $destResolved, [System.StringComparison]::OrdinalIgnoreCase)) {
+    if ([string]::Equals($srcResolved, $destResolved, (Get-CreatorFlowPathComparison))) {
       return "skip-same:$Destination"
     }
   }
@@ -185,7 +186,7 @@ function Infer-Collection {
   )
   if ($ProvidedCollection) { return $ProvidedCollection }
 
-  $existingManifest = Join-Path $VideoRoot "publish\sync-manifest.json"
+  $existingManifest = Join-CreatorFlowPath -BasePath $VideoRoot -RelativePath "publish/sync-manifest.json"
   $manifest = Read-JsonIfExists $existingManifest
   if ($manifest) {
     if ($manifest.PSObject.Properties.Name -contains "collection" -and $manifest.collection) {
@@ -244,12 +245,12 @@ function Find-Subtitle {
   $publish = Join-Path $VideoRoot "publish"
   $direct = Get-FirstExistingFile @(
     (Join-Path $publish "字幕.srt"),
-    (Join-Path $VideoRoot "hyperframes-app\assets\narration.srt"),
-    (Join-Path $VideoRoot "hyperframes-app\assets\audio\narration.srt")
+    (Join-CreatorFlowPath -BasePath $VideoRoot -RelativePath "hyperframes-app/assets/narration.srt"),
+    (Join-CreatorFlowPath -BasePath $VideoRoot -RelativePath "hyperframes-app/assets/audio/narration.srt")
   )
   if ($direct) { return $direct }
 
-  $voice = Join-Path $VideoRoot "assets\voice"
+  $voice = Join-CreatorFlowPath -BasePath $VideoRoot -RelativePath "assets/voice"
   if (Test-Path -LiteralPath $voice) {
     $latest = Get-ChildItem -LiteralPath $voice -Recurse -File -Include "*display.srt", "*realigned*.srt", "*.srt" -ErrorAction SilentlyContinue |
       Sort-Object LastWriteTimeUtc -Descending |
@@ -440,7 +441,7 @@ function Test-HumanVisualReviewPass {
     [string]$VideoPath
   )
 
-  $validator = Join-Path $ProjectRoot "scripts\test-video-human-visual-review.ps1"
+  $validator = Join-CreatorFlowPath -BasePath $ProjectRoot -RelativePath "scripts/test-video-human-visual-review.ps1"
   if (-not (Test-Path -LiteralPath $validator)) {
     throw "Missing human visual review validator: $validator"
   }
@@ -491,7 +492,7 @@ $videoHash = Get-Sha256 $finalVideoPath
 
 $qaReport = Join-Path $reviewDir "draft-qa-report.md"
 if ($RunQa) {
-  $qaScript = Join-Path $ProjectRoot "scripts\run-video-draft-qa.ps1"
+  $qaScript = Join-CreatorFlowPath -BasePath $ProjectRoot -RelativePath "scripts/run-video-draft-qa.ps1"
   if ($DryRun) {
     Write-Host "dry-run-qa:$qaScript -VideoDir $resolvedVideoDir"
   }
@@ -557,7 +558,7 @@ Write-Utf8Json -Object $qaStamp -Path (Join-Path $reviewDir "qa-stamp.json")
 $publishCopyContractResult = $null
 $publishCopyPlanPath = $null
 if ($publishCopyContractName -eq "publish-copy-v1") {
-  $publishCopyValidator = Join-Path $ProjectRoot "scripts\test-video-publish-copy.ps1"
+  $publishCopyValidator = Join-CreatorFlowPath -BasePath $ProjectRoot -RelativePath "scripts/test-video-publish-copy.ps1"
   if (-not (Test-Path -LiteralPath $publishCopyValidator -PathType Leaf)) {
     throw "Missing publish-copy-v1 validator: $publishCopyValidator"
   }
@@ -708,7 +709,7 @@ foreach ($destination in $destinations.Values) {
 }
 
 if (-not $DryRun) {
-  $stateScript = Join-Path $ProjectRoot "scripts\update-video-project-state.ps1"
+  $stateScript = Join-CreatorFlowPath -BasePath $ProjectRoot -RelativePath "scripts/update-video-project-state.ps1"
   if (Test-Path -LiteralPath $stateScript) {
     & $stateScript `
       -VideoDir $resolvedVideoDir `

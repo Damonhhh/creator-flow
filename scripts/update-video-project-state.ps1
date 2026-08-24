@@ -21,6 +21,7 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 function Resolve-OptionalPath {
   param([string]$PathValue)
@@ -97,7 +98,7 @@ if ($HumanVisualReview) {
   $validator = Join-Path $PSScriptRoot "test-video-human-visual-review.ps1"
   $validationJson = & $validator -VideoDir $videoRoot -VideoPath $renderPath
   $validation = (@($validationJson) -join "`n") | ConvertFrom-Json
-  if (-not [string]::Equals([string]$validation.reviewPath, [string](Resolve-Path -LiteralPath $resolvedHumanReview).Path, [System.StringComparison]::OrdinalIgnoreCase)) {
+  if (-not [string]::Equals([string]$validation.reviewPath, [string](Resolve-Path -LiteralPath $resolvedHumanReview).Path, (Get-CreatorFlowPathComparison))) {
     throw "HumanVisualReview is not the latest accepted review. Expected $($validation.reviewPath), got $resolvedHumanReview"
   }
   $humanReviewValue = $validation.reviewPath

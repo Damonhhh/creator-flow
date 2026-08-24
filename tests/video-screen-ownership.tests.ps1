@@ -2,6 +2,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+. (Join-Path (Join-Path $repoRoot 'scripts') (Join-Path 'lib' 'creatorflow-platform.ps1'))
+$powershellCommand = Get-CreatorFlowPowerShellCommand
 $validator = Join-Path $repoRoot "scripts\test-video-screen-ownership.ps1"
 $tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("zimeiti-screen-owner-test-" + [guid]::NewGuid().ToString("N"))
 
@@ -10,11 +12,17 @@ function Assert-True {
   if (-not $Condition) { throw $Message }
 }
 
+function Get-CompactChildOutput {
+  param([string]$Text)
+  $ansiPattern = "$([char]27)\[[0-9;?]*[ -/]*[@-~]"
+  return (($Text -replace $ansiPattern, '') -replace '[\s|]', '')
+}
+
 function Invoke-OwnershipCheck {
   param([string]$Root)
   $previousPreference = $ErrorActionPreference
   $ErrorActionPreference = "Continue"
-  $output = & powershell -NoProfile -ExecutionPolicy Bypass -File $validator -VideoDir $Root 2>&1
+  $output = & $powershellCommand -NoProfile -ExecutionPolicy Bypass -File $validator -VideoDir $Root 2>&1
   $exitCode = $LASTEXITCODE
   $ErrorActionPreference = $previousPreference
   return [pscustomobject]@{ ExitCode = $exitCode; Output = (@($output) -join "`n") }
@@ -57,13 +65,15 @@ try {
 | LINE01 | 00:00-00:04 | Opening. | VT01 | transition | PERSON | avatar-talk | full | n/a | continue-listening | opening | no | n/a | advance | assets/avatar/static-portrait.png | enter | n/a |
 "@
   $result = Invoke-OwnershipCheck -Root $tempRoot
-  Assert-True ($result.ExitCode -ne 0 -and $result.Output -match "talking video") "Expected static avatar to fail"
+  $compactOutput = Get-CompactChildOutput -Text $result.Output
+  Assert-True ($result.ExitCode -ne 0 -and $compactOutput -match "staticorunspecifiedavatar") "Expected static avatar to fail. ExitCode=$($result.ExitCode); Compact=$compactOutput; Output=$($result.Output)"
 
   Write-BeatMap -Body @"
 | LINE01 | 00:00-00:05 | Generated proof. | VT01 | prove | EVIDENCE | official-proof | full | generated | belief | official-proof | no | https://example.test/proof | prove | generated product page | hold | n/a |
 "@
   $result = Invoke-OwnershipCheck -Root $tempRoot
-  Assert-True ($result.ExitCode -ne 0 -and $result.Output -match "generated material cannot serve as EVIDENCE") "Expected generated evidence to fail"
+  $compactOutput = Get-CompactChildOutput -Text $result.Output
+  Assert-True ($result.ExitCode -ne 0 -and $compactOutput -match "generatedmaterialcannotserveasEVIDENCE") "Expected generated evidence to fail. ExitCode=$($result.ExitCode); Compact=$compactOutput; Output=$($result.Output)"
 
   Write-BeatMap -Body @"
 | LINE01 | 00:00-00:03 | Opening. | VT01 | transition | PERSON | avatar-talk | full | n/a | continue-listening | opening | no | n/a | advance | accepted-avatar opening video | enter | n/a |
@@ -72,7 +82,8 @@ try {
 | LINE04 | 00:09-00:12 | Item three. | VT04 | explain | EXPLAINER | support-card | bridge | internal-animation | understanding | mechanism | no | n/a | explain | support card three | reveal | n/a |
 "@
   $result = Invoke-OwnershipCheck -Root $tempRoot
-  Assert-True ($result.ExitCode -ne 0 -and $result.Output -match "PPT backbone") "Expected consecutive support cards to fail"
+  $compactOutput = Get-CompactChildOutput -Text $result.Output
+  Assert-True ($result.ExitCode -ne 0 -and $compactOutput -match "PPTbackbone") "Expected consecutive support cards to fail. ExitCode=$($result.ExitCode); Compact=$compactOutput; Output=$($result.Output)"
 
   Write-BeatMap -Contract "visual-task-v1; screen-owner-v1; motion-job-v1.1" -Body @"
 | LINE01 | 00:00-00:04 | Opening. | VT01 | transition | PERSON | avatar-talk | full | n/a | continue-listening | opening | no | n/a | advance | presenter full-screen main frame | enter | n/a |

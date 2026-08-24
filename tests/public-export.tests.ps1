@@ -2,6 +2,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+. (Join-Path (Join-Path $repoRoot 'scripts') (Join-Path 'lib' 'creatorflow-platform.ps1'))
+$powershellCommand = Get-CreatorFlowPowerShellCommand
 $exporterPath = Join-Path $repoRoot "scripts\export-public-workflow.ps1"
 $testRoot = Join-Path ([IO.Path]::GetTempPath()) ("zimeiti-public-export-test-" + [guid]::NewGuid().ToString("N"))
 
@@ -43,7 +45,7 @@ function Invoke-ExporterProcess {
   $previousPreference = $ErrorActionPreference
   $ErrorActionPreference = "Continue"
   try {
-    $output = & powershell -NoProfile -ExecutionPolicy Bypass -File $exporterPath @Arguments 2>&1
+    $output = & $powershellCommand -NoProfile -ExecutionPolicy Bypass -File $exporterPath @Arguments 2>&1
     $exitCode = $LASTEXITCODE
   }
   finally {

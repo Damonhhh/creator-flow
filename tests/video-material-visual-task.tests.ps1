@@ -2,6 +2,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+. (Join-Path (Join-Path $repoRoot 'scripts') (Join-Path 'lib' 'creatorflow-platform.ps1'))
+$powershellCommand = Get-CreatorFlowPowerShellCommand
 $validator = Join-Path $repoRoot "scripts\test-video-material-mix.ps1"
 $generator = Join-Path $repoRoot "scripts\new-video-source-candidates.ps1"
 $tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("zimeiti-visual-task-test-" + [guid]::NewGuid().ToString("N"))
@@ -41,8 +43,8 @@ function New-VisualTaskFixture {
 # Internet Source Candidates
 - Contract: agent-reach-material-v1
 - External sourcing status: sourced
-- Channel availability summary: agent-reach wrapper unavailable; mcporter Exa and gh available
-- Search fallback: mcporter Exa -> gh -> local diagram
+- Channel availability summary: browser and direct URL route available
+- Search fallback: direct official URL -> local product capture
 
 ### 1. Official product source
 - Source URL: https://example.com/source
@@ -50,8 +52,8 @@ function New-VisualTaskFixture {
 - Spoken line ID / time: LINE01 00:00-00:08
 - Visual task: prove
 - Material role: prove
-- Agent Reach route / command: mcporter call exa.web_search_exa
-- Channel preflight: mcporter available
+- Agent Reach route / command: browser direct URL capture
+- Channel preflight: browser route available
 $queryLine
 - Useful source timestamp / page region: hero product panel
 - Matched visible subject / action: product input becomes visible result
@@ -109,7 +111,7 @@ function Invoke-MaterialCheck {
   )
   $arguments = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $validator, "-VideoDir", $Fixture)
   if ($NoStateUpdate) { $arguments += "-NoStateUpdate" }
-  $output = & powershell @arguments 2>&1
+  $output = & $powershellCommand @arguments 2>&1
   return [pscustomobject]@{ ExitCode = $LASTEXITCODE; Output = (@($output) -join "`n") }
 }
 
