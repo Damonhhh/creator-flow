@@ -7,7 +7,8 @@ Use this stage when producing covers, publishing copy, final package files, sync
 ## Read First
 
 - `docs\failure-pattern-index.md` (Publish Wrap Up: FP05-FP07, FP12, FP22); open matching details only when triggered.
-- `docs\cover-system.md`.
+- Use the cover-system document routed by the active wrap-up Skill for the current package.
+- `references\publish-copy-contract.md`.
 - `.agents\skills\zimeiti-video-wrap-up\SKILL.md`.
 - The active project's writing-style file and a final human-readable editing pass for public copy.
 
@@ -15,6 +16,7 @@ Use this stage when producing covers, publishing copy, final package files, sync
 
 - QA-approved final render.
 - QA report and frame-inspection evidence.
+- Final script or transcript used by the approved render.
 - Final subtitles when present.
 - Cover source assets, title, body copy, tags, first comment, and collection name.
 
@@ -22,7 +24,10 @@ Use this stage when producing covers, publishing copy, final package files, sync
 
 - Verify or create vertical and horizontal covers through the cover system.
 - Write or verify `review\cover-qa-vNN.md` for the final cover set. This record must name the cover system checks, thumbnail check, visual pass/fail decision, and rejected alternatives when relevant.
-- Run platform copy through the project style layer and `humanize-writing`.
+- Build `draft\publish-copy\publish-copy-plan.json` from the final script/render: viewer brief, at least 8 title candidates across at least 4 angles, scored selection, body continuation, and a substantive first-comment question.
+- Write the final title, body, first comment, tags, and package from the selected promise. Run the project style layer and `humanize-writing` after the content decision, not instead of it.
+- Perform a separate final-copy review and write `review\publish-copy-scorecard-vNN.json` with the exact final script/render paths and SHA-256 values under `sourceBinding`.
+- Run `scripts\test-video-publish-copy.ps1` before formal wrap-up.
 - Ensure final MP4, subtitles, covers, title/body/tags/comment, QA proof, and manifests are package-ready before formal wrap-up.
 - Invoke the project wrap-up script or `zimeiti-video-wrap-up` skill.
 - Verify project `publish\`, waiting-publish, collection, and platform sync paths.
@@ -30,7 +35,9 @@ Use this stage when producing covers, publishing copy, final package files, sync
 ## Hard Gates
 
 - 收尾不是补课：final MP4, QA, subtitles, covers, and copy should already be ready or explicitly repaired here.
-- A downstream publish-copy pass is required when a publish package has title, body, tags, or first comment; `invoke-video-wrap-up.ps1` checks the configured record pattern, PASS status, and review method.
+- A formal public package must satisfy `publish-copy-v1`: complete viewer brief, diverse title matrix, selected title traceability, body/comment continuation, and a fresh independent scorecard. Plan and scorecard hashes must match the actual script/render; the render must also match `latest-render.json` and `qa-stamp.json`. A skill name or handwritten `PASS` marker is not completion evidence.
+- The selected title must be the first visible title in `publish\标题.md`, score at least 24/30, and keep both factual fidelity and script payoff at 4/5 or above.
+- A title may be declarative, but a topic summary with no audience stake, unresolved question, or promised takeaway fails. The body cannot merely restate that summary, and the first comment cannot be only `你怎么看`.
 - A production-director “发布前审片” record is advisory input only. It cannot replace cover QA, publish-copy review, automated QA, SHA-bound human visual review, package manifests, sync, or `zimeiti-video-wrap-up`.
 - A random screenshot is not a cover system output.
 - Cover visual QA must inspect the actual PNG at phone-feed thumbnail size.
@@ -66,7 +73,7 @@ Platform-specific metadata preparation and upload are optional adapter steps, no
 - `publish\publish-manifest.json` and `publish\sync-manifest.json` exist or the blocker is recorded.
 - Latest `review\cover-qa-vNN.md` exists, is PASS, and records actual PNG + thumbnail inspection.
 - Latest `review\human-visual-review-vNN.md` exists, is PASS, cites opened frame evidence, and matches the final render SHA256.
-- A publish-copy review record exists when public copy is generated.
+- `draft\publish-copy\publish-copy-plan.json` and the latest `review\publish-copy-scorecard-vNN.json` pass `test-video-publish-copy.ps1` against the exact final script, render, title/body/comment/tag/package files, plus the current render and QA manifests.
 - Actual vertical and horizontal cover files were opened or checked at platform thumbnail size.
 - Waiting-publish or collection sync paths are verified, or skipped platform actions are named explicitly.
 - Cleanup/archive status is recorded. If cleanup is deferred, state whether it is `pending-preview`, `pending-manual-confirmation`, or `blocked`.

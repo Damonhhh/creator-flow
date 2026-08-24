@@ -56,9 +56,11 @@ Before calling wrap-up done, the project must already have these package-ready a
    - `publish/发布包.md`
 6. Publishing-copy pass:
    - required for formal public videos with title/body/comment/tag copy;
-   - evidence file: `review/publish-copy-pass-vNN.md`;
-   - the record must match the pattern and markers configured in `config/publish.local.json`;
-   - upstream planning notes do not replace this downstream pass.
+   - production plan: `draft/publish-copy/publish-copy-plan.json`;
+   - independent review: `review/publish-copy-scorecard-vNN.json`;
+   - both records bind the final script and approved render by path plus SHA-256;
+   - both must pass `scripts/test-video-publish-copy.ps1` using the pattern configured in `config/publish.local.json`;
+   - a skill name, upstream diagnosis, or handwritten PASS marker does not replace this contract.
 
 If any of these are missing, do not pretend wrap-up is complete. Finish that stage first, then rerun the fast path.
 
@@ -70,7 +72,7 @@ Before running the fast path, open the actual vertical and horizontal PNG files 
 
 - final status: PASS or FAIL;
 - which files were opened;
-- which `zimeiti-cover-system-v1.md` checks were applied;
+- which checks from `cover-system.md` were applied;
 - whether the cover works at phone-feed thumbnail size;
 - whether the base image is current-topic generated art or an explicitly approved reusable series asset;
 - whether any candidate was rejected for looking like a grid, panel, PPT card, abstract icon, reused old hero image, or yesterday's cover with changed text.
@@ -79,11 +81,11 @@ Do not let `publish/` become a staging folder. Extra source MP4s, old source bac
 
 ## Publishing Copy Pass
 
-This pass turns the video package from "artifact summary" into public-facing copy.
+This pass turns the video package from "artifact summary" into public-facing copy. Read `zimeiti-video-workflow\references\publish-copy-contract.md` first.
 
 Before running the fast path, inspect the publish files. If the title, body, first comment, tags, or `发布包.md` read like an internal production summary, or if no configured review record exists, run the copy pass first.
 
-Apply the active project's `account-profile.md` and `writing-style.md`, then perform a final human-readable editing pass. The pass may use any locally available writing skills, but the public workflow does not require a private skill repository.
+Build `draft/publish-copy/publish-copy-plan.json` from the final script/render. Its `source` object must include both paths and their current SHA-256 values. It must also contain the viewer brief, at least 8 title candidates across at least 4 angles, the scored selection, body continuation, and a concrete first-comment question. Apply the active project's `account-profile.md` and `writing-style.md`, then perform a final `$humanize-writing` pass.
 
 Update or verify:
 
@@ -93,14 +95,21 @@ Update or verify:
 - `publish/标签.md`
 - `publish/发布包.md`
 
-Write `review/publish-copy-pass-vNN.md` with:
+Write `review/publish-copy-scorecard-vNN.json` after the final files, with:
 
-- review method or skills applied;
-- previous copy problem;
-- final recommended title;
-- final first comment;
-- files changed;
-- boundary statement that MP4/SRT/covers/QA were or were not changed.
+- independent review method and reviewer;
+- exact selected title ID and title text;
+- `sourceBinding` repeating the exact final script/render paths and hashes reviewed;
+- body continuation/value, first-comment value, voice, and platform scores;
+- all factual, payoff, continuation, humanize, and platform hard checks set from real review.
+
+Run:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-video-publish-copy.ps1 -VideoDir <video-project-dir>
+```
+
+The validator also requires the render hash to match `review/latest-render.json` and `review/qa-stamp.json`. If the script or render changed after review, regenerate the plan hashes and scorecard instead of carrying the old copy forward.
 
 This is allowed during wrap-up only as a missing publishing-package stage. Do not use it to reopen the video edit, rerender, rewrite the script, or change the cover unless the user explicitly asks for that stage.
 
@@ -144,7 +153,7 @@ Final reply must include:
 - vertical cover path;
 - horizontal cover path;
 - publish package path;
-- publish-copy pass record path;
+- publish-copy plan and scorecard paths;
 - waiting-publish directory;
 - skipped items and reasons.
 

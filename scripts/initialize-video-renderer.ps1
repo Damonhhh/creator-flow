@@ -72,8 +72,11 @@ function Get-VideoRendererSetupPlan {
     }
   }
 
+  $offlineCliAvailable = [bool](& $CommandResolver 'hyperframes')
+  $requiredCommands = @('node', 'ffmpeg')
+  if (-not $offlineCliAvailable) { $requiredCommands += @('npm', 'npx') }
   $missing = @()
-  foreach ($command in @('node', 'npm', 'npx', 'ffmpeg')) {
+  foreach ($command in $requiredCommands) {
     if (-not (& $CommandResolver $command)) { $missing += $command }
   }
   if (-not $missing.Contains('node')) {
@@ -102,16 +105,30 @@ function Get-VideoRendererSetupPlan {
     }
   }
 
+  $invocation = if ($offlineCliAvailable) { 'hyperframes' } else { 'npx' }
+  $command = if ($offlineCliAvailable) {
+    'hyperframes init hyperframes-app --example blank --non-interactive'
+  }
+  else {
+    'npx --yes hyperframes@0.7.55 init hyperframes-app --example blank --non-interactive'
+  }
   return [ordered]@{
     ready = $false
     engine = 'hyperframes'
     action = 'scaffold-renderer'
-    consentRequired = $true
+    consentRequired = -not $offlineCliAvailable
     missing = @('hyperframes-app')
     purpose = 'Create the project-local renderer used during Assembly.'
-    command = 'npx --yes hyperframes@0.7.55 init hyperframes-app --example blank --non-interactive'
+    command = $command
+    invocation = $invocation
+    downloadsCode = -not $offlineCliAvailable
     projectPath = $appDir
-    message = 'This command may download an npm package. Ask for permission before running it.'
+    message = if ($offlineCliAvailable) {
+      'The offline HyperFrames CLI is available. Creating the project does not require a network download.'
+    }
+    else {
+      'This command may download an npm package. Ask for permission before running it.'
+    }
   }
 }
 
@@ -124,7 +141,12 @@ if ($MyInvocation.InvocationName -ne '.') {
   if ($plan.action -eq 'scaffold-renderer' -and $AcceptDownload) {
     Push-Location -LiteralPath $project
     try {
-      & npx --yes hyperframes@0.7.55 init hyperframes-app --example blank --non-interactive
+      if ($plan.invocation -eq 'hyperframes') {
+        & hyperframes init hyperframes-app --example blank --non-interactive
+      }
+      else {
+        & npx --yes hyperframes@0.7.55 init hyperframes-app --example blank --non-interactive
+      }
       if ($LASTEXITCODE -ne 0) { throw "HyperFrames initialization failed with exit code $LASTEXITCODE" }
     }
     finally { Pop-Location }

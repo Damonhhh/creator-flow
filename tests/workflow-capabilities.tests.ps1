@@ -32,12 +32,20 @@ try {
   Assert-True $full.capabilities['hyperframes']['required'] 'HyperFrames must be required for the selected route'
   Assert-True (@($full.missingRequired) -contains 'npx') 'Missing requirements must be enumerated'
 
-  $allResolver = { param($name) return $true }
-  $fullNoTts = Get-WorkflowCapabilities -SelectedProfile Full -CommandResolver $allResolver
+  $onlineResolver = { param($name) return $name -ne 'hyperframes' }
+  $fullNoTts = Get-WorkflowCapabilities -SelectedProfile Full -CommandResolver $onlineResolver
   Assert-True $fullNoTts.ready 'Full with renderer commands and no selected TTS should be ready'
   Assert-True (-not $fullNoTts.capabilities['indextts']['required']) 'IndexTTS must remain optional without that route'
   Assert-True ($fullNoTts.capabilities['hyperframes']['invocation'] -match '^npx ') 'HyperFrames must use the project-local npx route'
   Assert-True $fullNoTts.capabilities['hyperframes']['consentRequired'] 'First-use package download must require consent'
+
+  $offlineRendererResolver = { param($name) return $name -in @('powershell', 'python', 'ffmpeg', 'ffprobe', 'node', 'hyperframes') }
+  $fullOfflineRenderer = Get-WorkflowCapabilities -SelectedProfile Full -CommandResolver $offlineRendererResolver
+  Assert-True $fullOfflineRenderer.ready 'The offline HyperFrames CLI should satisfy Full without npm or npx'
+  Assert-True ($fullOfflineRenderer.capabilities['hyperframes']['invocation'] -eq 'hyperframes') 'Offline renderer invocation must use the installed CLI'
+  Assert-True (-not $fullOfflineRenderer.capabilities['hyperframes']['consentRequired']) 'An installed offline renderer must not claim a download'
+
+  $allResolver = { param($name) return $true }
 
   $existingAudio = [pscustomobject]@{ mode = 'existing-audio' }
   $fullExistingAudio = Get-WorkflowCapabilities -SelectedProfile Full -TtsConfig $existingAudio -CommandResolver $allResolver

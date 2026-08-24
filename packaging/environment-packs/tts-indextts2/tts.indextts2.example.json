@@ -1,0 +1,9 @@
+{
+  "mode": "indextts2",
+  "referenceAudio": "",
+  "indexTts": {
+    "repo": "",
+    "python": "",
+    "cacheRoot": ""
+  }
+}

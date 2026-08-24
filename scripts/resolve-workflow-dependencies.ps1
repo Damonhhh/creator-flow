@@ -212,7 +212,8 @@ function Get-DependencyResolutionPlan {
       if (-not $renderer.ready) {
         $missing += @($renderer.missing)
         if ($renderer.action -eq 'scaffold-renderer') {
-          $actions += New-DependencyAction -Id 'hyperframes' -Purpose $renderer.purpose -OfficialSource 'https://www.npmjs.com/package/hyperframes' -Command $renderer.command -Scope 'project-local hyperframes-app directory' -Fallback 'Use another renderer that satisfies the same project and QA contracts.' -AutoExecutable $true -DownloadsCode $true
+          $downloadsCode = if ($renderer.PSObject.Properties['downloadsCode']) { [bool]$renderer.downloadsCode } else { $true }
+          $actions += New-DependencyAction -Id 'hyperframes' -Purpose $renderer.purpose -OfficialSource 'https://www.npmjs.com/package/hyperframes' -Command $renderer.command -Scope 'project-local hyperframes-app directory' -Fallback 'Use another renderer that satisfies the same project and QA contracts.' -AutoExecutable $true -DownloadsCode $downloadsCode
         }
         elseif ($renderer.action -eq 'install-prerequisites') {
           foreach ($name in @($renderer.missing)) {

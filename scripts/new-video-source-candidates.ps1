@@ -52,6 +52,7 @@ $ghCommand = Get-Command gh -ErrorAction SilentlyContinue
 $ytDlpCommand = Get-Command yt-dlp -ErrorAction SilentlyContinue
 $curlCommand = Get-Command curl.exe -ErrorAction SilentlyContinue
 $channelAvailabilitySummary = @(
+  "Agent Reach skill routing=available",
   "Agent Reach route=$(if ($agentReachCommand) { 'available' } else { 'unavailable' })",
   "agent-reach wrapper=$(if ($agentReachCommand) { 'available' } else { 'unavailable' })",
   "mcporter=$(if ($mcporterCommand) { 'available' } else { 'unavailable' })",
@@ -93,7 +94,7 @@ $markdown = @'
 - Topic: {{TOPIC}}
 - Created at: {{CREATED_AT}}
 - Contract: agent-reach-material-v1
-- Discovery layer: Agent Reach when installed; otherwise use only fallback channels that pass local preflight
+- Discovery layer: Agent Reach skill routes; use only channels that pass local preflight
 - Extraction/download layer: Scrapling / media-downloader
 - External sourcing status: not-assessed
 - Channel availability summary: {{CHANNEL_AVAILABILITY}}
@@ -188,30 +189,33 @@ $beatMap = @'
 
 - Topic: {{TOPIC}}
 - Created at: {{CREATED_AT}}
-- Contract: visual-task-v1; motion-job-v1.1
-- Use this file before HyperFrames assembly. Replace every TODO row with the actual spoken sentence, exact time, visual task, source path, motion job, and fallback.
+- Contract: visual-task-v1; screen-owner-v1; presenter-led-mixed-media-v1; motion-job-v1.1
+- Use this file before HyperFrames assembly. Replace every TODO row with the actual spoken sentence, exact time, screen owner, presentation mode, source path, motion action, and fallback.
 
 ## Rules
 
 1. Give every complete spoken sentence or semantic unit a stable `LINE##` and one primary visual task: prove, explain, analogize, transition, or close.
 2. This is a coverage rule, not a forced cut rule. Two short consecutive lines may share one `VT##` only when they keep the same visible subject/action and continuous time window.
 3. Job remains the material role: prove, explain, advance, or texture. Map visual tasks as `prove -> prove`, `explain/analogize -> explain`, and `transition/close -> advance`; texture is auxiliary only.
-4. Explain or abstract lines must put the semantic action inside the Motion Treatment column as `motion job: <action>; subject: <visible object>; change: <from state -> to state>; fallback: <fallback plan>`.
+4. Explain or abstract lines must put the semantic action inside the Motion action column as `motion job: <action>; subject: <visible object>; change: <from state -> to state>; fallback: <fallback plan>`.
 5. The action must describe what visibly changes: enter, split, route, compress, connect, verify, fail, resolve, sort, classify, or transform.
 6. Proof lines should use first-hand or product/source material. Explain/analogize lines can use diagrams, generated visuals, Xiaohei scenes, or motion graphics.
 7. Subtitles follow the spoken sentence only and do not count as the visual task.
 8. Do not leave TODO rows before running draft QA.
+9. Decide who owns the frame before choosing an asset: PERSON carries attitude/judgment/questions/turns; EVIDENCE proves; EXPLAINER makes mechanisms understandable; SCENE grounds the claim in real action.
+10. PERSON is a narrative anchor, not a persistent corner sticker. Use Return to person to reclaim judgment after dense proof/explanation; do not fake a handoff with card fly-ins, number scaling, or arrow drawing.
+11. For the default presenter-led style, use a verified talking video for `avatar-talk`; let proof, Demo, real footage, and kinetic images take over the frame; use AIGC only to explain or stage unavailable material. `support-card` is a bridge, not the backbone.
 
 ## Beat Map
 
-| Line ID | Time | Spoken sentence | Task ID | Visual Task | Job | Material | Motion Treatment | Fallback / next action |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LINE01 | 00:00-00:08 | TODO: complete opening sentence | VT01 | prove | advance + prove | TODO: first visible proof or concrete scene | motion job: enter; subject: viewer question and first proof; change: vague question -> visible proof; fallback: caption-safe proof scene with camera push | TODO |
-| LINE02 | 00:08-00:18 | TODO: complete fact sentence | VT02 | prove | prove | TODO: Agent Reach source timestamp, product capture, or recorded operation | motion job: highlight; subject: source claim area; change: full screen -> cited detail; fallback: zoomed crop with readable source label | TODO |
-| LINE03 | 00:18-00:30 | TODO: complete abstract-concept sentence | VT03 | explain | explain | TODO: diagram, Xiaohei scene, or generated explain asset | motion job: split; subject: abstract concept; change: one label -> visible parts; fallback: Xiaohei scene showing the split action | TODO |
-| LINE04 | 00:30-00:42 | TODO: complete process sentence | VT04 | explain | explain + advance | TODO: workflow capture or motion graphic | motion job: route; subject: input request; change: raw input -> verified output state; fallback: step diagram with moving highlight | TODO |
-| LINE05 | 00:42-00:54 | TODO: complete analogy/example sentence | VT05 | analogize | explain | TODO: real case, physical analogy, or side-by-side scene | motion job: compare; subject: two visible states; change: old state -> new state; fallback: side-by-side crop with reveal mask | TODO |
-| LINE06 | 00:54-01:06 | TODO: complete takeaway sentence | VT06 | close | advance | TODO: concrete checklist, action path, or final scene | motion job: compress; subject: action path; change: scattered steps -> one take-away action; fallback: final checklist with sequential highlight | TODO |
+| Line ID | Time | Spoken sentence | Task ID | Visual Task | Owner | Presentation mode | Takeover | Provenance | Purpose | Handoff reason | Return to person | Evidence source | Job | Material | Motion action | Fallback / next action |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LINE01 | 00:00-00:08 | TODO: complete opening sentence | VT01 | transition | PERSON | avatar-talk | full | n/a | continue-listening | opening | no | n/a | advance | TODO: accepted talking avatar video `.mp4` or stable accepted-avatar ID | motion job: enter; subject: viewer question; change: no question -> clear stakes; fallback: accepted talking avatar video with caption-safe framing | TODO |
+| LINE02 | 00:08-00:18 | TODO: complete fact sentence | VT02 | prove | EVIDENCE | official-proof | full | first-party | belief | official-proof | recommended | TODO: source URL/path/demo ID | prove | TODO: Agent Reach source timestamp, product capture, or recorded operation | motion job: highlight; subject: source claim area; change: full page -> cited detail; fallback: zoomed crop with readable source label | TODO |
+| LINE03 | 00:18-00:30 | TODO: complete abstract-concept sentence | VT03 | explain | EXPLAINER | explainer-animation | dominant | internal-animation | understanding | abstract-concept | recommended | n/a | explain | TODO: mechanism animation, kinetic source image, or clearly labeled generated explain asset | motion job: split; subject: abstract concept; change: one state -> visible parts; fallback: concrete process animation showing the split action | TODO |
+| LINE04 | 00:30-00:42 | TODO: complete judgment/reset sentence | VT04 | transition | PERSON | avatar-talk | full | n/a | continue-listening | complex-reset | no | n/a | advance | TODO: accepted talking avatar video `.mp4` returns as main frame | motion job: reclaim; subject: human judgment; change: dense material -> clear decision; fallback: accepted talking avatar video full-screen | TODO |
+| LINE05 | 00:42-00:54 | TODO: complete workflow/example sentence | VT05 | analogize | SCENE | real-footage | full | real-world | reality | workflow | recommended | n/a | explain + advance | TODO: real workflow, production action, or enterprise footage | motion job: follow; subject: real action; change: input -> operational result; fallback: clearly labeled simulated workflow | TODO |
+| LINE06 | 00:54-01:06 | TODO: complete takeaway sentence | VT06 | close | PERSON | avatar-talk | full | n/a | continue-listening | conclusion | no | n/a | advance | TODO: accepted talking avatar video `.mp4` owns final conclusion | motion job: compress; subject: final judgment; change: scattered evidence -> one take-away; fallback: accepted talking avatar video with one supporting phrase | TODO |
 
 ## Asset Intake Notes
 
