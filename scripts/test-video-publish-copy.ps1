@@ -7,11 +7,12 @@
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 
 $videoRoot = (Resolve-Path -LiteralPath $VideoDir -ErrorAction Stop).Path
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
-$planPath = Join-Path $videoRoot "draft\publish-copy\publish-copy-plan.json"
+$planPath = Join-CreatorFlowPath -BasePath $videoRoot -RelativePath "draft/publish-copy/publish-copy-plan.json"
 $reviewDir = Join-Path $videoRoot "review"
 $publishDir = Join-Path $videoRoot "publish"
 $latestRenderPath = Join-Path $reviewDir "latest-render.json"
@@ -109,8 +110,9 @@ function Test-IsPathWithinRoot {
   )
   $normalizedRoot = $Root.TrimEnd('\', '/')
   $prefix = $normalizedRoot + [System.IO.Path]::DirectorySeparatorChar
-  return $Path.Equals($normalizedRoot, [System.StringComparison]::OrdinalIgnoreCase) -or
-    $Path.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)
+  $comparison = Get-CreatorFlowPathComparison
+  return $Path.Equals($normalizedRoot, $comparison) -or
+    $Path.StartsWith($prefix, $comparison)
 }
 
 function Resolve-AllowedFile {
@@ -554,11 +556,11 @@ if ($null -ne $scorecard) {
       $reviewedRenderPath = Resolve-AllowedFile -RelativeOrAbsolutePath $reviewedRenderValue -Label "scorecard.sourceBinding.qaApprovedRender" -AllowedRoots @($videoRoot) -BoundaryLabel "the video project"
     }
     if ($reviewedScriptPath -and $resolvedSourceScriptPath -and
-        -not $reviewedScriptPath.Equals($resolvedSourceScriptPath, [System.StringComparison]::OrdinalIgnoreCase)) {
+        -not $reviewedScriptPath.Equals($resolvedSourceScriptPath, (Get-CreatorFlowPathComparison))) {
       Add-Issue "scorecard.sourceBinding.script does not match plan.source.script"
     }
     if ($reviewedRenderPath -and $resolvedSourceRenderPath -and
-        -not $reviewedRenderPath.Equals($resolvedSourceRenderPath, [System.StringComparison]::OrdinalIgnoreCase)) {
+        -not $reviewedRenderPath.Equals($resolvedSourceRenderPath, (Get-CreatorFlowPathComparison))) {
       Add-Issue "scorecard.sourceBinding.qaApprovedRender does not match plan.source.qaApprovedRender"
     }
 

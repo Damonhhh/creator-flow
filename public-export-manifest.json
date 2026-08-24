@@ -6,12 +6,12 @@
     {
       "source": "README.md",
       "destination": "README.md",
-      "sha256": "ba3a9e4714ff0515ca45b379aef44b034d022f58b492dddc9d511dad17c6e040"
+      "sha256": "12c5ac3bc414f2cb673d0c9f4c1ecafd2eafd6d17aef22db10b39ad5583d2979"
     },
     {
       "source": "CHANGELOG.md",
       "destination": "CHANGELOG.md",
-      "sha256": "12e61c0771ff603d30fb1048a5944280d2179c31adff4a1b8e6396813aa23829"
+      "sha256": "002d388a6f817d7538c11ce7d53de301550a32f8e923173bd846fdeafc3808bd"
     },
     {
       "source": "LICENSE",
@@ -24,6 +24,11 @@
       "sha256": "d687a2b21699e7f31a4a5c7c2f4a27d1c3782f456f062804c186723c93006b07"
     },
     {
+      "source": ".github/workflows/macos-core-beta.yml",
+      "destination": ".github/workflows/macos-core-beta.yml",
+      "sha256": "0a93248b5cc75e78c67a4b1d877ac139586c01f5684d5b65001bee6e9c1899ab"
+    },
+    {
       "source": "pytest.ini",
       "destination": "pytest.ini",
       "sha256": "ca4b82760538130959a0fbe25c21fc5d28cd46fb7a63b1209def6d19e2b40a62"
@@ -31,12 +36,17 @@
     {
       "source": "docs/installation.md",
       "destination": "docs/installation.md",
-      "sha256": "3a11a1a0799a7675969a127877baa5654595bcd933c0164c98ba421a4f8141e5"
+      "sha256": "f76f0cb17b385ca9397eccbc38b7bdbdbb97c97e8cc3a64ee0ce63e0d6c04938"
     },
     {
       "source": "docs/dependency-matrix.md",
       "destination": "docs/dependency-matrix.md",
-      "sha256": "113dffda07f6b20fd9e4d8a3a71334c70711a8848c9a597e9e986608d2e8b034"
+      "sha256": "0893f820287d105cdbef284d230d269aa8616a52da74d2e688e86fd375a5593e"
+    },
+    {
+      "source": "docs/macos-core-beta.md",
+      "destination": "docs/macos-core-beta.md",
+      "sha256": "75f4a89c6510456e3862fd3e372755c15423a24de627a49f2ee5316a36270c15"
     },
     {
       "source": "docs/environment-helper-packs.md",
@@ -201,12 +211,17 @@
     {
       "source": "scripts/export-public-workflow.ps1",
       "destination": "scripts/export-public-workflow.ps1",
-      "sha256": "1c781314a26ce11348d54b2c46768e7e098e9220ec99b9aabe856f0ec792f964"
+      "sha256": "bec66f4b41947269aadbad82417775c50e53740b3271bc48b95eb69d3dba4847"
     },
     {
       "source": "scripts/lib/resolve-zimeiti-config.ps1",
       "destination": "scripts/lib/resolve-zimeiti-config.ps1",
-      "sha256": "a34d1ef664a419511b2ceede09e38d84efa11885524930d60ceecd53a18a08da"
+      "sha256": "1e9dc1f9ee05729c2962a666bfdec2cef35ece1f836c56b86191925130113c98"
+    },
+    {
+      "source": "scripts/lib/creatorflow-platform.ps1",
+      "destination": "scripts/lib/creatorflow-platform.ps1",
+      "sha256": "54f07dea1e717919f67bac5fb9032c428c568c7fd3bd148685902ca74c645c25"
     },
     {
       "source": "scripts/workflow_config.py",
@@ -256,17 +271,17 @@
     {
       "source": "scripts/new-video-project.ps1",
       "destination": "scripts/new-video-project.ps1",
-      "sha256": "9047dd44c0ba3abe7270194ffb8a29dd935dbb2e99d58c8876af8bd2336a27ae"
+      "sha256": "4a9513c7c52f0279055c1c5cc082d40c47499e3774202e54112925eaa537f849"
     },
     {
       "source": "scripts/initialize-video-renderer.ps1",
       "destination": "scripts/initialize-video-renderer.ps1",
-      "sha256": "c4b9c7301168dea806179994350c7f12f7c1b11e1e276bc5179a8090d225548c"
+      "sha256": "c9e0da24e9d04348f4c55289fbe5b88887a1aea2e8e8e43b50ed646c6a5e9bc6"
     },
     {
       "source": "scripts/resolve-workflow-dependencies.ps1",
       "destination": "scripts/resolve-workflow-dependencies.ps1",
-      "sha256": "cfcd3a679512621fe797a98e5b1925a1582d93ffbfae155dad57a18f45726d22"
+      "sha256": "331d5d8c31c6c8d9026c22b2f927c3b4c83cd34d1cbccaab201f572aea2873a8"
     },
     {
       "source": "scripts/collect-ai-daily-signal-radar.mjs",
@@ -311,32 +326,32 @@
     {
       "source": "scripts/invoke-video-wrap-up.ps1",
       "destination": "scripts/invoke-video-wrap-up.ps1",
-      "sha256": "ecd7162d9f0f9275e0660324716483660230163f0be7889920acb51474073c38"
+      "sha256": "60b1d6a9ba74b6c5937e15ed780dec28e9fc07e68fea9bf39ea9770a99bbc4e8"
     },
     {
       "source": "scripts/test-video-publish-copy.ps1",
       "destination": "scripts/test-video-publish-copy.ps1",
-      "sha256": "b645885a06dee739a5d1390477d2c27ec42233899a1fa921ad3042746c6e2ca0"
+      "sha256": "e6b21480e8beb36ff8fa8f9ca61d4cc653a2329d22f4a14d71a4e026fb20bd8e"
     },
     {
       "source": "scripts/run-video-draft-qa.ps1",
       "destination": "scripts/run-video-draft-qa.ps1",
-      "sha256": "5445bc9f16b2ca118fa4b37c86d0d3a8e91995e78ce3826933e8092c201db7e6"
+      "sha256": "7d84e88258689f8f78f5f748c652a4d2b8131d7f6199f05ddb4b77d2f7458c79"
     },
     {
       "source": "scripts/test-workflow-capabilities.ps1",
       "destination": "scripts/test-workflow-capabilities.ps1",
-      "sha256": "e74283c2ac3c62bd07c13abceb0ceadaa042f48deb7ac70edb037b376cd4b7e2"
+      "sha256": "f023f24dfb2a16a075aedd0f1125be889c7a52d8dc83af935fec466b69d475bd"
     },
     {
       "source": "scripts/test-public-release.ps1",
       "destination": "scripts/test-public-release.ps1",
-      "sha256": "265e6cbfe077b2ddf34e0d9c2ad8f49502ea265acfa99d5ac78b0619df37c301"
+      "sha256": "ff32d30e5668e072b9caee1ef64ca3a0c2fc4d3e73d99631473d6ef8b7593b7f"
     },
     {
       "source": "scripts/update-video-project-state.ps1",
       "destination": "scripts/update-video-project-state.ps1",
-      "sha256": "09967821f6aed08158cffc5632731f76278e26d0806ec9525eabb3c92ff14fad"
+      "sha256": "6cce13aa555a3cdeb93c9e8f71ad36b5ac68960c2804162340789d0614760185"
     },
     {
       "source": "scripts/test-video-human-visual-review.ps1",
@@ -356,22 +371,22 @@
     {
       "source": "scripts/test-video-visual-task-coverage.ps1",
       "destination": "scripts/test-video-visual-task-coverage.ps1",
-      "sha256": "3598dcffa5847ea2fc7d450e032010fb58280ee084f453af78799bd7d39c1801"
+      "sha256": "c5fcef355cdd98788ab06b9c33ac989a713a40f63f68c0e1be46d81fa5527639"
     },
     {
       "source": "scripts/test-video-material-mix.ps1",
       "destination": "scripts/test-video-material-mix.ps1",
-      "sha256": "b45782a93f56d744559f9db8d6ebfe93c76ef2aff67d83a564e0ea4a354e5136"
+      "sha256": "dacabf6baf1b840ad14f4b845699bac84afcb4015420e38ec6bc35047ba9e19d"
     },
     {
       "source": "scripts/test-video-screen-ownership.ps1",
       "destination": "scripts/test-video-screen-ownership.ps1",
-      "sha256": "bd89b5b2d6a02a8f729297e64249fcb6eaaa97cde3f6b0bb326dc6e661d0f20a"
+      "sha256": "b2517cc4d306fcce41b346adc47ffdcdd966d9ca12730e9abe624061e5dfaee7"
     },
     {
       "source": "scripts/new-video-source-candidates.ps1",
       "destination": "scripts/new-video-source-candidates.ps1",
-      "sha256": "1085bc0d97258d93ffbb34c3ab9056c796c65dfbe5205a68d8a9642e411d5d86"
+      "sha256": "8779caa85f6cabb4400c32e2dfc00ad6fea87f8d487b15ea22e0f6f3343048da"
     },
     {
       "source": "tests/public-export-manifest.tests.ps1",
@@ -422,6 +437,11 @@
       "source": "tests/minimal-video-project.tests.ps1",
       "destination": "tests/minimal-video-project.tests.ps1",
       "sha256": "2705a4924137f0e48fe29e96c0ae1f40ceb0ed4aabd8d81e8d4567702d95e5bb"
+    },
+    {
+      "source": "tests/macos-core-smoke.ps1",
+      "destination": "tests/macos-core-smoke.ps1",
+      "sha256": "b96b96d22bb7a3929b31d63f422ad5d3178327ff3e10874a9380b39042fb8690"
     },
     {
       "source": "tests/video-wrap-up-portability.tests.ps1",

@@ -4,6 +4,8 @@
 
 **支持平台：** Codex · TRAE Work · Claude Code · OpenClaw · Hermes
 
+**系统状态：** Windows 为当前主线；macOS Core Beta 已开放，覆盖 Intel 与 Apple Silicon 的基础链路测试。详见 [macOS Core Beta](docs/macos-core-beta.md)。
+
 `选题 → 评分 → 脚本 → 素材 → visual plan → 组装 → 渲染 → QA → 发布包 → 收尾`
 
 CreatorFlow 来自真实使用中的自媒体生产链路。你可以跑完整流程，也可以只调用其中一个阶段。仓库提供流程、脚本、检查规则和项目模板；账号定位、个人判断、写作风格与知识库由你自己补入。
@@ -24,7 +26,7 @@ CreatorFlow 来自真实使用中的自媒体生产链路。你可以跑完整�
 
 想先看一条实际跑出来的记录，可以读[第一次真实运行：一条 2 分 32 秒的科普视频如何走到可收尾](docs/first-real-run.md)。如果你更想跟着完整案例理解流程，可读飞书教程：[CreatorFlow 实战：从一个选题到通过人工验收](https://my.feishu.cn/docx/Lit8djyV9ouskExB6mkcHDPxnee)。
 
-V1 面向 Windows。Core 使用 PowerShell、Python、FFmpeg 和 ffprobe；HyperFrames、IndexTTS2、ASR、视频生成适配器与上传工具按需启用。
+Windows 是当前完整主线。macOS Core Beta 使用 PowerShell 7、Python 3、FFmpeg 和 ffprobe；HyperFrames 按需启用，本地声音克隆与自动上传暂不列入 Mac 支持承诺。
 
 ## 它会交付什么
 
@@ -56,6 +58,8 @@ Publish Wrap Up    成片、封面、发布文案和 publish/ 发布包
 所有平台共用 `.agents/skills/` 中的主流程、脚本和检查规则。Claude Code 的薄入口位于 `.claude/skills/`；它只负责发现主 Skill，不复制工作流。第一次运行见[安装与第一次运行](docs/installation.md#7-在-agent-中推进六个阶段)。
 
 ### 手动开始
+
+下面是 Windows 命令。Mac 用户请使用 `pwsh` 和 `/` 路径，直接跟随 [macOS Core Beta](docs/macos-core-beta.md)。
 
 ```powershell
 git clone https://github.com/Damonhhh/creator-flow.git

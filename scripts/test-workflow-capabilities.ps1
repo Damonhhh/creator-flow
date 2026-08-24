@@ -14,6 +14,7 @@ $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
 
 $script:RepoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 function Test-CommandAvailable {
   param([string]$Name)
@@ -74,7 +75,12 @@ function Get-IndexTtsReadiness {
   $configuredPython = [string](Get-PropertyValue -Object $indexTts -Name 'python' -Default '')
   $python = Resolve-ConfiguredPath -PathValue $configuredPython
   if ([string]::IsNullOrWhiteSpace($python) -and $sourceAvailable) {
-    $defaultPython = Join-Path $repo '.venv\Scripts\python.exe'
+    $defaultPython = if ((Get-CreatorFlowPlatform) -eq 'windows') {
+      Join-CreatorFlowPath -BasePath $repo -RelativePath '.venv/Scripts/python.exe'
+    }
+    else {
+      Join-CreatorFlowPath -BasePath $repo -RelativePath '.venv/bin/python'
+    }
     if (Test-Path -LiteralPath $defaultPython -PathType Leaf) { $python = $defaultPython }
   }
   $runtimeAvailable = -not [string]::IsNullOrWhiteSpace($python) -and (Test-Path -LiteralPath $python -PathType Leaf)
@@ -134,6 +140,7 @@ function Get-WorkflowCapabilities {
 
   $pythonCommand = ''
   if (& $CommandResolver 'python') { $pythonCommand = 'python' }
+  elseif (& $CommandResolver 'python3') { $pythonCommand = 'python3' }
   elseif (& $CommandResolver 'py') { $pythonCommand = 'py' }
 
   $nodeAvailable = [bool](& $CommandResolver 'node')
@@ -150,7 +157,8 @@ function Get-WorkflowCapabilities {
   $indexTtsReadiness = Get-IndexTtsReadiness -TtsConfig $TtsConfig
   $indexTtsAvailable = [bool]$indexTtsReadiness.ready
 
-  $powershellCap = (New-CapabilityRecord -Available ([bool](& $CommandResolver 'powershell')) -Required $true -Purpose 'Run workflow entry points and quality gates.' -InstallUrl 'https://learn.microsoft.com/powershell/' -Invocation 'powershell');
+  $powershellCommand = if (& $CommandResolver 'pwsh') { 'pwsh' } elseif (& $CommandResolver 'powershell') { 'powershell' } else { '' }
+  $powershellCap = (New-CapabilityRecord -Available (-not [string]::IsNullOrWhiteSpace($powershellCommand)) -Required $true -Purpose 'Run workflow entry points and quality gates.' -InstallUrl 'https://learn.microsoft.com/powershell/scripting/install/install-powershell-on-macos' -Invocation $powershellCommand);
   $pythonCap = (New-CapabilityRecord -Available (-not [string]::IsNullOrWhiteSpace($pythonCommand)) -Required $true -Purpose 'Run topic, subtitle, and helper scripts.' -InstallUrl 'https://www.python.org/downloads/' -Invocation $pythonCommand);
   $ffmpegCap = (New-CapabilityRecord -Available ([bool](& $CommandResolver 'ffmpeg')) -Required $true -Purpose 'Process, sample, and encode media.' -InstallUrl 'https://ffmpeg.org/download.html' -Invocation 'ffmpeg');
   $ffprobeCap = (New-CapabilityRecord -Available ([bool](& $CommandResolver 'ffprobe')) -Required $true -Purpose 'Inspect media duration, streams, and codecs.' -InstallUrl 'https://ffmpeg.org/download.html' -Invocation 'ffprobe');

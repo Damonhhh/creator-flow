@@ -8,6 +8,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 function Get-NormalizedFullPath {
   param([Parameter(Mandatory = $true)][string]$PathValue)
@@ -19,9 +20,9 @@ function Test-PathInsideRoot {
     [Parameter(Mandatory = $true)][string]$PathValue,
     [Parameter(Mandatory = $true)][string]$RootValue
   )
-  $path = (Get-NormalizedFullPath $PathValue).TrimEnd('\')
-  $root = (Get-NormalizedFullPath $RootValue).TrimEnd('\')
-  return $path.StartsWith($root + "\", [StringComparison]::OrdinalIgnoreCase)
+  $path = (Get-NormalizedFullPath $PathValue).TrimEnd('\', '/')
+  $root = (Get-NormalizedFullPath $RootValue).TrimEnd('\', '/')
+  return $path.StartsWith($root + [IO.Path]::DirectorySeparatorChar, (Get-CreatorFlowPathComparison))
 }
 
 function Resolve-SafeDestination {
@@ -29,17 +30,17 @@ function Resolve-SafeDestination {
     [Parameter(Mandatory = $true)][string]$PathValue,
     [Parameter(Mandatory = $true)][string]$SourceRoot
   )
-  $resolved = (Get-NormalizedFullPath $PathValue).TrimEnd('\')
-  $driveRoot = ([IO.Path]::GetPathRoot($resolved)).TrimEnd('\')
-  $source = (Get-NormalizedFullPath $SourceRoot).TrimEnd('\')
-  $userProfile = (Get-NormalizedFullPath ([Environment]::GetFolderPath("UserProfile"))).TrimEnd('\')
+  $resolved = (Get-NormalizedFullPath $PathValue).TrimEnd('\', '/')
+  $driveRoot = ([IO.Path]::GetPathRoot($resolved)).TrimEnd('\', '/')
+  $source = (Get-NormalizedFullPath $SourceRoot).TrimEnd('\', '/')
+  $userProfile = (Get-NormalizedFullPath ([Environment]::GetFolderPath("UserProfile"))).TrimEnd('\', '/')
   $broadRoots = @($driveRoot, $source, $userProfile)
   if ((Split-Path -Leaf $source) -eq "zimeiti") {
     $broadRoots += (Split-Path -Parent $source)
   }
   foreach ($blocked in $broadRoots) {
     if (-not [string]::IsNullOrWhiteSpace($blocked) -and
-        $resolved.Equals($blocked.TrimEnd('\'), [StringComparison]::OrdinalIgnoreCase)) {
+        $resolved.Equals($blocked.TrimEnd('\', '/'), (Get-CreatorFlowPathComparison))) {
       throw "Unsafe public export destination: $resolved"
     }
   }
@@ -68,7 +69,7 @@ function Resolve-ManifestRelativePath {
   if ([IO.Path]::IsPathRooted($RelativePath) -or $RelativePath -match '(^|[\\/])\.\.([\\/]|$)' -or $RelativePath -match '\*\*') {
     throw "Unsafe $Label path in public export manifest: $RelativePath"
   }
-  $resolved = Get-NormalizedFullPath (Join-Path $Root ($RelativePath -replace '/', '\'))
+  $resolved = Get-NormalizedFullPath (Join-CreatorFlowPath -BasePath $Root -RelativePath $RelativePath)
   if (-not (Test-PathInsideRoot -PathValue $resolved -RootValue $Root)) {
     throw "$Label path escapes its root: $RelativePath"
   }

@@ -2,8 +2,8 @@
 
 | 能力 | Core 必需 | 用途 | 缺失时不可用 | 可接受的降级 |
 | --- | --- | --- | --- | --- |
-| PowerShell 5.1 / 7 | 是 | 入口、配置解析与质量门 | 全部 stage 的标准脚本 | 无 |
-| Python 3 | 是 | 选题、音频与辅助检查 | Python 驱动的处理和测试 | 无 |
+| PowerShell 5.1 / 7 | 是 | 入口、配置解析与质量门；macOS 只使用 PowerShell 7 | 全部 stage 的标准脚本 | 无 |
+| Python 3 | 是 | 选题、音频与辅助检查；接受 `python3`、`python` 或 Windows `py` | Python 驱动的处理和测试 | 无 |
 | FFmpeg | 是 | 音视频处理、抽帧与编码 | Assembly、QA、wrap-up 的媒体操作 | 无 |
 | ffprobe | 是 | 时长、流和编码探测 | QA 无法验证真实媒体 | 无 |
 | Agent Reach | 否 | Material 阶段的多渠道素材发现与预检 | 统一的搜索、视频、社交和仓库路由 | 使用已安装的渠道工具、浏览器检索或用户提供素材，并记录降级 |
@@ -21,6 +21,14 @@ Core 命令：
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-workflow-capabilities.ps1 -Profile Core
 ```
+
+macOS Core Beta 使用：
+
+```powershell
+pwsh -NoProfile -File ./scripts/test-workflow-capabilities.ps1 -Profile Core
+```
+
+macOS Beta 暂不承诺 IndexTTS2 本地声音克隆、CUDA、Windows 离线包和自动上传；建议使用已有旁白、已核对字幕与手动发布。完整边界见 [macOS Core Beta](macos-core-beta.md)。
 
 Full 命令：
 

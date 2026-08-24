@@ -6,17 +6,18 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 $root = (Resolve-Path -LiteralPath $VideoDir -ErrorAction Stop).Path
-$carryoverFile = Join-Path $root "draft\production-carryover.md"
-$sourceFile = Join-Path $root "draft\web-assets\source-candidates.md"
-$beatMapFile = Join-Path $root "draft\visual-plan\material-beat-map.md"
-$generatedMotionPlanFile = Join-Path $root "draft\visual-plan\generated-motion-asset-plan.md"
-$stillPromptPackFile = Join-Path $root "draft\visual-plan\still-image-prompt-pack.md"
-$sourceImageRenameMapFile = Join-Path $root "draft\visual-plan\source-image-rename-map.md"
-$motionPromptPackFile = Join-Path $root "draft\visual-plan\motion-video-prompt-pack.md"
-$sourceMotionRenameMapFile = Join-Path $root "draft\visual-plan\source-motion-rename-map.md"
-$motionVideoIntakeFile = Join-Path $root "draft\visual-plan\motion-video-intake.md"
+$carryoverFile = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/production-carryover.md"
+$sourceFile = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/web-assets/source-candidates.md"
+$beatMapFile = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/visual-plan/material-beat-map.md"
+$generatedMotionPlanFile = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/visual-plan/generated-motion-asset-plan.md"
+$stillPromptPackFile = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/visual-plan/still-image-prompt-pack.md"
+$sourceImageRenameMapFile = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/visual-plan/source-image-rename-map.md"
+$motionPromptPackFile = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/visual-plan/motion-video-prompt-pack.md"
+$sourceMotionRenameMapFile = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/visual-plan/source-motion-rename-map.md"
+$motionVideoIntakeFile = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/visual-plan/motion-video-intake.md"
 
 $issues = New-Object System.Collections.Generic.List[string]
 $materialNextAction = "Resolve material QA blockers before Assembly."
@@ -836,8 +837,8 @@ if (-not (Test-Path -LiteralPath $generatedMotionPlanFile)) {
                             }
                         }
 
-                        $expectedIncoming = Join-Path $root "assets\generated\incoming"
-                        $expectedAccepted = Join-Path $root "assets\generated\accepted"
+$expectedIncoming = Join-CreatorFlowPath -BasePath $root -RelativePath "assets/generated/incoming"
+$expectedAccepted = Join-CreatorFlowPath -BasePath $root -RelativePath "assets/generated/accepted"
                         $declaredIncoming = Resolve-ProjectDeclaredPath -ProjectRoot $root -PathValue (Get-DeclaredFieldValue -Text $generatedPlanText -Name "Returned stills folder")
                         $declaredAccepted = Resolve-ProjectDeclaredPath -ProjectRoot $root -PathValue (Get-DeclaredFieldValue -Text $generatedPlanText -Name "Accepted stills folder")
                         if (-not (Test-SamePath -Left $declaredIncoming -Right $expectedIncoming)) {
@@ -1032,7 +1033,7 @@ if (-not (Test-Path -LiteralPath $generatedMotionPlanFile)) {
                                     }
 
                                     if ($provider -match '(?i)(Grok|third-party)') {
-                                        $metadataPath = Join-Path (Join-Path $root "assets\motion\raw") ($motionId + ".generation.json")
+$metadataPath = Join-Path (Join-CreatorFlowPath -BasePath $root -RelativePath "assets/motion/raw") ($motionId + ".generation.json")
                                         if (-not (Test-Path -LiteralPath $metadataPath)) {
                                             $issues.Add("Third-party Grok motion $motionId is missing sibling .generation.json provenance.")
                                         } else {

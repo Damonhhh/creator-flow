@@ -10,6 +10,9 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
+$script:PowerShellCommand = Get-CreatorFlowPowerShellCommand
+$script:PythonCommand = Get-CreatorFlowPythonCommand
 
 if ([string]::IsNullOrWhiteSpace($PackageRoot)) {
   $PackageRoot = Join-Path $PSScriptRoot '..'
@@ -21,8 +24,9 @@ function Resolve-PublicPackagePath {
     throw "Unsafe package path: $RelativePath"
   }
   $resolvedRoot = [IO.Path]::GetFullPath($Root).TrimEnd('\', '/')
-  $resolved = [IO.Path]::GetFullPath((Join-Path $resolvedRoot ($RelativePath -replace '/', '\')))
-  if (-not $resolved.StartsWith($resolvedRoot + '\', [StringComparison]::OrdinalIgnoreCase)) {
+  $resolved = [IO.Path]::GetFullPath((Join-CreatorFlowPath -BasePath $resolvedRoot -RelativePath $RelativePath))
+  $prefix = $resolvedRoot + [IO.Path]::DirectorySeparatorChar
+  if (-not $resolved.StartsWith($prefix, (Get-CreatorFlowPathComparison))) {
     throw "Package path escapes root: $RelativePath"
   }
   return $resolved
@@ -182,7 +186,7 @@ function Invoke-ReleaseProcess {
 function Invoke-PowerShellReleaseTest {
   param([string]$PackageRoot, [string]$RelativePath)
   $path = Resolve-PublicPackagePath -Root $PackageRoot -RelativePath $RelativePath
-  $result = Invoke-ReleaseProcess -FilePath 'powershell' -Arguments @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $path) -WorkingDirectory $PackageRoot
+  $result = Invoke-ReleaseProcess -FilePath $script:PowerShellCommand -Arguments @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $path) -WorkingDirectory $PackageRoot
   if ($result.ExitCode -ne 0) { throw "Release test failed: $RelativePath`n$($result.Output)" }
   return [pscustomobject]@{ Test = $RelativePath; Status = 'PASS' }
 }
@@ -192,7 +196,7 @@ function Invoke-PythonReleaseTests {
   $results = @()
   foreach ($relativePath in $RelativePaths) {
     $path = Resolve-PublicPackagePath -Root $PackageRoot -RelativePath $relativePath
-    $result = Invoke-ReleaseProcess -FilePath 'python' -Arguments @($path) -WorkingDirectory $PackageRoot
+    $result = Invoke-ReleaseProcess -FilePath $script:PythonCommand -Arguments @($path) -WorkingDirectory $PackageRoot
     if ($result.ExitCode -ne 0) { throw "Python release test failed: $relativePath`n$($result.Output)" }
     $results += [pscustomobject]@{ Test = $relativePath; Status = 'PASS' }
   }
@@ -222,14 +226,14 @@ function Invoke-PublicReleaseAudit {
   $git = Test-PublicGitState -PackageRoot $root -Manifest $manifest
   $layout = Test-PublicRequiredLayout -PackageRoot $root
 
-  $scan = Invoke-ReleaseProcess -FilePath 'powershell' -Arguments @(
-    '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $root 'scripts\export-public-workflow.ps1'),
+  $scan = Invoke-ReleaseProcess -FilePath $script:PowerShellCommand -Arguments @(
+    '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-CreatorFlowPath -BasePath $root -RelativePath 'scripts/export-public-workflow.ps1'),
     '-ManifestPath', (Join-Path $root 'public-export-manifest.json'), '-ScanOnly'
   ) -WorkingDirectory $root
   if ($scan.ExitCode -ne 0) { throw "Privacy scan failed:`n$($scan.Output)" }
 
-  $capabilityResult = Invoke-ReleaseProcess -FilePath 'powershell' -Arguments @(
-    '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $root 'scripts\test-workflow-capabilities.ps1'),
+  $capabilityResult = Invoke-ReleaseProcess -FilePath $script:PowerShellCommand -Arguments @(
+    '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-CreatorFlowPath -BasePath $root -RelativePath 'scripts/test-workflow-capabilities.ps1'),
     '-Profile', $Profile, '-AsJson'
   ) -WorkingDirectory $root
   $capabilities = $capabilityResult.Output | ConvertFrom-Json
@@ -280,9 +284,9 @@ function Invoke-PublicReleaseAudit {
     if (-not (Test-Path -LiteralPath $appDir -PathType Container)) { throw "Full fixture has no hyperframes-app: $videoDir" }
     $npmCheck = Invoke-ReleaseProcess -FilePath 'npm' -Arguments @('run', 'check') -WorkingDirectory $appDir
     if ($npmCheck.ExitCode -ne 0) { throw "Full renderer check failed:`n$($npmCheck.Output)" }
-    $qa = Invoke-ReleaseProcess -FilePath 'powershell' -Arguments @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $root 'scripts\run-video-draft-qa.ps1'), '-VideoDir', $videoDir) -WorkingDirectory $root
+    $qa = Invoke-ReleaseProcess -FilePath $script:PowerShellCommand -Arguments @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-CreatorFlowPath -BasePath $root -RelativePath 'scripts/run-video-draft-qa.ps1'), '-VideoDir', $videoDir) -WorkingDirectory $root
     if ($qa.ExitCode -ne 0) { throw "Full draft QA failed:`n$($qa.Output)" }
-    $wrap = Invoke-ReleaseProcess -FilePath 'powershell' -Arguments @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $root 'scripts\invoke-video-wrap-up.ps1'), '-VideoDir', $videoDir, '-PublishConfigPath', $env:ZIMEITI_FULL_RELEASE_PUBLISH_CONFIG, '-DryRun') -WorkingDirectory $root
+    $wrap = Invoke-ReleaseProcess -FilePath $script:PowerShellCommand -Arguments @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-CreatorFlowPath -BasePath $root -RelativePath 'scripts/invoke-video-wrap-up.ps1'), '-VideoDir', $videoDir, '-PublishConfigPath', $env:ZIMEITI_FULL_RELEASE_PUBLISH_CONFIG, '-DryRun') -WorkingDirectory $root
     if ($wrap.ExitCode -ne 0) { throw "Full wrap-up DryRun failed:`n$($wrap.Output)" }
   }
 

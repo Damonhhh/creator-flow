@@ -1,4 +1,5 @@
 Set-StrictMode -Version Latest
+. (Join-Path $PSScriptRoot 'creatorflow-platform.ps1')
 
 function Resolve-ZimeitiConfigPath {
   param(
@@ -10,7 +11,7 @@ function Resolve-ZimeitiConfigPath {
   if ([IO.Path]::IsPathRooted($expanded)) {
     return [IO.Path]::GetFullPath($expanded)
   }
-  return [IO.Path]::GetFullPath((Join-Path $RepoRoot $expanded))
+  return [IO.Path]::GetFullPath((Join-CreatorFlowPath -BasePath $RepoRoot -RelativePath $expanded))
 }
 
 function Get-ZimeitiNestedProperty {
@@ -36,9 +37,9 @@ function Get-ZimeitiConfig {
     [string[]]$RequiredKeys = @()
   )
   $resolvedRoot = [IO.Path]::GetFullPath($RepoRoot)
-  $examplePath = Join-Path $resolvedRoot ("config\{0}.example.json" -f $Name)
+  $examplePath = Join-CreatorFlowPath -BasePath $resolvedRoot -RelativePath ("config/{0}.example.json" -f $Name)
   $resolvedPath = if ([string]::IsNullOrWhiteSpace($ConfigPath)) {
-    Join-Path $resolvedRoot ("config\{0}.local.json" -f $Name)
+    Join-CreatorFlowPath -BasePath $resolvedRoot -RelativePath ("config/{0}.local.json" -f $Name)
   }
   else {
     Resolve-ZimeitiConfigPath -RepoRoot $resolvedRoot -Value $ConfigPath

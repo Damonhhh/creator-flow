@@ -1,0 +1,36 @@
+name: macOS Core Beta
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core-smoke:
+    name: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-15-intel]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure FFmpeg
+        run: brew list ffmpeg >/dev/null 2>&1 || brew install ffmpeg
+      - name: Show runtime versions
+        shell: pwsh
+        run: |
+          $PSVersionTable.PSVersion
+          node --version
+          python3 --version
+          ffmpeg -version | Select-Object -First 1
+      - name: Run macOS Core smoke
+        shell: pwsh
+        run: ./tests/macos-core-smoke.ps1
+      - name: Run public Core release audit
+        shell: pwsh
+        run: ./scripts/test-public-release.ps1 -Profile Core

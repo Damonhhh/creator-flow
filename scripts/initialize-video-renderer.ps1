@@ -13,6 +13,7 @@ $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
 
 $script:RepoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 function Test-RendererCommand {
   param([string]$Name)
@@ -22,8 +23,8 @@ function Test-RendererCommand {
 function Get-RendererEngine {
   param([string]$ConfigPath)
   if ([string]::IsNullOrWhiteSpace($ConfigPath)) {
-    $local = Join-Path $script:RepoRoot 'config\workflow.local.json'
-    $example = Join-Path $script:RepoRoot 'config\workflow.example.json'
+    $local = Join-CreatorFlowPath -BasePath $script:RepoRoot -RelativePath 'config/workflow.local.json'
+    $example = Join-CreatorFlowPath -BasePath $script:RepoRoot -RelativePath 'config/workflow.example.json'
     $ConfigPath = if (Test-Path -LiteralPath $local -PathType Leaf) { $local } else { $example }
   }
   elseif (-not [IO.Path]::IsPathRooted($ConfigPath)) {

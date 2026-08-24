@@ -5,6 +5,7 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 function Split-MarkdownRow {
   param([string]$Line)
@@ -28,7 +29,7 @@ function Get-Cell {
 }
 
 $root = (Resolve-Path -LiteralPath $VideoDir -ErrorAction Stop).Path
-$beatMapPath = Join-Path $root "draft\visual-plan\material-beat-map.md"
+$beatMapPath = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/visual-plan/material-beat-map.md"
 if (-not (Test-Path -LiteralPath $beatMapPath)) {
   throw "Missing material beat map: $beatMapPath"
 }

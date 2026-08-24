@@ -2,6 +2,15 @@
 
 这里记录每个正式版本对使用者可见的变化。开发过程中的零散提交不单独列出，只有通过公开发布审计并合入 `main` 的内容才会进入版本说明。
 
+## [Unreleased]
+
+### macOS Core Beta
+
+- 增加 Intel 与 Apple Silicon 两组 macOS CI，验证跨平台路径、Core 能力探测、项目初始化、素材目录和组装授权门。
+- PowerShell 入口会在 macOS 使用 `pwsh`，Python 探测增加 `python3`，Agent Reach 的用户级虚拟环境改用 macOS 的 `bin/` 路径。
+- 首版建议使用已有旁白和已核对字幕。IndexTTS2 本地声音克隆、CUDA、Windows 离线包与自动上传仍不在 Mac 支持范围内。
+- 修复依赖解析器中的智能引号与分支闭合问题，避免 IndexTTS2 检查阶段发生参数绑定错误。
+
 ## [0.2.0] - 2026-08-24
 
 ### 补全发布收尾链路

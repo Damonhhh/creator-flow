@@ -9,6 +9,7 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 function Write-Utf8NoBom {
   param(
@@ -31,12 +32,12 @@ if (-not (Test-Path -LiteralPath $resolvedVideoDir)) {
   throw "VideoDir does not exist: $resolvedVideoDir"
 }
 
-$webAssetsDir = Join-Path $resolvedVideoDir "draft\web-assets"
-$visualPlanDir = Join-Path $resolvedVideoDir "draft\visual-plan"
-$generatedIncomingDir = Join-Path $resolvedVideoDir "assets\generated\incoming"
-$generatedAcceptedDir = Join-Path $resolvedVideoDir "assets\generated\accepted"
-$motionIncomingDir = Join-Path $resolvedVideoDir "assets\motion\incoming"
-$motionAcceptedDir = Join-Path $resolvedVideoDir "assets\motion\raw"
+$webAssetsDir = Join-CreatorFlowPath -BasePath $resolvedVideoDir -RelativePath "draft/web-assets"
+$visualPlanDir = Join-CreatorFlowPath -BasePath $resolvedVideoDir -RelativePath "draft/visual-plan"
+$generatedIncomingDir = Join-CreatorFlowPath -BasePath $resolvedVideoDir -RelativePath "assets/generated/incoming"
+$generatedAcceptedDir = Join-CreatorFlowPath -BasePath $resolvedVideoDir -RelativePath "assets/generated/accepted"
+$motionIncomingDir = Join-CreatorFlowPath -BasePath $resolvedVideoDir -RelativePath "assets/motion/incoming"
+$motionAcceptedDir = Join-CreatorFlowPath -BasePath $resolvedVideoDir -RelativePath "assets/motion/raw"
 New-Item -ItemType Directory -Force -Path $webAssetsDir | Out-Null
 New-Item -ItemType Directory -Force -Path $visualPlanDir | Out-Null
 New-Item -ItemType Directory -Force -Path $generatedIncomingDir | Out-Null
@@ -50,7 +51,7 @@ $agentReachCommand = Get-Command agent-reach -ErrorAction SilentlyContinue
 $mcporterCommand = Get-Command mcporter -ErrorAction SilentlyContinue
 $ghCommand = Get-Command gh -ErrorAction SilentlyContinue
 $ytDlpCommand = Get-Command yt-dlp -ErrorAction SilentlyContinue
-$curlCommand = Get-Command curl.exe -ErrorAction SilentlyContinue
+$curlCommand = Get-Command $(if ((Get-CreatorFlowPlatform) -eq 'windows') { 'curl.exe' } else { 'curl' }) -ErrorAction SilentlyContinue
 $channelAvailabilitySummary = @(
   "Agent Reach skill routing=available",
   "Agent Reach route=$(if ($agentReachCommand) { 'available' } else { 'unavailable' })",

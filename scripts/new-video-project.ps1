@@ -10,11 +10,12 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 if ([string]::IsNullOrWhiteSpace($Template)) {
   $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
-  $packageTemplate = Join-Path $repoRoot "examples\minimal-video-project"
-  $sourceTemplate = Join-Path $repoRoot "open-source\examples\minimal-video-project"
+  $packageTemplate = Join-CreatorFlowPath -BasePath $repoRoot -RelativePath "examples/minimal-video-project"
+  $sourceTemplate = Join-CreatorFlowPath -BasePath $repoRoot -RelativePath "open-source/examples/minimal-video-project"
   $Template = if (Test-Path -LiteralPath $packageTemplate -PathType Container) { $packageTemplate } else { $sourceTemplate }
 }
 
@@ -35,7 +36,7 @@ $requiredTemplateFiles = [ordered]@{
 }
 
 foreach ($relativePath in $requiredTemplateFiles.Keys) {
-  $sourcePath = Join-Path $templateRoot $relativePath
+  $sourcePath = Join-CreatorFlowPath -BasePath $templateRoot -RelativePath $relativePath
   if (-not (Test-Path -LiteralPath $sourcePath -PathType Leaf)) {
     throw "Template is incomplete. Missing: $sourcePath"
   }
@@ -52,13 +53,13 @@ if (Test-Path -LiteralPath $projectRoot) {
 
 New-Item -ItemType Directory -Path $projectRoot | Out-Null
 foreach ($directory in @("draft\visual-plan", "draft\web-assets", "assets", "review", "publish")) {
-  New-Item -ItemType Directory -Path (Join-Path $projectRoot $directory) -Force | Out-Null
+  New-Item -ItemType Directory -Path (Join-CreatorFlowPath -BasePath $projectRoot -RelativePath $directory) -Force | Out-Null
 }
 
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 foreach ($entry in $requiredTemplateFiles.GetEnumerator()) {
-  $sourcePath = Join-Path $templateRoot $entry.Key
-  $targetPath = Join-Path $projectRoot $entry.Value
+  $sourcePath = Join-CreatorFlowPath -BasePath $templateRoot -RelativePath $entry.Key
+  $targetPath = Join-CreatorFlowPath -BasePath $projectRoot -RelativePath $entry.Value
   $content = [System.IO.File]::ReadAllText($sourcePath)
   if ($entry.Key -eq "project-state.json") {
     $content = $content.Replace("__PROJECT_NAME__", $Name)

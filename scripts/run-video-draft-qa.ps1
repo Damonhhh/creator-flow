@@ -8,6 +8,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 $KeyframeProbeMaxBytes = 512MB
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
+$powerShellCommand = Get-CreatorFlowPowerShellCommand
 
 function Resolve-FullPath {
     param([string]$PathValue)
@@ -480,7 +482,7 @@ function Get-EncodingExceptionData {
         }
     }
 
-    $exceptionPath = Join-Path $VideoRoot "review\encoding-exceptions.json"
+    $exceptionPath = Join-CreatorFlowPath -BasePath $VideoRoot -RelativePath "review/encoding-exceptions.json"
     if (-not (Test-Path -LiteralPath $exceptionPath)) {
         return @{
             HdrApproved = @()
@@ -765,8 +767,8 @@ function Test-ProductionNoteLeak {
     foreach ($target in $targets) {
         if (-not (Test-Path -LiteralPath $target)) { continue }
         $relative = $target
-        if ($target.StartsWith($VideoRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
-            $relative = $target.Substring($VideoRoot.Length).TrimStart('\')
+        if ($target.StartsWith($VideoRoot, (Get-CreatorFlowPathComparison))) {
+            $relative = $target.Substring($VideoRoot.Length).TrimStart('\', '/')
         }
         $lines = @(Get-Content -LiteralPath $target -Encoding utf8)
         for ($i = 0; $i -lt $lines.Count; $i++) {
@@ -790,8 +792,8 @@ function Test-NarrationSrtProvenance {
     )
 
     $problems = @()
-    $voiceDir = Join-Path $VideoRoot "assets\voice"
-    $appSrt = Join-Path $HyperframesDir "assets\narration.srt"
+    $voiceDir = Join-CreatorFlowPath -BasePath $VideoRoot -RelativePath "assets/voice"
+    $appSrt = Join-CreatorFlowPath -BasePath $HyperframesDir -RelativePath "assets/narration.srt"
     if (-not (Test-Path -LiteralPath $voiceDir)) { return $problems }
     if (-not (Test-Path -LiteralPath $appSrt)) { return $problems }
 
@@ -951,7 +953,7 @@ function Test-CaptionAudioAlignmentEvidence {
 
     $problems = @()
     $captionPath = Join-Path $HyperframesDir "captions-data.js"
-    $audioPath = Join-Path $HyperframesDir "assets\audio\narration.wav"
+    $audioPath = Join-CreatorFlowPath -BasePath $HyperframesDir -RelativePath "assets/audio/narration.wav"
     if (-not (Test-Path -LiteralPath $captionPath)) { return $problems }
     if (-not (Test-Path -LiteralPath $audioPath)) { return $problems }
 
@@ -1106,7 +1108,7 @@ $sceneClips = @()
 
 $materialMixScript = Join-Path (Split-Path -Parent $PSCommandPath) "test-video-material-mix.ps1"
 if (Test-Path -LiteralPath $materialMixScript) {
-    $materialOutput = & powershell -ExecutionPolicy Bypass -File $materialMixScript -VideoDir $videoRoot 2>&1
+    $materialOutput = & $powerShellCommand -NoProfile -ExecutionPolicy Bypass -File $materialMixScript -VideoDir $videoRoot 2>&1
     if ($LASTEXITCODE -eq 0) {
         $notes.Add("material mix QA passed")
     }
@@ -1127,7 +1129,7 @@ $screenOwnershipScript = Join-Path (Split-Path -Parent $PSCommandPath) "test-vid
 if (Test-Path -LiteralPath $screenOwnershipScript) {
     $previousErrorActionPreference = $ErrorActionPreference
     $ErrorActionPreference = "Continue"
-    $screenOwnershipOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File $screenOwnershipScript -VideoDir $videoRoot 2>&1
+    $screenOwnershipOutput = & $powerShellCommand -NoProfile -ExecutionPolicy Bypass -File $screenOwnershipScript -VideoDir $videoRoot 2>&1
     $screenOwnershipExitCode = $LASTEXITCODE
     $ErrorActionPreference = $previousErrorActionPreference
     if ($screenOwnershipExitCode -eq 0) {
@@ -1168,7 +1170,7 @@ $visualTaskCoverageScript = Join-Path (Split-Path -Parent $PSCommandPath) "test-
 if (Test-Path -LiteralPath $visualTaskCoverageScript) {
     $previousErrorActionPreference = $ErrorActionPreference
     $ErrorActionPreference = "Continue"
-    $visualTaskCoverageOutput = & powershell -ExecutionPolicy Bypass -File $visualTaskCoverageScript -VideoDir $videoRoot 2>&1
+    $visualTaskCoverageOutput = & $powerShellCommand -NoProfile -ExecutionPolicy Bypass -File $visualTaskCoverageScript -VideoDir $videoRoot 2>&1
     $visualTaskCoverageExitCode = $LASTEXITCODE
     $ErrorActionPreference = $previousErrorActionPreference
     if ($visualTaskCoverageExitCode -eq 0) {
@@ -1187,7 +1189,7 @@ else {
 
 $orientationScript = Join-Path (Split-Path -Parent $PSCommandPath) "test-video-orientation-decision.ps1"
 if (Test-Path -LiteralPath $orientationScript) {
-    $orientationOutput = & powershell -ExecutionPolicy Bypass -File $orientationScript -VideoDir $videoRoot 2>&1
+    $orientationOutput = & $powerShellCommand -NoProfile -ExecutionPolicy Bypass -File $orientationScript -VideoDir $videoRoot 2>&1
     if ($LASTEXITCODE -eq 0) {
         $notes.Add("orientation decision QA passed")
         foreach ($line in $orientationOutput) {

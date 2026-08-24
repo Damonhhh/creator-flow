@@ -5,6 +5,7 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+. (Join-Path (Join-Path $PSScriptRoot 'lib') 'creatorflow-platform.ps1')
 
 function Split-MarkdownRow {
   param([string]$Line)
@@ -22,7 +23,7 @@ function Get-HeaderIndex {
 }
 
 $root = (Resolve-Path -LiteralPath $VideoDir -ErrorAction Stop).Path
-$beatMapPath = Join-Path $root "draft\visual-plan\material-beat-map.md"
+$beatMapPath = Join-CreatorFlowPath -BasePath $root -RelativePath "draft/visual-plan/material-beat-map.md"
 if (-not (Test-Path -LiteralPath $beatMapPath)) {
   throw "Missing material beat map: $beatMapPath"
 }
@@ -60,9 +61,9 @@ if ($planned.Count -eq 0) {
 }
 
 $manifestCandidates = @(
-  (Join-Path $root "hyperframes-app\visual-task-coverage.json"),
-  (Join-Path $root "remotion-app\visual-task-coverage.json"),
-  (Join-Path $root "assembly\visual-task-coverage.json")
+  (Join-CreatorFlowPath -BasePath $root -RelativePath "hyperframes-app/visual-task-coverage.json"),
+  (Join-CreatorFlowPath -BasePath $root -RelativePath "remotion-app/visual-task-coverage.json"),
+  (Join-CreatorFlowPath -BasePath $root -RelativePath "assembly/visual-task-coverage.json")
 )
 $manifestPath = @($manifestCandidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1)
 if ($manifestPath.Count -eq 0) {

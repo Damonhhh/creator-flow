@@ -48,7 +48,7 @@ function Test-DependencyCommand {
 function Get-DefaultToolRoot {
   $userRoot = [Environment]::GetFolderPath('UserProfile')
   if ([string]::IsNullOrWhiteSpace($userRoot)) { throw 'Could not resolve the current user profile.' }
-  return Join-Path $userRoot '.creatorflow\tools'
+  return Join-CreatorFlowPath -BasePath $userRoot -RelativePath '.creatorflow/tools'
 }
 
 function Resolve-DependencyPath {
@@ -62,7 +62,12 @@ function Resolve-DependencyPath {
 function Get-AgentReachExecutable {
   param([string]$SelectedToolRoot, [scriptblock]$CommandResolver = ${function:Test-DependencyCommand})
   if (& $CommandResolver 'agent-reach') { return 'agent-reach' }
-  $local = Join-Path $SelectedToolRoot 'agent-reach-venv\Scripts\agent-reach.exe'
+  $local = if ((Get-CreatorFlowPlatform) -eq 'windows') {
+    Join-CreatorFlowPath -BasePath $SelectedToolRoot -RelativePath 'agent-reach-venv/Scripts/agent-reach.exe'
+  }
+  else {
+    Join-CreatorFlowPath -BasePath $SelectedToolRoot -RelativePath 'agent-reach-venv/bin/agent-reach'
+  }
   if (Test-Path -LiteralPath $local -PathType Leaf) { return $local }
   return ''
 }
@@ -149,7 +154,8 @@ function Get-DependencyResolutionPlan {
 
   if ($SelectedStage -eq 'Material') {
     $agentReach = Get-AgentReachExecutable -SelectedToolRoot $SelectedToolRoot -CommandResolver $CommandResolver
-    $fallbackCommands = @('mcporter', 'gh', 'yt-dlp', 'curl.exe') | Where-Object { & $CommandResolver $_ }
+    $curlName = if ((Get-CreatorFlowPlatform) -eq 'windows') { 'curl.exe' } else { 'curl' }
+    $fallbackCommands = @('mcporter', 'gh', 'yt-dlp', $curlName) | Where-Object { & $CommandResolver $_ }
     $details['agentReach'] = [ordered]@{ available = -not [string]::IsNullOrWhiteSpace($agentReach); invocation = $agentReach }
     $details['fallbackCommands'] = @($fallbackCommands)
     if ([string]::IsNullOrWhiteSpace($agentReach)) {
@@ -157,7 +163,9 @@ function Get-DependencyResolutionPlan {
       $missing += 'agent-reach'
       $venv = Join-Path $SelectedToolRoot 'agent-reach-venv'
       $archive = "https://github.com/Panniantong/agent-reach/archive/$($script:AgentReachCommit).zip"
-      $canInstallAgentReach = [bool](& $CommandResolver 'python') -or [bool](& $CommandResolver 'py')
+      $canInstallAgentReach = [bool](& $CommandResolver 'python')
+      if (-not $canInstallAgentReach) { $canInstallAgentReach = [bool](& $CommandResolver 'python3') }
+      if (-not $canInstallAgentReach) { $canInstallAgentReach = [bool](& $CommandResolver 'py') }
       $actions += New-DependencyAction -Id 'agent-reach' -Purpose 'Discover first-hand web, video, social, and repository sources during Material.' -OfficialSource 'https://github.com/Panniantong/agent-reach' -Command "python -m venv `"$venv`"; <venv-python> -m pip install $archive; agent-reach install --env=auto --safe; agent-reach doctor" -Scope 'current user under .creatorflow/tools; no workspace install and no credential setup' -Fallback 'Use an available routed CLI, browser research, or user-provided assets and record the unavailable channel.' -AutoExecutable $canInstallAgentReach -DownloadsCode $true
       $fallbacks += 'Material may continue with available routed tools or user-provided assets, but source discovery is degraded.'
     }
@@ -177,16 +185,51 @@ function Get-DependencyResolutionPlan {
       $repo = if ([string]::IsNullOrWhiteSpace([string]$readiness.repo)) { $defaultRepo } else { [string]$readiness.repo }
       if (-not $readiness.sourceAvailable) {
         $missing += 'indextts-source'
-        $actions += New-DependencyAction -Id 'indextts-source' -Purpose 'Fetch the pinned IndexTTS2 source expected by CreatorFlow’s adapter.' -OfficialSource 'https://github.com/index-tts/index-tts/tree/v2.0.0' -Command "git clone --branch $($script:IndexTtsTag) --depth 1 https://github.com/index-tts/index-tts.git `"$repo`"" -Scope 'current user under .creatorflow/tools unless indexTts.repo is configured' -Fallback 'Keep mode=existing-audio and provide narration plus verified subtitles.' -AutoExecutable ([bool](& $CommandResolver 'git')) -DownloadsCode $true -RemainingAfterAction @('install the Python runtime', 'download model files', 'provide a local reference-audio path')
+        $sourceAction = @{
+          Id = 'indextts-source'
+          Purpose = 'Fetch the pinned IndexTTS2 source expected by the CreatorFlow adapter.'
+          OfficialSource = 'https://github.com/index-tts/index-tts/tree/v2.0.0'
+          Command = "git clone --branch $($script:IndexTtsTag) --depth 1 https://github.com/index-tts/index-tts.git `"$repo`""
+          Scope = 'current user under .creatorflow/tools unless indexTts.repo is configured'
+          Fallback = 'Keep mode=existing-audio and provide narration plus verified subtitles.'
+          AutoExecutable = [bool](& $CommandResolver 'git')
+          DownloadsCode = $true
+          RemainingAfterAction = @('install the Python runtime', 'download model files', 'provide a local reference-audio path')
+        }
+        $actions += New-DependencyAction @sourceAction
       }
       else {
         if (-not $readiness.runtimeAvailable) {
           $missing += 'indextts-runtime'
-          $actions += New-DependencyAction -Id 'indextts-runtime' -Purpose 'Create the project’s isolated Python environment and install IndexTTS2 dependencies.' -OfficialSource 'https://github.com/index-tts/index-tts/tree/v2.0.0' -Command "uv sync --all-extras (working directory: $repo)" -Scope 'IndexTTS repository virtual environment' -Fallback 'Use existing audio or another TTS adapter.' -AutoExecutable ([bool](& $CommandResolver 'uv')) -DownloadsCode $true -LargeDownload $true -RemainingAfterAction @('download model files', 'provide a local reference-audio path')
+          $runtimeAction = @{
+            Id = 'indextts-runtime'
+            Purpose = 'Create an isolated Python environment for the project and install IndexTTS2 dependencies.'
+            OfficialSource = 'https://github.com/index-tts/index-tts/tree/v2.0.0'
+            Command = "uv sync --all-extras (working directory: $repo)"
+            Scope = 'IndexTTS repository virtual environment'
+            Fallback = 'Use existing audio or another TTS adapter.'
+            AutoExecutable = [bool](& $CommandResolver 'uv')
+            DownloadsCode = $true
+            LargeDownload = $true
+            RemainingAfterAction = @('download model files', 'provide a local reference-audio path')
+          }
+          $actions += New-DependencyAction @runtimeAction
         }
         if (-not $readiness.modelAvailable) {
           $missing += 'indextts-model'
-          $actions += New-DependencyAction -Id 'indextts-model' -Purpose 'Download the IndexTTS2 model checkpoints required for synthesis.' -OfficialSource 'https://huggingface.co/IndexTeam/IndexTTS-2' -Command "uv run hf download IndexTeam/IndexTTS-2 --local-dir=checkpoints (working directory: $repo)" -Scope 'IndexTTS checkpoints directory; large network download' -Fallback 'Use existing audio or another TTS adapter.' -AutoExecutable ([bool](& $CommandResolver 'uv')) -DownloadsCode $true -LargeDownload $true -RemainingAfterAction @('provide a local reference-audio path')
+          $modelAction = @{
+            Id = 'indextts-model'
+            Purpose = 'Download the IndexTTS2 model checkpoints required for synthesis.'
+            OfficialSource = 'https://huggingface.co/IndexTeam/IndexTTS-2'
+            Command = "uv run hf download IndexTeam/IndexTTS-2 --local-dir=checkpoints (working directory: $repo)"
+            Scope = 'IndexTTS checkpoints directory; large network download'
+            Fallback = 'Use existing audio or another TTS adapter.'
+            AutoExecutable = [bool](& $CommandResolver 'uv')
+            DownloadsCode = $true
+            LargeDownload = $true
+            RemainingAfterAction = @('provide a local reference-audio path')
+          }
+          $actions += New-DependencyAction @modelAction
         }
       }
       if (-not $readiness.referenceAudioAvailable) {
@@ -254,14 +297,20 @@ function Invoke-DependencyAction {
   New-Item -ItemType Directory -Force -Path $SelectedToolRoot | Out-Null
 
   if ($ActionId -eq 'agent-reach') {
-    $python = if (Test-DependencyCommand 'python') { 'python' } elseif (Test-DependencyCommand 'py') { 'py' } else { throw 'Python is required before Agent Reach can be installed.' }
+    $python = if (Test-DependencyCommand 'python') { 'python' } elseif (Test-DependencyCommand 'python3') { 'python3' } elseif (Test-DependencyCommand 'py') { 'py' } else { throw 'Python is required before Agent Reach can be installed.' }
     $venv = Join-Path $SelectedToolRoot 'agent-reach-venv'
     if (-not (Test-Path -LiteralPath $venv -PathType Container)) {
       & $python -m venv $venv
       if ($LASTEXITCODE -ne 0) { throw 'Could not create the Agent Reach virtual environment.' }
     }
-    $venvPython = Join-Path $venv 'Scripts\python.exe'
-    $venvCommand = Join-Path $venv 'Scripts\agent-reach.exe'
+    if ((Get-CreatorFlowPlatform) -eq 'windows') {
+      $venvPython = Join-CreatorFlowPath -BasePath $venv -RelativePath 'Scripts/python.exe'
+      $venvCommand = Join-CreatorFlowPath -BasePath $venv -RelativePath 'Scripts/agent-reach.exe'
+    }
+    else {
+      $venvPython = Join-CreatorFlowPath -BasePath $venv -RelativePath 'bin/python'
+      $venvCommand = Join-CreatorFlowPath -BasePath $venv -RelativePath 'bin/agent-reach'
+    }
     $archive = "https://github.com/Panniantong/agent-reach/archive/$($script:AgentReachCommit).zip"
     & $venvPython -m pip install $archive
     if ($LASTEXITCODE -ne 0) { throw 'Agent Reach package installation failed.' }

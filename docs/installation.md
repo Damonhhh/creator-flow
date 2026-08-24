@@ -1,6 +1,6 @@
 # 安装与第一次运行
 
-V1 支持 Windows PowerShell 5.1 和 PowerShell 7。先跑通 Core，再按实际生产路线增加渲染、TTS、ASR、视频生成或上传组件。
+Windows 主线支持 Windows PowerShell 5.1 和 PowerShell 7。macOS 目前提供 Core Beta，只使用 PowerShell 7；具体边界和命令见 [macOS Core Beta](macos-core-beta.md)。先跑通 Core，再按实际生产路线增加渲染、TTS、ASR、视频生成或上传组件。
 
 ## 1. 克隆仓库
 
@@ -13,8 +13,8 @@ cd .\creator-flow
 
 Core 需要以下命令可从 `PATH` 调用：
 
-- `powershell`
-- Python 3：`py` 或 `python`
+- PowerShell：Windows 使用 `powershell` 或 `pwsh`；macOS 使用 `pwsh`
+- Python 3：`py`、`python` 或 `python3`
 - `ffmpeg`
 - `ffprobe`
 
@@ -25,6 +25,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-workflow-capa
 ```
 
 只有 `ready: true` 才代表基础命令齐全。能力探测只检查运行条件，不代表某条视频已经通过内容与视觉验收。
+
+macOS 对应命令：
+
+```powershell
+pwsh -NoProfile -File ./scripts/test-workflow-capabilities.ps1 -Profile Core
+```
 
 ## 3. 创建本地配置
 
@@ -37,7 +43,7 @@ Copy-Item .\config\publish.example.json .\config\publish.local.json
 
 这些 `.local.json` 已被 `.gitignore` 排除。相对路径以仓库根为基准，也可以使用环境变量。不要把 Cookie、Token、API Key、声音样本或本机私有路径写入 example 文件。
 
-先保留 `config\tts.local.json` 默认的 `existing-audio` 模式也可以。跑通主链不要求预先安装 TTS。
+先保留 `config\tts.local.json` 默认的 `existing-audio` 模式也可以。跑通主链不要求预先安装 TTS；macOS Core Beta 也建议先走这条路线。
 
 ## 4. 初始化视频项目
 
