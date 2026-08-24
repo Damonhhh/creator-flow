@@ -14,7 +14,8 @@ function Assert-True {
 
 function Get-CompactChildOutput {
   param([string]$Text)
-  return ($Text -replace '[\s|]', '')
+  $ansiPattern = "$([char]27)\[[0-9;?]*[ -/]*[@-~]"
+  return (($Text -replace $ansiPattern, '') -replace '[\s|]', '')
 }
 
 function Invoke-OwnershipCheck {
@@ -65,14 +66,14 @@ try {
 "@
   $result = Invoke-OwnershipCheck -Root $tempRoot
   $compactOutput = Get-CompactChildOutput -Text $result.Output
-  Assert-True ($result.ExitCode -ne 0 -and $compactOutput -match "staticorunspecifiedavatar") "Expected static avatar to fail. ExitCode=$($result.ExitCode); Output=$($result.Output)"
+  Assert-True ($result.ExitCode -ne 0 -and $compactOutput -match "staticorunspecifiedavatar") "Expected static avatar to fail. ExitCode=$($result.ExitCode); Compact=$compactOutput; Output=$($result.Output)"
 
   Write-BeatMap -Body @"
 | LINE01 | 00:00-00:05 | Generated proof. | VT01 | prove | EVIDENCE | official-proof | full | generated | belief | official-proof | no | https://example.test/proof | prove | generated product page | hold | n/a |
 "@
   $result = Invoke-OwnershipCheck -Root $tempRoot
   $compactOutput = Get-CompactChildOutput -Text $result.Output
-  Assert-True ($result.ExitCode -ne 0 -and $compactOutput -match "generatedmaterialcannotserveasEVIDENCE") "Expected generated evidence to fail. ExitCode=$($result.ExitCode); Output=$($result.Output)"
+  Assert-True ($result.ExitCode -ne 0 -and $compactOutput -match "generatedmaterialcannotserveasEVIDENCE") "Expected generated evidence to fail. ExitCode=$($result.ExitCode); Compact=$compactOutput; Output=$($result.Output)"
 
   Write-BeatMap -Body @"
 | LINE01 | 00:00-00:03 | Opening. | VT01 | transition | PERSON | avatar-talk | full | n/a | continue-listening | opening | no | n/a | advance | accepted-avatar opening video | enter | n/a |
@@ -82,7 +83,7 @@ try {
 "@
   $result = Invoke-OwnershipCheck -Root $tempRoot
   $compactOutput = Get-CompactChildOutput -Text $result.Output
-  Assert-True ($result.ExitCode -ne 0 -and $compactOutput -match "PPTbackbone") "Expected consecutive support cards to fail. ExitCode=$($result.ExitCode); Output=$($result.Output)"
+  Assert-True ($result.ExitCode -ne 0 -and $compactOutput -match "PPTbackbone") "Expected consecutive support cards to fail. ExitCode=$($result.ExitCode); Compact=$compactOutput; Output=$($result.Output)"
 
   Write-BeatMap -Contract "visual-task-v1; screen-owner-v1; motion-job-v1.1" -Body @"
 | LINE01 | 00:00-00:04 | Opening. | VT01 | transition | PERSON | avatar-talk | full | n/a | continue-listening | opening | no | n/a | advance | presenter full-screen main frame | enter | n/a |
