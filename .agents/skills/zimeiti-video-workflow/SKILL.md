@@ -78,9 +78,7 @@ Treat repository scripts and contracts as part of this skill package; do not ask
 4. Ask for explicit consent before downloading, installing, signing in, or configuring credentials.
 5. After consent, perform only the approved setup, rerun capability detection, and record the result. Without consent, preserve the project and report the blocked stage.
 
-At the start of `ScriptTTS`, `Material`, and `Assembly`, run `scripts\resolve-workflow-dependencies.ps1` for that stage. Its default mode only detects and proposes; it never downloads. Show the returned purpose, official source, command, scope, risk, remaining work, and fallback. After the user approves one exact action, rerun with that single `-AcceptAction`, then rely on the script's post-action recheck. Never infer approval for a second action, a model download, a login, or credential setup.
-
-Use `scripts\test-workflow-capabilities.ps1` for the broad Core/Full report. `scripts\initialize-video-renderer.ps1` remains the Assembly implementation behind the resolver. Agent Reach is preferred for Material discovery but is not a global hard dependency; missing Agent Reach degrades Material to installed routed tools, browser research, or user-provided assets. `existing-audio` similarly keeps Script TTS usable without installing IndexTTS.
+Use `scripts\test-workflow-capabilities.ps1` for route-aware detection. When Assembly selects HyperFrames and the project lacks `hyperframes-app`, run `scripts\initialize-video-renderer.ps1` without `-AcceptDownload` to produce the proposal; add `-AcceptDownload` only after approval.
 
 ## Hard Gates
 
@@ -89,6 +87,7 @@ Use `scripts\test-workflow-capabilities.ps1` for the broad Core/Full report. `sc
 - Captions must come from final audio/SRT timing, not hand-written fake timelines.
 - Mainline videos need `draft\web-assets\source-candidates.md` and `draft\visual-plan\material-beat-map.md` unless explicitly exempted.
 - `visual-task-v1` projects need `hyperframes-app\visual-task-coverage.json` to cover every planned `VT##` before draft QA.
+- Formal public packages need `publish-copy-v1`: a final-script viewer brief, an 8+ candidate / 4+ angle title matrix, exact selected-title binding, body/comment continuation, and a fresh independent scorecard validated by `scripts\test-video-publish-copy.ps1`.
 - Formal wrap-up must use `scripts\invoke-video-wrap-up.ps1` or `zimeiti-video-wrap-up`.
 - Never copy secrets, cookies, auth headers, or API keys into docs, prompts, publish packages, or chat.
 
@@ -125,16 +124,16 @@ Renderer setup proposal (no download):
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\initialize-video-renderer.ps1 -ProjectDir <video-dir>
 ```
 
-Stage dependency proposal (no download):
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 -Stage Material
-```
-
 Video wrap-up:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\invoke-video-wrap-up.ps1 -VideoDir <video-dir> -Collection <collection-name>
+```
+
+Publishing-copy contract check:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-video-publish-copy.ps1 -VideoDir <video-dir>
 ```
 
 Human visual review validation:

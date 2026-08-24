@@ -139,6 +139,7 @@ function Get-WorkflowCapabilities {
   $nodeAvailable = [bool](& $CommandResolver 'node')
   $npmAvailable = [bool](& $CommandResolver 'npm')
   $npxAvailable = [bool](& $CommandResolver 'npx')
+  $offlineHyperFramesAvailable = [bool](& $CommandResolver 'hyperframes')
   $customRendererAvailable = $false
   if (-not $usesHyperFrames -and -not [string]::IsNullOrWhiteSpace($rendererCommand)) {
     $commandName = ($rendererCommand -split '\s+')[0]
@@ -154,9 +155,13 @@ function Get-WorkflowCapabilities {
   $ffmpegCap = (New-CapabilityRecord -Available ([bool](& $CommandResolver 'ffmpeg')) -Required $true -Purpose 'Process, sample, and encode media.' -InstallUrl 'https://ffmpeg.org/download.html' -Invocation 'ffmpeg');
   $ffprobeCap = (New-CapabilityRecord -Available ([bool](& $CommandResolver 'ffprobe')) -Required $true -Purpose 'Inspect media duration, streams, and codecs.' -InstallUrl 'https://ffmpeg.org/download.html' -Invocation 'ffprobe');
   $nodeCap = (New-CapabilityRecord -Available $nodeAvailable -Required ($isFull -and $usesHyperFrames) -Purpose 'Run the HyperFrames assembly project.' -InstallUrl 'https://nodejs.org/en/download' -Invocation 'node');
-  $npmCap = (New-CapabilityRecord -Available $npmAvailable -Required ($isFull -and $usesHyperFrames) -Purpose 'Install and check renderer project dependencies.' -InstallUrl 'https://nodejs.org/en/download' -Invocation 'npm');
-  $npxCap = (New-CapabilityRecord -Available $npxAvailable -Required ($isFull -and $usesHyperFrames) -Purpose 'Invoke the project-scoped HyperFrames CLI.' -InstallUrl 'https://nodejs.org/en/download' -Invocation 'npx');
-  $hyperFramesCap = (New-CapabilityRecord -Available ($nodeAvailable -and $npmAvailable -and $npxAvailable) -Required ($isFull -and $usesHyperFrames) -Purpose 'Reference Assembly renderer; first setup may download an npm package.' -InstallUrl 'https://www.npmjs.com/package/hyperframes' -Invocation 'npx --yes hyperframes@0.7.55' -DownloadMayBeRequired:$usesHyperFrames);
+  $onlineRendererRequired = $isFull -and $usesHyperFrames -and -not $offlineHyperFramesAvailable
+  $npmCap = (New-CapabilityRecord -Available $npmAvailable -Required $onlineRendererRequired -Purpose 'Install and check renderer project dependencies when the offline CLI is absent.' -InstallUrl 'https://nodejs.org/en/download' -Invocation 'npm');
+  $npxCap = (New-CapabilityRecord -Available $npxAvailable -Required $onlineRendererRequired -Purpose 'Invoke HyperFrames from npm when the offline CLI is absent.' -InstallUrl 'https://nodejs.org/en/download' -Invocation 'npx');
+  $hyperFramesAvailable = $nodeAvailable -and ($offlineHyperFramesAvailable -or ($npmAvailable -and $npxAvailable))
+  $hyperFramesInvocation = if ($offlineHyperFramesAvailable) { 'hyperframes' } else { 'npx --yes hyperframes@0.7.55' }
+  $hyperFramesPurpose = if ($offlineHyperFramesAvailable) { 'Reference Assembly renderer available from the offline environment pack.' } else { 'Reference Assembly renderer; first setup may download an npm package.' }
+  $hyperFramesCap = (New-CapabilityRecord -Available $hyperFramesAvailable -Required ($isFull -and $usesHyperFrames) -Purpose $hyperFramesPurpose -InstallUrl 'https://www.npmjs.com/package/hyperframes' -Invocation $hyperFramesInvocation -DownloadMayBeRequired:($usesHyperFrames -and -not $offlineHyperFramesAvailable));
   $customRendererCap = (New-CapabilityRecord -Available $customRendererAvailable -Required ($isFull -and -not $usesHyperFrames) -Purpose 'Run the alternate renderer selected in workflow.local.json.' -InstallUrl '' -Invocation $rendererCommand);
   $indexTtsCap = (New-CapabilityRecord -Available $indexTtsAvailable -Required $indexTtsRequired -Purpose 'Generate narration only when the IndexTTS or clone-voice route is selected.' -InstallUrl 'https://github.com/index-tts/index-tts' -Invocation '' -DownloadMayBeRequired:$indexTtsRequired);
   $indexTtsCap['details'] = $indexTtsReadiness

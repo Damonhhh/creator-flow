@@ -45,12 +45,26 @@ $publishCopyConfig = $publishConfig.publishCopyPass
 if (-not $publishCopyConfig) {
   throw "Missing required config key: publishCopyPass. See config/publish.example.json"
 }
+$publishCopyContractName = if ($publishCopyConfig.PSObject.Properties["contract"] -and $publishCopyConfig.contract) {
+  [string]$publishCopyConfig.contract
+}
+else {
+  "markers-v1"
+}
 $publishCopyRecordPattern = [string]$publishCopyConfig.recordPattern
-$publishCopyRequiredMarkers = @($publishCopyConfig.requiredMarkers | ForEach-Object { [string]$_ })
+$publishCopyRequiredMarkers = if ($publishCopyConfig.PSObject.Properties["requiredMarkers"] -and $publishCopyConfig.requiredMarkers) {
+  @($publishCopyConfig.requiredMarkers | ForEach-Object { [string]$_ })
+}
+else {
+  @()
+}
 if (-not $publishCopyRecordPattern) {
   throw "Missing required config key: publishCopyPass.recordPattern. See config/publish.example.json"
 }
-if ($publishCopyRequiredMarkers.Count -eq 0) {
+if ($publishCopyContractName -notin @("markers-v1", "publish-copy-v1")) {
+  throw "Unsupported publishCopyPass.contract: $publishCopyContractName"
+}
+if ($publishCopyContractName -eq "markers-v1" -and $publishCopyRequiredMarkers.Count -eq 0) {
   throw "Missing required config key: publishCopyPass.requiredMarkers. See config/publish.example.json"
 }
 
@@ -393,7 +407,7 @@ function Test-CoverVisualQaPass {
   if ($text -notmatch "(?im)\bPASS\b|通过") {
     throw "Cover visual QA record does not contain PASS: $($latest.FullName)"
   }
-  if ($text -notmatch "zimeiti-cover-system-v1|Cover System|封面系统") {
+  if ($text -notmatch "Cover System|封面系统") {
     throw "Cover visual QA record does not name the cover system checks: $($latest.FullName)"
   }
   if ($text -notmatch "thumbnail|缩略图") {
@@ -512,10 +526,64 @@ if ($subtitlePath) {
 $coverInfo = Test-Covers -PublishDir $publishDir
 Test-PublishPackage -PublishDir $publishDir
 $coverVisualQa = Test-CoverVisualQaPass -ReviewDir $reviewDir
-$publishCopyPass = Test-PublishCopyPass `
-  -ReviewDir $reviewDir `
-  -RecordPattern $publishCopyRecordPattern `
-  -RequiredMarkers $publishCopyRequiredMarkers
+
+# Publish-copy review must bind to the QA-approved render recorded in these
+# manifests, so refresh them before running the publish-copy validator.
+$latestRender = [ordered]@{
+  project = $projectName
+  generatedAt = (Get-Date).ToString("o")
+  finalVideo = $finalVideoPath
+  publishVideo = $publishVideo
+  sha256 = $videoHash
+  probe = $videoProbe
+}
+Write-Utf8Json -Object $latestRender -Path (Join-Path $reviewDir "latest-render.json")
+
+$qaStamp = [ordered]@{
+  project = $projectName
+  generatedAt = (Get-Date).ToString("o")
+  status = "PASS"
+  finalVideo = $finalVideoPath
+  finalVideoSha256 = $videoHash
+  qaReport = $qaReport
+  publishQaReport = $publishQa
+  humanVisualReview = $humanVisualReview.reviewPath
+  humanVisualReviewSha256 = $humanVisualReview.reviewedVideoSha256
+  subtitle = $publishSubtitle
+  subtitleInfo = $subtitleInfo
+}
+Write-Utf8Json -Object $qaStamp -Path (Join-Path $reviewDir "qa-stamp.json")
+
+$publishCopyContractResult = $null
+$publishCopyPlanPath = $null
+if ($publishCopyContractName -eq "publish-copy-v1") {
+  $publishCopyValidator = Join-Path $ProjectRoot "scripts\test-video-publish-copy.ps1"
+  if (-not (Test-Path -LiteralPath $publishCopyValidator -PathType Leaf)) {
+    throw "Missing publish-copy-v1 validator: $publishCopyValidator"
+  }
+  $publishCopyContractJson = @(& $publishCopyValidator `
+      -VideoDir $resolvedVideoDir `
+      -ScorecardPattern $publishCopyRecordPattern) -join "`n"
+  $publishCopyContractResult = $publishCopyContractJson | ConvertFrom-Json
+  $publishCopyPlanPath = [string]$publishCopyContractResult.planPath
+  $publishCopyScorecardPath = [string]$publishCopyContractResult.scorecardPath
+  $publishCopyScorecard = Get-Item -LiteralPath $publishCopyScorecardPath
+  $publishCopyPass = [ordered]@{
+    path = $publishCopyScorecardPath
+    lastWriteTime = $publishCopyScorecard.LastWriteTime.ToString("o")
+  }
+}
+else {
+  $publishCopyPass = Test-PublishCopyPass `
+    -ReviewDir $reviewDir `
+    -RecordPattern $publishCopyRecordPattern `
+    -RequiredMarkers $publishCopyRequiredMarkers
+  $publishCopyContractResult = [ordered]@{
+    status = "PASS"
+    contract = "markers-v1"
+    reviewPath = $publishCopyPass.path
+  }
+}
 
 $collectionName = Infer-Collection -VideoRoot $resolvedVideoDir -ProjectName $projectName -ProvidedCollection $Collection
 $destinations = [ordered]@{
@@ -543,31 +611,6 @@ foreach ($file in $publishSyncExclusions) {
   }
 }
 
-$latestRender = [ordered]@{
-  project = $projectName
-  generatedAt = (Get-Date).ToString("o")
-  finalVideo = $finalVideoPath
-  publishVideo = $publishVideo
-  sha256 = $videoHash
-  probe = $videoProbe
-}
-Write-Utf8Json -Object $latestRender -Path (Join-Path $reviewDir "latest-render.json")
-
-$qaStamp = [ordered]@{
-  project = $projectName
-  generatedAt = (Get-Date).ToString("o")
-  status = "PASS"
-  finalVideo = $finalVideoPath
-  finalVideoSha256 = $videoHash
-  qaReport = $qaReport
-  publishQaReport = $publishQa
-  humanVisualReview = $humanVisualReview.reviewPath
-  humanVisualReviewSha256 = $humanVisualReview.reviewedVideoSha256
-  subtitle = $publishSubtitle
-  subtitleInfo = $subtitleInfo
-}
-Write-Utf8Json -Object $qaStamp -Path (Join-Path $reviewDir "qa-stamp.json")
-
 $manifest = [ordered]@{
   project = $projectName
   status = "pending_manual_publish"
@@ -587,6 +630,7 @@ $manifest = [ordered]@{
   publishPackage = Join-Path $publishDir "发布包.md"
   coverVisualQa = $coverVisualQa.path
   publishCopyPass = $publishCopyPass.path
+  publishCopyContract = $publishCopyContractResult
   qaReport = $publishQa
   humanVisualReview = $humanVisualReview.reviewPath
   latestRender = Join-Path $reviewDir "latest-render.json"
@@ -619,6 +663,8 @@ $statusLines = @(
   "- 封面视觉 QA：``$($coverVisualQa.path)``",
   "- 发布包：``$(Join-Path $publishDir '发布包.md')``",
   "- 发布文案复核：``$($publishCopyPass.path)``",
+  "- 发布文案契约：``$publishCopyContractName``",
+  "- 发布文案计划：``$publishCopyPlanPath``",
   "- QA：``$publishQa``",
   "- 人工画面复核：``$($humanVisualReview.reviewPath)``",
   "",
@@ -685,6 +731,8 @@ $result = [ordered]@{
   horizontalCover = $coverInfo.horizontal
   publishPackage = Join-Path $publishDir "发布包.md"
   publishCopyPass = $publishCopyPass.path
+  publishCopyContract = $publishCopyContractName
+  publishCopyPlan = $publishCopyPlanPath
   humanVisualReview = $humanVisualReview.reviewPath
   waitingPublishDir = $destinations["待发布"]
   collection = $collectionName

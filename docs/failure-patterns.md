@@ -54,12 +54,12 @@
 
 ## 7. 发布文案没有做下游收口
 
-- 症状：标题、正文、首评像内部总结、生产报告或旧角度复读；标题先把结论讲完，正文又把口播答案完整复述，用户扫完文字已经没有点开视频的必要。
-- 根因：上游企划校验没有在 publish 包阶段重新落到平台文案，或只检查“写全没有”，没有检查“还剩什么必须点开才知道”。
-- 硬修法：正式发布包必须有符合 `config\publish.local.json` 的 `review\publish-copy-pass-vNN.md`，记录复核方法、问题和改写文件。标题必须点名受众或处境、给出个人风险并保留未解问题；正文首屏继续放大同一条风险，不能把视频核心答案提前摘要完；首评沿用同一情绪线，只要求一个能直接回答的具体动作。标题、正文、首评三处各自写得通但不在同一条线上，仍判 FAIL。
-- 当前拦截位置：`zimeiti-video-wrap-up` skill、`wrap-up-checklist.md`、`invoke-video-wrap-up.ps1`。
-- 是否需要进入脚本：已进入脚本，wrap-up 按本地配置检查 publish-copy pass 的文件名、状态和方法字段。
-- 经验：形式 PASS 不等于文案有效。若标题提前说完结论、正文复述完整答案，仍应判定为 FAIL，并统一标题、正文和首评的阅读动机。
+- 症状：标题、正文、首评像内部总结、生产报告或旧角度复读；标题只是陈述“这期讲了什么”，或者先把结论讲完，正文再把口播答案完整复述，用户扫完文字已经没有点开视频的必要。
+- 根因：发布阶段没有从最终成片重新提取 `观众处境 / 核心事实 / 未解张力 / 可带走物 / 内容内兑现点`，直接把脚本题目或第一条顺眼的标题写进发布包；marker-only 门槛只能证明有人写过 `PASS`，不能证明比较过角度或验收过最终文案。
+- 硬修法：执行 `publish-copy-v1`。从 QA 通过的最终脚本和成片写 `draft\publish-copy\publish-copy-plan.json`，记录两者 SHA-256，并至少生成 8 个非同义标题、覆盖 4 个角度族；再完成标题、正文和首评的同线延续，针对最终文件写带 `sourceBinding` 的 `review\publish-copy-scorecard-vNN.json`。脚本/成片哈希必须匹配实际文件，成片还要匹配 `latest-render.json` 与 `qa-stamp.json`，最后通过 `scripts\test-video-publish-copy.ps1`。若成片本身没有可兑现的收获，退回 Script TTS。
+- 当前拦截位置：`publish-copy-contract.md`、`stage-publish-wrap-up.md`、`zimeiti-video-wrap-up` skill、`wrap-up-checklist.md`、`test-video-publish-copy.ps1`、`invoke-video-wrap-up.ps1`。
+- 是否需要进入脚本：已进入脚本。`publish-copy-v1` 验证候选数量、角度多样性、选中标题一致性、正文/首评计划、独立评分、硬检查和文件新鲜度；`markers-v1` 仅保留兼容。
+- 经验：陈述句不是原罪，空泛的主题摘要才是。机器门槛保证做过比较和复核，点击价值仍必须由独立语义审阅判断。
 
 ## 8. 制作备注泄漏到口播或画面
 

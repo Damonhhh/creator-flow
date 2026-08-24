@@ -30,18 +30,27 @@ foreach ($entry in @($manifest.files)) {
   $destinations[[string]$entry.destination] = $true
 }
 
-$requiredMappings = @{
-  "README.md" = "README.md"
-  "LICENSE" = "LICENSE"
-  ".gitignore" = ".gitignore"
-  "public-export-manifest.json" = "public-export-manifest.json"
-}
-foreach ($source in $requiredMappings.Keys) {
+$requiredMappings = @(
+  @{ sources = @("open-source/README.md", "README.md"); destination = "README.md" }
+  @{ sources = @("open-source/LICENSE", "LICENSE"); destination = "LICENSE" }
+  @{ sources = @("open-source/.gitignore", ".gitignore"); destination = ".gitignore" }
+  @{ sources = @("public-export-manifest.json"); destination = "public-export-manifest.json" }
+  @{ sources = @("scripts/test-video-publish-copy.ps1"); destination = "scripts/test-video-publish-copy.ps1" }
+  @{ sources = @("scripts/test-video-screen-ownership.ps1"); destination = "scripts/test-video-screen-ownership.ps1" }
+  @{ sources = @("tests/video-publish-copy.tests.ps1"); destination = "tests/video-publish-copy.tests.ps1" }
+  @{ sources = @("tests/video-screen-ownership.tests.ps1"); destination = "tests/video-screen-ownership.tests.ps1" }
+  @{ sources = @(".agents/skills/zimeiti-video-workflow/references/publish-copy-contract.md"); destination = ".agents/skills/zimeiti-video-workflow/references/publish-copy-contract.md" }
+  @{ sources = @(".agents/skills/zimeiti-video-workflow/references/screen-ownership-contract.md"); destination = ".agents/skills/zimeiti-video-workflow/references/screen-ownership-contract.md" }
+  @{ sources = @(".agents/skills/zimeiti-video-workflow/references/presenter-led-mixed-media-style.md"); destination = ".agents/skills/zimeiti-video-workflow/references/presenter-led-mixed-media-style.md" }
+)
+foreach ($mapping in $requiredMappings) {
+  $acceptedSources = @($mapping.sources)
+  $destination = [string]$mapping.destination
   $matches = @($manifest.files | Where-Object {
-    ([string]$_.source -replace '\\', '/') -eq $source -and
-    ([string]$_.destination -replace '\\', '/') -eq $requiredMappings[$source]
+    $acceptedSources -contains ([string]$_.source -replace '\\', '/') -and
+    ([string]$_.destination -replace '\\', '/') -eq $destination
   })
-  Assert-True ($matches.Count -eq 1) "Missing required manifest mapping: $source -> $($requiredMappings[$source])"
+  Assert-True ($matches.Count -eq 1) "Missing required manifest mapping: [$($acceptedSources -join ' or ')] -> $destination"
 }
 
 Write-Host "public export manifest tests passed"

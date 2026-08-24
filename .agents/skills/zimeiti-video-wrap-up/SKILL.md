@@ -37,13 +37,13 @@ Use this fast path when the project already has:
 - subtitles when the project has narration/subtitles;
 - vertical and horizontal covers in `publish/`;
 - a complete `publish/` package;
-- a passing publishing-copy review record matching `config\publish.local.json`.
+- a passing `publish-copy-v1` plan and scorecard matching `config\publish.local.json`.
 
 ## Publishing Copy Gate
 
-Before the fast path, verify that the project publishing copy is not only present, but actually written for public distribution.
+Before the fast path, verify that the project publishing copy was produced from the final video rather than improvised during sync.
 
-For public-facing videos, review the copy against the active project's `account-profile.md` and `writing-style.md`. Check that the title opens a real question, the body makes one useful point, the first comment adds value, and the tags match the actual subject. Finish with a human-readable editing pass; do not invent facts to make the copy sharper.
+Follow `zimeiti-video-workflow\references\publish-copy-contract.md`. Create a viewer brief from the final script/render, generate and score at least 8 titles across at least 4 real angles, select one promise the video repays, then make the body and first comment continue that same line. Finish with the account style and `$humanize-writing`; do not invent facts to make the copy sharper.
 
 This gate updates or verifies at least:
 
@@ -53,20 +53,21 @@ This gate updates or verifies at least:
 - `publish\标签.md`
 - `publish\发布包.md`
 
-Record the invocation in:
+Record the production and independent review in:
 
-`review\publish-copy-pass-vNN.md`
+- `draft\publish-copy\publish-copy-plan.json`
+- `review\publish-copy-scorecard-vNN.json`
 
-The record must name:
+The scorecard must name:
 
 - `status: PASS`;
-- a non-empty `method:` describing how the review was done;
-- previous copy problem;
-- final recommended title and first comment;
-- files updated;
-- boundary: whether MP4/SRT/covers/QA were unchanged.
+- a non-empty review `method` and `reviewer`;
+- the exact selected title ID and final title;
+- the final script/render paths and SHA-256 values under `sourceBinding`;
+- body, first-comment, voice, and platform scores;
+- the factual, payoff, continuation, humanize, and platform hard checks required by the contract.
 
-Upstream planning notes do not replace the downstream publish-copy pass. The publish package itself must show the conversion from diagnosis into public title, body, comment, and tag copy.
+Run `scripts\test-video-publish-copy.ps1`. Its PASS proves that the structured review exists and that the plan, scorecard, actual script/render, `latest-render.json`, and `qa-stamp.json` share the same source binding; it does not replace editorial judgment.
 
 The script verifies the artifacts, writes machine-readable state, syncs the publish folder, and returns the final paths.
 
@@ -84,7 +85,7 @@ It writes or updates:
 2. If the project is already package-ready, run `invoke-video-wrap-up.ps1`.
 3. If QA is missing or stale, run QA first only when the user has clearly asked to finish this exact version. Otherwise stop and report the missing QA stage.
 4. If cover files or publishing copy are missing, do not silently invent a low-quality shortcut inside wrap-up. Complete the missing stage first, then rerun the fast path.
-5. If publishing copy exists but has no configured publish-copy pass, perform that review first, write `review\publish-copy-pass-vNN.md`, then run the fast path.
+5. If publishing copy exists but has no passing `publish-copy-v1` plan/scorecard, return to Publish Wrap Up copy production, finish those artifacts, then run the fast path.
 6. If the script fails, fix the named missing artifact or explain the blocker. Do not fall back to slow manual directory spelunking unless the script does not support this project shape.
 7. Reply only after paths are verified. Include final video, vertical cover, horizontal cover, publish package, waiting-publish directory, publish-copy record, and any skipped item with reason.
 

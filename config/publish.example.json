@@ -1,13 +1,10 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "outputRoot": "videos/00-final-output",
   "collection": "",
   "platforms": [],
   "publishCopyPass": {
-    "recordPattern": "publish-copy-pass-v*.md",
-    "requiredMarkers": [
-      "status: PASS",
-      "method:"
-    ]
+    "contract": "publish-copy-v1",
+    "recordPattern": "publish-copy-scorecard-v*.json"
   }
 }

@@ -21,7 +21,7 @@ Private production history is not a runtime dependency of this package.
 - Material planning maps each spoken line to one visible task and records source, timing, motion and fallback.
 - Assembly records visual-task coverage rather than assuming that a file list proves coverage.
 - Automated QA and human visual review are separate gates. The accepted human review is bound to the current render SHA256.
-- Formal wrap-up requires the final render, subtitles when present, cover QA, publish copy and the publishing package.
+- Formal wrap-up requires the final render, subtitles when present, cover QA, publish copy and the publishing package. The publish-copy plan and scorecard bind the final script/render by SHA-256, and the render must also match the current render and QA manifests.
 - `project-state.json` is the machine-readable stage authority when present.
 
 ## Dependency behavior

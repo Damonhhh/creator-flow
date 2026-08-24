@@ -1123,6 +1123,47 @@ else {
     $issues.Add("Missing material mix QA script: $materialMixScript")
 }
 
+$screenOwnershipScript = Join-Path (Split-Path -Parent $PSCommandPath) "test-video-screen-ownership.ps1"
+if (Test-Path -LiteralPath $screenOwnershipScript) {
+    $previousErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    $screenOwnershipOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File $screenOwnershipScript -VideoDir $videoRoot 2>&1
+    $screenOwnershipExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousErrorActionPreference
+    if ($screenOwnershipExitCode -eq 0) {
+        $screenOwnershipRaw = (@($screenOwnershipOutput) -join "`n").Trim()
+        try {
+            $screenOwnershipResult = $screenOwnershipRaw | ConvertFrom-Json
+            if ([string]$screenOwnershipResult.status -eq "PASS") {
+                $notes.Add("screen-owner-v1 planning QA passed")
+                if (@($screenOwnershipResult.contracts) -contains "presenter-led-mixed-media-v1") {
+                    $notes.Add("presenter-led-mixed-media-v1 planning QA passed")
+                }
+                foreach ($warning in @($screenOwnershipResult.warnings)) {
+                    if (-not [string]::IsNullOrWhiteSpace([string]$warning)) {
+                        $warnings.Add("Screen ownership: $([string]$warning)")
+                    }
+                }
+            }
+            else {
+                $notes.Add("screen-owner-v1 was not applicable")
+            }
+        }
+        catch {
+            $issues.Add("Screen ownership: validator returned invalid JSON")
+        }
+    }
+    else {
+        foreach ($line in $screenOwnershipOutput) {
+            $text = ([string]$line).Trim()
+            if ($text) { $issues.Add("Screen ownership: $text") }
+        }
+    }
+}
+else {
+    $issues.Add("Missing screen-ownership QA script: $screenOwnershipScript")
+}
+
 $visualTaskCoverageScript = Join-Path (Split-Path -Parent $PSCommandPath) "test-video-visual-task-coverage.ps1"
 if (Test-Path -LiteralPath $visualTaskCoverageScript) {
     $previousErrorActionPreference = $ErrorActionPreference
@@ -1450,6 +1491,15 @@ if ($latestRender) {
         "- Static-card duration:",
         "- Audio review:",
         "- Closing beat:",
+        "",
+        "For presenter-led-mixed-media-v1, resolve every check below with PASS plus inspected timestamps, or N/A plus the reason. These are finished-render observations, not plan labels.",
+        "",
+        "- Digital-human mouth motion:",
+        "- Proof/Demo takeover and readability:",
+        "- Real-scene/kinetic-image motion:",
+        "- AIGC boundary:",
+        "- Presenter re-anchor:",
+        "- Support-card exceptions:",
         "- Evidence files opened:"
     )
     Set-Content -LiteralPath $pendingReviewPath -Value $pendingLines -Encoding utf8

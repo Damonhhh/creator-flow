@@ -6,7 +6,7 @@
     {
       "source": "README.md",
       "destination": "README.md",
-      "sha256": "cd36749d151cbb528f1a6032b6cf5b5dffaad0d2dc58b18e2c6d899519d41623"
+      "sha256": "60aa98c8a198887815568185a9b6f501ba040255ffb6b54bd6c1c07c63ae49cc"
     },
     {
       "source": "LICENSE",
@@ -32,6 +32,16 @@
       "source": "docs/dependency-matrix.md",
       "destination": "docs/dependency-matrix.md",
       "sha256": "113dffda07f6b20fd9e4d8a3a71334c70711a8848c9a597e9e986608d2e8b034"
+    },
+    {
+      "source": "docs/environment-helper-packs.md",
+      "destination": "docs/environment-helper-packs.md",
+      "sha256": "2198af8a334b61a5a0d836be9467c6bfdb595447a2aa543696ae193bd730b576"
+    },
+    {
+      "source": "docs/offline-resource-packs.md",
+      "destination": "docs/offline-resource-packs.md",
+      "sha256": "69484e52ec71a16a980a0432f4985c2d196db0e2385deb31fe1540f5c33466e1"
     },
     {
       "source": "docs/workflow-thread-map.md",
@@ -86,7 +96,7 @@
     {
       "source": "docs/failure-patterns.md",
       "destination": "docs/failure-patterns.md",
-      "sha256": "2efb8f32ba675a27ef8419be479f3f44a2fa485649f8799103caf5924064f818"
+      "sha256": "9d3d3d25a1ff2699804ffe250898b95c01286380507ddaca8b220967aceba02b"
     },
     {
       "source": "docs/tts-natural-pace-acceptance.md",
@@ -101,7 +111,7 @@
     {
       "source": "docs/video-workflow-current-state.md",
       "destination": "docs/video-workflow-current-state.md",
-      "sha256": "ed02ca2a577cd40bb5825f5796e7042b4ac8dfec195007829fd03d65f34b35ea"
+      "sha256": "7e6a3d32f2d8110b004b90f63d1fc717f16722299c3aef34b3b60236a8963f9a"
     },
     {
       "source": "config/workflow.example.json",
@@ -121,7 +131,7 @@
     {
       "source": "config/publish.example.json",
       "destination": "config/publish.example.json",
-      "sha256": "76a9e3d8f9171cff70e4c6d742cb37f612813f86c9afba8ab99625801715908b"
+      "sha256": "b42b11d8c92b5ed2b91759b5b5cec5ae6843151941b9d30ba8a322d5f36b1e65"
     },
     {
       "source": "config/ai-daily-briefing-public-rules.json",
@@ -246,12 +256,12 @@
     {
       "source": "scripts/initialize-video-renderer.ps1",
       "destination": "scripts/initialize-video-renderer.ps1",
-      "sha256": "d46f210ad6b11378591fe82f695d672fbd14410207a1de1209f66a32f4ea321e"
+      "sha256": "c4b9c7301168dea806179994350c7f12f7c1b11e1e276bc5179a8090d225548c"
     },
     {
       "source": "scripts/resolve-workflow-dependencies.ps1",
       "destination": "scripts/resolve-workflow-dependencies.ps1",
-      "sha256": "dc09c940262495348e2468b3135b32f9a3c0845d4b956b2578e82fa16f395557"
+      "sha256": "cfcd3a679512621fe797a98e5b1925a1582d93ffbfae155dad57a18f45726d22"
     },
     {
       "source": "scripts/collect-ai-daily-signal-radar.mjs",
@@ -296,22 +306,27 @@
     {
       "source": "scripts/invoke-video-wrap-up.ps1",
       "destination": "scripts/invoke-video-wrap-up.ps1",
-      "sha256": "494f1bb2a8a1eb8b2c06e9464dc06ca62cbe9d1dd12ab593163a0489176e3326"
+      "sha256": "ecd7162d9f0f9275e0660324716483660230163f0be7889920acb51474073c38"
+    },
+    {
+      "source": "scripts/test-video-publish-copy.ps1",
+      "destination": "scripts/test-video-publish-copy.ps1",
+      "sha256": "b645885a06dee739a5d1390477d2c27ec42233899a1fa921ad3042746c6e2ca0"
     },
     {
       "source": "scripts/run-video-draft-qa.ps1",
       "destination": "scripts/run-video-draft-qa.ps1",
-      "sha256": "aec8e9411b2844d8125004ef642b99b151b4b6a870f4b801817462c795f71c30"
+      "sha256": "5445bc9f16b2ca118fa4b37c86d0d3a8e91995e78ce3826933e8092c201db7e6"
     },
     {
       "source": "scripts/test-workflow-capabilities.ps1",
       "destination": "scripts/test-workflow-capabilities.ps1",
-      "sha256": "c20f08eac376c3722b42ce6802b0a4c91d0d6d7aa616bb42ee4c1ca825898011"
+      "sha256": "e74283c2ac3c62bd07c13abceb0ceadaa042f48deb7ac70edb037b376cd4b7e2"
     },
     {
       "source": "scripts/test-public-release.ps1",
       "destination": "scripts/test-public-release.ps1",
-      "sha256": "5e650377e00d7e7f938ff6bc8296d9129b6fa198d102b7c16db693f1d0803f93"
+      "sha256": "265e6cbfe077b2ddf34e0d9c2ad8f49502ea265acfa99d5ac78b0619df37c301"
     },
     {
       "source": "scripts/update-video-project-state.ps1",
@@ -344,19 +359,29 @@
       "sha256": "b45782a93f56d744559f9db8d6ebfe93c76ef2aff67d83a564e0ea4a354e5136"
     },
     {
+      "source": "scripts/test-video-screen-ownership.ps1",
+      "destination": "scripts/test-video-screen-ownership.ps1",
+      "sha256": "bd89b5b2d6a02a8f729297e64249fcb6eaaa97cde3f6b0bb326dc6e661d0f20a"
+    },
+    {
       "source": "scripts/new-video-source-candidates.ps1",
       "destination": "scripts/new-video-source-candidates.ps1",
-      "sha256": "6f97e9586472dd7e94a2faebc46c2d0464e33ac292ebb47d973f5fea3c692ef1"
+      "sha256": "1085bc0d97258d93ffbb34c3ab9056c796c65dfbe5205a68d8a9642e411d5d86"
     },
     {
       "source": "tests/public-export-manifest.tests.ps1",
       "destination": "tests/public-export-manifest.tests.ps1",
-      "sha256": "a020ad47806cccd15ff7503bb2202bb2b834bd2c18ecafe8c74f3c0d20dbe135"
+      "sha256": "560726e8133012ca8be35351f05281a5c39e68fa86fb821bac4a21bfaf578bc3"
     },
     {
       "source": "tests/public-export.tests.ps1",
       "destination": "tests/public-export.tests.ps1",
       "sha256": "ce1c37dcc2d3cdab6fedff68f8df6571d7b75be11fd9971ea18b73c48af50fbd"
+    },
+    {
+      "source": "tests/video-publish-copy.tests.ps1",
+      "destination": "tests/video-publish-copy.tests.ps1",
+      "sha256": "447fdc3e8afc94159a58fb2471a5e13ad4628cefa657ba0dfa6770e68b8c68a9"
     },
     {
       "source": "tests/workflow-config.tests.ps1",
@@ -396,12 +421,12 @@
     {
       "source": "tests/video-wrap-up-portability.tests.ps1",
       "destination": "tests/video-wrap-up-portability.tests.ps1",
-      "sha256": "db0edd127f1ba6a3f932ff2d27f7c7a37f4fe97608310d24d1f55455dee436a9"
+      "sha256": "b34c2e549f423b28940c27ff3ed4495dccf286fd3c7e502973093ea29c01e03c"
     },
     {
       "source": "tests/workflow-capabilities.tests.ps1",
       "destination": "tests/workflow-capabilities.tests.ps1",
-      "sha256": "7315fade3b4c0d11db0cf94b0ee39620f8af45ab71dc3240bf1e35bb83f9bbc9"
+      "sha256": "9a424a30439f5efea3473c79bc2d9221c0b8350c8aeb639db2f596c6850a2ba8"
     },
     {
       "source": "tests/workflow-dependency-resolver.tests.ps1",
@@ -409,9 +434,14 @@
       "sha256": "4e07dd221a12f1e434b0c877f5e27e9ff5f6e53820261e41e85f861173f26158"
     },
     {
+      "source": "tests/environment-helper-packages.tests.ps1",
+      "destination": "tests/environment-helper-packages.tests.ps1",
+      "sha256": "e9c7c1acab4d091636b10ebf023c6d65cdfda550c6234f592dcd276b208a3cd9"
+    },
+    {
       "source": "tests/video-renderer-initializer.tests.ps1",
       "destination": "tests/video-renderer-initializer.tests.ps1",
-      "sha256": "5a7813004fe23cda2b4a105109883ae79b1d730fbcdbfb66ef76dee20d7e79ec"
+      "sha256": "334910ff8344b40d07c620e3d6dfb182a05bf4217742d13b0544e1974dedb169"
     },
     {
       "source": "tests/agent-platform-support.tests.ps1",
@@ -431,7 +461,12 @@
     {
       "source": "tests/video-workflow-contract.tests.ps1",
       "destination": "tests/video-workflow-contract.tests.ps1",
-      "sha256": "ee4332968c6a20dadcb9a262c8c9401bd2a042d3fba2c97dd7b07d8242e895d9"
+      "sha256": "c0e34639e9f8fbc0007f33a9c0a3d66a796aac9e9e388ebf0c665b1a30d2c18b"
+    },
+    {
+      "source": "tests/video-screen-ownership.tests.ps1",
+      "destination": "tests/video-screen-ownership.tests.ps1",
+      "sha256": "a3afa3f6c5d82831c4aeb71e157c8c03b9833b62c22f4272d8a46e19320c0921"
     },
     {
       "source": "tests/video-project-state.tests.ps1",
@@ -461,12 +496,22 @@
     {
       "source": ".agents/skills/zimeiti-video-workflow/SKILL.md",
       "destination": ".agents/skills/zimeiti-video-workflow/SKILL.md",
-      "sha256": "1a61a4076d470388b6e8bda9f14c06132d169f163a6aa27dbdac5a7802ecafc1"
+      "sha256": "2c1424e5b11196bd1709549fa496b83cd00a8504809e3254ac373b134d57bdd0"
     },
     {
       "source": ".agents/skills/zimeiti-video-workflow/references/pipeline.md",
       "destination": ".agents/skills/zimeiti-video-workflow/references/pipeline.md",
-      "sha256": "4e72ab0b60963d265b1c369421be8d2463a92c30ab1160c506efe8b88e40581e"
+      "sha256": "2e7dae8c5061a19836576061a2708d51d1de1ab378eec7e2c7101a974125e182"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/screen-ownership-contract.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/screen-ownership-contract.md",
+      "sha256": "2dcb8ceeacb8af601295c47d0fd46a49b3442106fb9da14f9e5a9dc52fd5d16e"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/presenter-led-mixed-media-style.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/presenter-led-mixed-media-style.md",
+      "sha256": "afffbcbf1a2390ae7a6c2a9c68882bfb14421ba73d5cbf37834d52646ffd2006"
     },
     {
       "source": ".agents/skills/zimeiti-video-workflow/references/stage-topic.md",
@@ -496,7 +541,12 @@
     {
       "source": ".agents/skills/zimeiti-video-workflow/references/stage-publish-wrap-up.md",
       "destination": ".agents/skills/zimeiti-video-workflow/references/stage-publish-wrap-up.md",
-      "sha256": "97626b20246e7001391a3d32c9ce9d89be02b951e18fc14c84dfee1e550975f2"
+      "sha256": "b82bea68e6382e2144dbf314759e160ca1165276abe454b1037610169487477e"
+    },
+    {
+      "source": ".agents/skills/zimeiti-video-workflow/references/publish-copy-contract.md",
+      "destination": ".agents/skills/zimeiti-video-workflow/references/publish-copy-contract.md",
+      "sha256": "a0feadbcf8af8803d0af022b7099122a00b940aaca0efc21388dd6e0c8584be0"
     },
     {
       "source": ".agents/skills/zimeiti-video-workflow/references/visual-task-coverage-contract.md",
@@ -506,17 +556,67 @@
     {
       "source": ".agents/skills/zimeiti-video-wrap-up/SKILL.md",
       "destination": ".agents/skills/zimeiti-video-wrap-up/SKILL.md",
-      "sha256": "bd972ef7872b2b9f0063b14d1b41de6178f0a8b60eb05f032bca2192ee77000a"
+      "sha256": "3e1a0260fd9556a7129b848957d8b709c0934c78377f51bdb967c41f202ac16d"
     },
     {
       "source": ".agents/skills/zimeiti-video-wrap-up/references/wrap-up-checklist.md",
       "destination": ".agents/skills/zimeiti-video-wrap-up/references/wrap-up-checklist.md",
-      "sha256": "c7c64739e1cfddc0c482d64de87ca992b060af4f5e6e81d3b5fc8cb673c271ab"
+      "sha256": "9cadb19c050d71a16417681ce9bed31e15f88576aa7093cd6d3b8adee1031d52"
     },
     {
       "source": "packaging/trae-work/README.md",
       "destination": "packaging/trae-work/README.md",
       "sha256": "708f885e237adc2798a6a3d8cd0bd79fe21ab0bb82ff7b7bfe5e661e81e53d53"
+    },
+    {
+      "source": "packaging/environment-packs/common/creatorflow-pack-common.ps1",
+      "destination": "packaging/environment-packs/common/creatorflow-pack-common.ps1",
+      "sha256": "8ab0fdf3c4548405c40f2999f47d2d46cd6e407847ba2e35d80f2e1a49a41618"
+    },
+    {
+      "source": "packaging/environment-packs/core-windows/README.md",
+      "destination": "packaging/environment-packs/core-windows/README.md",
+      "sha256": "a69e539ed4ff6bca367744c9d7f9a58699098b9ce420ecdb68ddb9fb0b38e628"
+    },
+    {
+      "source": "packaging/environment-packs/core-windows/start.ps1",
+      "destination": "packaging/environment-packs/core-windows/start.ps1",
+      "sha256": "92caab8853deaf0a1d2d3ea71741960859e8d755a1668f80d84e2ba1af4ecc19"
+    },
+    {
+      "source": "packaging/environment-packs/material-agent-reach/README.md",
+      "destination": "packaging/environment-packs/material-agent-reach/README.md",
+      "sha256": "81789d5527bd30bc5bc9332fc59728034f3603563ee3262b39dc78ad85317234"
+    },
+    {
+      "source": "packaging/environment-packs/material-agent-reach/start.ps1",
+      "destination": "packaging/environment-packs/material-agent-reach/start.ps1",
+      "sha256": "a11ad9eb6a33bfd8997607de5921fcbaa75b25f441706356c5af8b755fe8d60a"
+    },
+    {
+      "source": "packaging/environment-packs/tts-indextts2/README.md",
+      "destination": "packaging/environment-packs/tts-indextts2/README.md",
+      "sha256": "6a27120cc6cbaff06c4173a5791ce7d5f9184ace88113ea35455d1e17e703145"
+    },
+    {
+      "source": "packaging/environment-packs/tts-indextts2/start.ps1",
+      "destination": "packaging/environment-packs/tts-indextts2/start.ps1",
+      "sha256": "00c5cfdcac256577535cff89f26f2f4dc366b28ac277347a6f226047e473e79b"
+    },
+    {
+      "source": "packaging/environment-packs/tts-indextts2/tts.indextts2.example.json",
+      "destination": "packaging/environment-packs/tts-indextts2/tts.indextts2.example.json",
+      "sha256": "0aea39c8a4cfa3971f202ad79faf444bbc91626df29ba25139d3ddbe0521ad85"
+    },
+    {
+      "source": "packaging/environment-packs/assembly-hyperframes/README.md",
+      "destination": "packaging/environment-packs/assembly-hyperframes/README.md",
+      "sha256": "8946b15831ad32b98e0dc23cdf75d0b5b7882457fdf4d893577d73eb0091ee36"
+    },
+    {
+      "source": "packaging/environment-packs/assembly-hyperframes/start.ps1",
+      "destination": "packaging/environment-packs/assembly-hyperframes/start.ps1",
+      "sha256": "12741dc5170f69b76894069b02455b4773668581d15bfa0fac42c4239e065a82"
     },
     {
       "source": "packaging/trae-work/installation.md",
@@ -527,6 +627,11 @@
       "source": "scripts/export-trae-work-brand-package.ps1",
       "destination": "scripts/export-trae-work-brand-package.ps1",
       "sha256": "e844e293237be325342d0149af62789c6e4c3ee53d7fc7ed360f4dbb1cb67af0"
+    },
+    {
+      "source": "scripts/export-environment-helper-packages.ps1",
+      "destination": "scripts/export-environment-helper-packages.ps1",
+      "sha256": "bdec0a502933cbe27e29a18c2fe75cd96eaa905c5b2d8eea20269a6546c3903d"
     },
     {
       "source": "scripts/test-trae-work-package.ps1",

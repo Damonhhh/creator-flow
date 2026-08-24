@@ -21,6 +21,13 @@ try {
   Assert-True $plan.consentRequired 'Scaffolding may download a package and must require consent'
   Assert-True (-not (Test-Path -LiteralPath (Join-Path $tempRoot 'hyperframes-app'))) 'A plan must not create or download anything'
 
+  $offlineCommands = { param($name) return $name -in @('node', 'ffmpeg', 'hyperframes') }
+  $offlinePlan = Get-VideoRendererSetupPlan -TargetProjectDir $tempRoot -CommandResolver $offlineCommands -NodeVersion 'v24.16.0'
+  Assert-True ($offlinePlan.action -eq 'scaffold-renderer') 'Offline HyperFrames should scaffold the renderer'
+  Assert-True ($offlinePlan.invocation -eq 'hyperframes') 'Offline HyperFrames must not fall back to npx'
+  Assert-True (-not $offlinePlan.downloadsCode) 'Offline HyperFrames scaffolding must not claim a package download'
+  Assert-True (-not $offlinePlan.consentRequired) 'An already installed offline CLI must not request download consent'
+
   $missingCommands = { param($name) return $name -eq 'ffmpeg' }
   $blocked = Get-VideoRendererSetupPlan -TargetProjectDir $tempRoot -CommandResolver $missingCommands
   Assert-True ($blocked.action -eq 'install-prerequisites') 'Missing commands must produce an install-prerequisites action'

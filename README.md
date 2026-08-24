@@ -71,7 +71,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\new-video-project.
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\resolve-workflow-dependencies.ps1 -Stage Material
 ```
 
-下载和安装必须通过一个明确的 `-AcceptAction` 单独授权。Agent Reach、IndexTTS2 和 HyperFrames 都按需接入，不是开局一次性装完。
+下载和安装必须通过一个明确的 `-AcceptAction` 单独授权。Agent Reach、IndexTTS2 和 HyperFrames 等用到对应阶段时再接入。
+
+需要转发给不熟悉本地环境的伙伴时，可以使用[四个环境辅助包](docs/environment-helper-packs.md)。网络正常时，它们负责检查环境并从官方来源安装；无法稳定访问 GitHub、Hugging Face、npm 或 PyPI 时，改用单独分发的 [Windows 离线资源包](docs/offline-resource-packs.md)。离线包可以包含已经下载好的第三方文件，但仍不会携带登录状态、私人声音、账号配置或密钥。
 
 ## 先换成你自己的内容
 

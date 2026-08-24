@@ -20,10 +20,13 @@ try {
   Assert-True ($scriptText.Contains('[string]$OutputRoot')) "Wrap-up must expose OutputRoot"
   Assert-True ($scriptText.Contains('[string[]]$Platforms = @()')) "Platforms must default through config"
   Assert-True ($scriptText.Contains('publishCopyPass = $publishCopyPass.path')) "Manifest must expose publishCopyPass"
+  Assert-True ($scriptText.Contains('publishCopyContract = $publishCopyContractResult')) "Manifest must expose the structured publish-copy contract"
+  Assert-True ($scriptText.Contains('test-video-publish-copy.ps1')) "Wrap-up must invoke the publish-copy-v1 validator"
 
   $publicConfig = Get-Content -LiteralPath $publicConfigPath -Raw -Encoding UTF8 | ConvertFrom-Json
   Assert-True (@($publicConfig.platforms).Count -eq 0) "Public config must not select upload platforms"
-  Assert-True ($publicConfig.publishCopyPass.recordPattern -eq 'publish-copy-pass-v*.md') "Unexpected public review record pattern"
+  Assert-True ($publicConfig.publishCopyPass.contract -eq 'publish-copy-v1') "Public config must default to the structured publish-copy contract"
+  Assert-True ($publicConfig.publishCopyPass.recordPattern -eq 'publish-copy-scorecard-v*.json') "Unexpected public scorecard pattern"
 
   $tokens = $null
   $errors = $null
